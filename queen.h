@@ -5,8 +5,8 @@
 #include "piece.h"
 
 Class Queen: Public Piece {
-    virtual bool validMove(int row, int col) const override;
-    virtual void move(int row, int col) override;
+    virtual bool validMove(int col, int row) const override;
+    virtual void move(int col, int row) override;
     virtual int getCol() const override;
     virtual int getRow() const override;
     virtual char getColour() const override;
