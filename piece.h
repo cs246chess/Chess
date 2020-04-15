@@ -2,25 +2,40 @@
 #define PIECE_H
 
 //base class
-class Piece {
+Class Piece {
   int row;
   int col;
   char color;
 
   virtual bool validMove(int col, int row) = 0;
-  virtual void move(int col, int row) = 0;
   int getRow();
   int getCol();
   char getColor();
 };
 
-class Pawn : public piece {
+Class Pawn : public piece {
   bool validMove(int col, int row) const override;
-  void move(int col, int row) const override;
 };
 
-Class Queen: Public Piece {
-    bool validMove(int row, int col) const override;
-    void move(int row, int col) override;
+Class Queen : Public Piece {
+  bool validMove(int row, int col) const override;
+};
+
+Class King : Public Piece {
+  bool hasMoved;
+  bool validMove(int row, int col) const override;
+};
+
+Class Rook : Public Piece {
+  bool hasMoved;
+  bool validMove(int row, int col) const override;
+};
+
+Class Knight : Public Piece {
+  bool validMove(int row, int col) const override;
+};
+
+Class Pawn : Public Piece {
+  bool validMove(int row, int col) const override;
 };
 #endif
