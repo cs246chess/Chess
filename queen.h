@@ -9,6 +9,6 @@ Class Queen: Public Piece {
     virtual void move(int col, int row) override;
     virtual int getCol() const override;
     virtual int getRow() const override;
-    virtual char getColour() const override;
+    virtual char getColor() const override;
 };
 #endif
