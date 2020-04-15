@@ -22,12 +22,12 @@ Class Queen : Public Piece {
 };
 
 Class King : Public Piece {
-  bool hasMoved;
+  bool hasMoved = false;
   bool validMove(int row, int col) const override;
 };
 
 Class Rook : Public Piece {
-  bool hasMoved;
+  bool hasMoved = false;
   bool validMove(int row, int col) const override;
 };
 
