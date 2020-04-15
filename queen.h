@@ -5,10 +5,10 @@
 #include "piece.h"
 
 Class Queen: Public Piece {
-    virtual bool validMove(int col, int row) const override;
-    virtual void move(int col, int row) override;
-    virtual int getCol() const override;
-    virtual int getRow() const override;
-    virtual char getColor() const override;
+    bool validMove(int col, int row) const override;
+    void move(int col, int row) override;
+    int getCol() const override;
+    int getRow() const override;
+    char getColor() const override;
 };
 #endif
