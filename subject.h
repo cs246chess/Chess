@@ -2,19 +2,6 @@
 #define SUBJECT_H
 #include <vector>
 
-/*We have separated the collection of fields into two parts:  its Info
-   and its State.
-
-   Info is for the parts of the subjject inherent to what it is:  its position
-   and its colour.
-
-   State is for the parts of the subject that, when changed, trigger
-   notifications.  This is the information that the Observer "gets" when it
-   calls getState on the subject.  It comprises the type of state, a direction,
-   and a colour.  For more details, see state.h.
-*/
-
-
 template <typename InfoType, typename StateType> class Observer;
 
 template <typename InfoType, typename StateType> class Subject {
