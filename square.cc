@@ -23,7 +23,7 @@ this->p = p;
 }
 void Square::Square::validMove(int row, int col){
   if (this->p == Piece::Pawn) { //Pawn moves
-    if (this->pColour == Colour::Black) {
+    if (this->pColour == Color::Black) {
       if (this->r - row != 1 || this->r - row != 2) {
         return false;
       } else if (this->r - row == 2) {
@@ -37,7 +37,7 @@ void Square::Square::validMove(int row, int col){
           return false;
         }
       }
-    } else if if (this->pColour == Colour::white) {
+    } else if if (this->pColour == Color::white) {
       if (row - this->r != 1 || row - this->r != 2) {
         return false;
       } else if (row - this->r == 2) {
@@ -87,7 +87,7 @@ void Square::Square::validMove(int row, int col){
 }
 
 void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call this
-  
+
 }
 
 
