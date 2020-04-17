@@ -13,15 +13,19 @@ int abs(int x) {
   return x;
 }
 
-Square(int r, int c, Colour colour) {
-
+Square(int r, int c, Color colour) {
+  this->r = r;
+  this->c = c;
+  this->colour = colour;
+  p = Piece::Empty;
+  pColour = Color::NoColour;
 }
 
-void Square::Square::setPiece(Piece p, Colour colour, Colour c) {    // Place a piece of given colour here.
+void Square::setPiece(Piece p, Color colour, Color c) {    // Place a piece of given colour here.
 this->p = p;
   this->pColour = c;
 }
-void Square::Square::validMove(int row, int col){
+void Square::validMove(int row, int col){
   if (this->p == Piece::Pawn) { //Pawn moves
     if (this->pColour == Colour::Black) {
       if (this->r - row != 1 || this->r - row != 2) {
@@ -87,7 +91,7 @@ void Square::Square::validMove(int row, int col){
 }
 
 void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call this
-  
+
 }
 
 
