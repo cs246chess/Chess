@@ -14,7 +14,7 @@
 
 enum Class Piece { Pawn, Rook, King, Bishop, Knight, Queen, Empty};
 enum class StateType { MovedPiece, Relay, Reply };
-enum class Colour { NoColour, Black, White };
+enum class Color { NoColour, Black, White };
 enum class Direction { NW, N, NE, W, E, SW, S, SE };
 
 //1. knight notifies neighbours
