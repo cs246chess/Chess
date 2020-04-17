@@ -2,6 +2,7 @@
 #define SUBJECT_H
 #include <vector>
 
+<<<<<<< HEAD
 /*
 
    We have separated the collection of fields into two parts:  its Info
