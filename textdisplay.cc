@@ -23,10 +23,10 @@ TextDisplay::TextDisplay() {
 };
 
 void TextDisplay::notify(Subject<Info, State> &whoNotified) {
-  int row = whoNotified.getInfo().getRow();
-  int col = whoNotified.getInfo().getCol();
-  int color = whoNotified.getInfo().getColor();
-  int piece = whoNotified.getInfo();.
+  int row = whoNotified.getInfo().row;
+  int col = whoNotified.getInfo().col;
+  int color = whoNotified.getInfo().color;
+  int piece = whoNotified.getInfo().piece;
   if (color = Color::Black) {
     if (piece == "Pawn") {
       theDisplay[row][col] = "p";
