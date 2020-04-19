@@ -26,4 +26,3 @@ int main() {
   cin >> c;
 
 }
-
