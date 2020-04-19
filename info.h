@@ -4,7 +4,8 @@
 struct Info {
   int col;
   int row;
-  char color;
+  Colour colour;
   Piece piece;
+  Colour pieceColour;
 };
 #endif
