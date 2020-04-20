@@ -191,7 +191,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         AttackedByBlack = true;
       }
         break;
-      case Piece::King:
+      case Piece::King: //not really needed tbh
         Direction d = getDirection(*this, whoFrom);
         break;
       case Piece::Bishop:
