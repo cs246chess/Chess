@@ -8,8 +8,9 @@
 class Square : public Subject, public Observer {
   const int r, c;
   Piece p;
-  Colour Colour
+  Colour Colour; //colour of SQUARE
   bool isEmpty;
+  Colour pieceColour; //colour of PIECE
   // Add other private members if necessary
 
  public:

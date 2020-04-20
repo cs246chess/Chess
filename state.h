@@ -23,7 +23,7 @@ enum class Direction { NW, N, NE, W, E, SW, S, SE };
 struct State {
   Piece piece; //what was the piece? (not what piece am I)
   StateType type;  // See above
-  Colour colour;   // What colour was the piece?  (NOT what is my colour)
+  Colour pieceColour;   // What colour was the piece?  (NOT what is my colour)
   Direction direction;  // In which direction from me is the piece?
 };
 

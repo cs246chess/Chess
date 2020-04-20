@@ -1,7 +1,7 @@
 #ifndef INFO_H
 #define INFO_H
 #include "state.h"
-struct Info {
+s truct Info {
   int col;
   int row;
   Colour colour;
