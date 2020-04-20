@@ -11,6 +11,7 @@ class Square : public Subject, public Observer {
   Color colour;
   bool isEmpty;
   Colour pieceColour; //colour of PIECE
+  bool check;
   // Add other private members if necessary
 
  public:
