@@ -185,38 +185,23 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       case Piece::Pawn:
       Direction d = getDirection(*this, whoFrom);
       if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Color::White) {
-        State newS;
-        newS.type = StateType::Relay;
-        newS.direction = d;
-        newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece
-        this->setState(newS);
-        notifyObservers();
+        AttackedByWhite = true;
       }
       if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Color::Black) {
-        State newS;
-        newS.type = StateType::Relay;
-        newS.direction = d;
-        newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece
-        this->setState(newS);
-        notifyObservers();
+        AttackedByBlack = true;
       }
         break;
       case Piece::King:
         Direction d = getDirection(*this, whoFrom);
-        State newS;
-        newS.type = StateType::Relay;
-        newS.direction = d;
-        newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece;
-        this->setState(newS);
-        notifyObservers();
         break;
       case Piece::Bishop:
         //find the direction of the new piece
         Direction d = getDirection(*this, whoFrom);
         if ((d == Direction::NE) || (d == Direction::NW) || (d == Direction::SE) || (d == Direction::SW)) {
+          if (pieceColour == Color::Black) {
+            AttackedByBlack = true;
+          }
+          else (pieceColour)
           State newS;
           newS.type = StateType::Relay;
           newS.direction = d;
@@ -256,7 +241,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       //if the cell is in line with the direction of the relay
       //i.e. the direction of *this is the direction of the relay
       if (s.piece == Piece::Knight) {
-        if (s.direction == Direction::N) {}
+        if (s.direction == Direction::N) {
           if ((d == Direction::NW) || (d == Direction::NE)) {
             State newS;
             newS.type = StateType::Relay;
@@ -266,7 +251,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
             notifyObservers();
           }
         }
-        else if ( s.direction == Direction::S) {
+        else if (s.direction == Direction::S) {
           if ((d == Direction::SW) || (d == Direction::SE)) {
             State newS;
             newS.type = StateType::Relay;
@@ -313,7 +298,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         }
       }
       else if (s.direction == d) {
-          if (piece != Empty) {
+          if (piece != Piece::Empty) {
             if (pieceColour == s.pieceColour) {
               //do nothing
             }
@@ -332,17 +317,17 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
                 }
                 break;
                 case Piece::King:
-                if (i.piece == Piece::King) {
-                  State newS;
-                  newS.type = StateType::Reply;
-                  newS.direction = reverse;
-                  newS.pieceColour = pieceColour;
-                  this->setState(newS);
-                  notifyObservers();
-                }
-                else if (i.piece == Piece::Pawn) {
-                  check = true;
-                }
+                  if (i.piece == Piece::King) {
+                    State newS;
+                    newS.type = StateType::Reply;
+                    newS.direction = reverse;
+                    newS.pieceColour = pieceColour;
+                    this->setState(newS);
+                    notifyObservers();
+                  }
+                  else if (i.piece == Piece::Pawn) {
+                    check = true;
+                  }
                 break;
                 case Piece::Queen:
                 State newS;
@@ -379,8 +364,9 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
           //is not in line with the current line check
       }
   }
-  else if (s.type == StateType::Relay) {
+  else {//type is a reply to check for discovered checks
       Direction d = getDirection(*this, whoFrom);
+      Direction reverse = getDirection(whoFrom, *this);
       //if the cell is in line with the direction of the relay
       //i.e. the direction of *this is the direction of the relay
       if (s.direction == d) {
