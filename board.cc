@@ -117,17 +117,12 @@ void Board::init() {
 void Board::setPiece(int r, int c, Colour colour, Piece piece) {
   theBoard[r-1][c-1].piece = piece;
   theBoard[r-1][c-1].pieceColour = colour;
-  State newS;
-  newS.type = StateType::MovedPiece;
-  newS.pieceColour = s.pieceColour;
-  newS.piece = s.piece;
-  theBoard[r-1][c-1].setState(newS);
   theBoard[r-1][c-1].notifyObservers();
   td->notify(theBoard[r-1][c-1]);
 }
 
 void Board::setObserver(Observer<Info, State> *ob) {
-  this->ob = ob;
+  this->gd = ob;
 }
 
 
