@@ -273,9 +273,9 @@ bool Board::isPinned(Square s) {
       return false;
     }
   }
-  if (abs(s.r - convertBackwards(kingLocations[PieceColour][0])) == abs(s.c - kingcol)) {
-    int constSide = (s.r - convertBackwards(kingLocations[PieceColour][0])) / abs(s.r - convertBackwards(kingLocations[PieceColour][0]));
-    int constUp = (s.c - kingcol) / abs(s.c - kingcol);
+  if (abso(s.r - convertBackwards(kingLocations[PieceColour][0])) == abso(s.c - kingcol)) {
+    int constSide = (s.r - convertBackwards(kingLocations[PieceColour][0])) / abso(s.r - convertBackwards(kingLocations[PieceColour][0]));
+    int constUp = (s.c - kingcol) / abso(s.c - kingcol);
     int counter = s.c - 1 + constUp;
     for (int i = (s.r - 1 + constSide); i != (convertBackwards(kingLocations[PieceColour][0]) - 1); i = i + constSide) {
       if (theBoard[i][counter].piece != Piece::Empty) {
@@ -1236,9 +1236,9 @@ Colour Board::isCheckmate(Colour c) { // is there checkmate? and returns who won
             std::cout << "Checkmated by White Pawn" << std::endl;
             return Colour::White;
           }
-          else if ((abs(kingrow-checkingRow) == 1 && abs(kingcol-checkingCol) == 0) ||
-            (abs(kingrow-checkingRow) == 1 && abs(kingcol-checkingCol) == 1) ||
-            (abs(kingrow-checkingRow) == 0 && abs(kingcol-checkingCol) == 1)) { //if the checking piece is adjacent
+          else if ((abso(kingrow-checkingRow) == 1 && abso(kingcol-checkingCol) == 0) ||
+            (abso(kingrow-checkingRow) == 1 && abso(kingcol-checkingCol) == 1) ||
+            (abso(kingrow-checkingRow) == 0 && abso(kingcol-checkingCol) == 1)) { //if the checking piece is adjacent
                 //to the king then it's checkmate since black can't capture it and the black king has no valid moves
             return Colour::White;
           }
@@ -1303,8 +1303,8 @@ Colour Board::isCheckmate(Colour c) { // is there checkmate? and returns who won
               }
             }
             else if (checkingPiece == Piece::Bishop) {
-              int up = (kingcol - checkingCol) / abs(kingcol - checkingCol);
-              int side = (kingrow - checkingRow) / abs(kingrow - checkingRow);
+              int up = (kingcol - checkingCol) / abso(kingcol - checkingCol);
+              int side = (kingrow - checkingRow) / abso(kingrow - checkingRow);
               int counter = checkingCol;
               for (int i = checkingRow; i != kingrow; i += side) {
                 string s = " ";
@@ -1340,8 +1340,8 @@ Colour Board::isCheckmate(Colour c) { // is there checkmate? and returns who won
 
               }
               else {
-                int up = (kingcol - checkingCol) / abs(kingcol - checkingCol);
-                int side = (kingrow - checkingRow) / abs(kingrow - checkingRow);
+                int up = (kingcol - checkingCol) / abso(kingcol - checkingCol);
+                int side = (kingrow - checkingRow) / abso(kingrow - checkingRow);
                 int counter = checkingCol;
                 for (int i = checkingRow; i != kingrow; i += side) {
                   string s = " ";

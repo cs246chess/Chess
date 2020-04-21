@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-int abs(int x) {
+int abso(int x) {
   if (x < 0) {
     return x * -1;
   }
@@ -92,7 +92,7 @@ bool Square::validMove(int row, int col){
           return false;
         }
       } else if (this->r - row == 1) {
-        if (abs(this->c - col) > 1) {
+        if (abso(this->c - col) > 1) {
           return false;
         }
       }
@@ -106,13 +106,13 @@ bool Square::validMove(int row, int col){
           return false;
         }
       } else if (row - this->r == 1) {
-        if (abs(this->c - col) > 1) {
+        if (abso(this->c - col) > 1) {
           return false;
         }
       }
     }
   } else if (this->piece == Piece::Bishop) { //Bishop moves
-    if ((abs(this->r - row) != abs(this->c - col)) || this->r - row == 0 || this->c - col == 0) {
+    if ((abso(this->r - row) != abso(this->c - col)) || this->r - row == 0 || this->c - col == 0) {
       return false;
     }
   } else if (this->piece == Piece::Rook) { //Rook Moves
@@ -122,21 +122,21 @@ bool Square::validMove(int row, int col){
       return false;
     }
   } else if (this->piece == Piece::Queen) { //Queen moves
-    if ((abs(this->r - row) != abs(this->c - col)) && (this->r - row != 0) && (this->c - col != 0)) {
+    if ((abso(this->r - row) != abso(this->c - col)) && (this->r - row != 0) && (this->c - col != 0)) {
       return false;
     } else if ((this->r - row == 0) && (this->c - col == 0)) {
       return false;
     }
   } else if (this->piece == Piece::Knight) {
-    if ((abs(this->r - row) == 2) && (abs(this->c - col == 1))) {
+    if ((abso(this->r - row) == 2) && (abso(this->c - col == 1))) {
       return true;
-    } else if ((abs(this->r - row) == 1) && (abs(this->c - col) == 2)) {
+    } else if ((abso(this->r - row) == 1) && (abso(this->c - col) == 2)) {
       return true;
     } else {
       return false;
     }
   } else if (this->piece == Piece::King) {
-    if ((abs(this->r - row) > 1) && (abs(this->c - col) > 1)) {
+    if ((abso(this->r - row) > 1) && (abso(this->c - col) > 1)) {
       return false;
     } else if ((this->r - row == 0) && (this->c - col == 0)) {
       return false;
@@ -343,10 +343,6 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         }
         if (piece != Piece::Empty) {
             switch (piece) {
-              case /* value */:
-            }{
-              //the spaces a pawn can attack cannot be blocked
-              // so it does not need to be recalculated until moved
               case Piece::Pawn: {
                 break;
               }

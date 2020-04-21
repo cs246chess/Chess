@@ -21,5 +21,5 @@ class Square : public Subject<Info, State>, public Observer<Info, State> {
   void notify(Subject<Info, State> &whoFrom) override;// My neighbours will call this
   Info getInfo() const override;
 };
-int abs(int x);
+int abso(int x);
 #endif
