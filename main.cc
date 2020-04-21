@@ -51,17 +51,17 @@ int main(int argc, char *argv[]) {
         int colto = move_to_col - 'a';
         Square currentSquare = b.theBoard[colfrom][move_from_row];
         Colour currentSquarecol = currentSquare[colfrom][move_from_row].getInfo().colour;
-	int inlist = 0;
-	for (int i = 0; i < currentSquare.validMoves().size(); i++) {
-		string row = to_string(move_to_row);
-		string col = to_string(move_to_col);
-		string rowcol = row + col;
-		if (rowcol == currentSquare.validMoves()[i]) {
-			inlist++;
-		} else {
-			inlist+=0;
-		}
-	} 
+	      int inlist = 0;
+	      for (int i = 0; i < currentSquare.validMoves().size(); i++) {
+		        string row = to_string(move_to_row);
+		        string col = to_string(move_to_col);
+		        string rowcol = row + col;
+		        if (rowcol == currentSquare.validMoves()[i]) {
+			           inlist++;
+		        } else {
+			           inlist+=0;
+		        }
+        }
         if (inlist > 0
             && (currentSquarecol == Colour::White && checkturn == 0)
             || (currentSquarecol == Colour::Black && checkturn == 1)) {
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
                       b.setPiece(move_to_row, colto, Colour::Black, Piece::Queen);
               } else if (p == "r") {
                       b.setPiece(move_to_row, colto, Colour::Black, Piece::Rook);
-              } else if (p == "b") {	
+              } else if (p == "b") {
 		      b.setPiece(move_to_row, colto, Colour::Black, Piece::Bishop);
               } else if (p == "n") {
 		      b.setPiece(move_to_row, colto, Colour::Black, Piece::Knight);
