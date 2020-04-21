@@ -52,10 +52,7 @@ Direction getDirection(Subject<Info, State> &here, Subject<Info, State> &from) {
     return d;
 }
 
-Square(int r, int c, Colour colour) {
-
-
-Square(int r, int c, Colour colour) {
+Square::Square(int r, int c, Colour colour) {
   this->r = r;
   this->c = c;
   this->colour = colour;
@@ -64,10 +61,11 @@ Square(int r, int c, Colour colour) {
 
 }
 
-void Square::Square::setPiece(Piece p, Colour colour, Colour c) {    // Place a piece of given colour here.
+void Square::setPiece(Piece p, Colour colour, Colour c) {    // Place a piece of given colour here.
   this->p = p;
   this->pieceColour = c;
 }
+
 void Square::validMove(int row, int col){
   if (this->p == Piece::Pawn) { //Pawn moves
     if (this->pieceColour == Colour::Black) {
