@@ -1,4 +1,5 @@
 #include "square.h"
+#include "info.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -419,6 +420,6 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
 }
 
 Info Square::getInfo() const {
-  Info i = {r, c, colour, p};
+  Info i = {r, c, colour, p, pieceColour};
   return i;
 }
