@@ -13,7 +13,6 @@ template <typename InfoType, typename StateType> class Observer;
 class InvalidMove{};
 
 class Board {
-  std::vector<std::vector<Square>> theBoard;  // The actual grid.
   TextDisplay *td = nullptr; // The text display.
   Observer<Info, State> *ob = nullptr; //graphics display pointer
   int size = 8;
@@ -24,14 +23,15 @@ class Board {
   bool hasWhiteRookHMoved;
   bool hasBlackRookAMoved;
   bool hasBlackRookHMoved;
-  vector<string> kingLocations; /*stores locations of kings for a variety of reasons
-  one is that there can be only one king on the board so storing the location
-  of current kings for set up purposes is useful
-  we can also more easily check if a king is in checkmate
-  index [0] has the location of the white king and index [1]*/
   vector<string> whiteCheckLocations; //stores the locations of white pieces that are checking the black king
   vector<string> blackCheckLocations; //stores the locations of black pieces that are checking the white king
  public:
+   std::vector<std::vector<Square>> theBoard;  // The actual grid.
+   vector<string> kingLocations; /*stores locations of kings for a variety of reasons
+   one is that there can be only one king on the board so storing the location
+   of current kings for set up purposes is useful
+   we can also more easily check if a king is in checkmate
+   index [0] has the location of the white king and index [1]*/
   ~Board();
   vector<string> validMoves(Square &s) const;
   bool isPinned(Square &s);
