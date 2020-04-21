@@ -19,7 +19,7 @@ class Square : public Subject<Info, State>, public Observer<Info, State> {
   bool validMove(int row, int col);
   void setPiece(Piece p, Colour c);    // Place a piece of given colour here.
   void notify(Subject<Info, State> &whoFrom) override;// My neighbours will call this
-  Info getInfo() override;
+  Info getInfo() const override;
 };
 int abs(int x);
 #endif
