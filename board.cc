@@ -9,6 +9,13 @@ int convertBackwards(char i){
   return ((i - 'a') + 1);
 }
 
+friend std::ostream &operator<<(std::ostream &out, const Board &b) {
+  if (b.td != nullptr) {
+    out << *g.td;
+  }
+  return out;
+}
+
 void Board::init() {
   theBoard.clear();
   for (int i = 0; i < 8; i++) {
