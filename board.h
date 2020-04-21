@@ -43,7 +43,7 @@ class Board {
   void init(); // Sets up an n x n grid.  Clears old grid, if necessary.
   void setPiece(int r, int c, Colour colour, Piece piece);  // Plays piece at row r, col c.
 
-  friend std::ostream &operator<<(std::ostream &out, const Grid &g);
+  friend std::ostream &operator<<(std::ostream &out, const Board &b);
 };
 
 char convert(int i);

@@ -11,7 +11,7 @@ int convertBackwards(char i){
 
 friend std::ostream &operator<<(std::ostream &out, const Board &b) {
   if (b.td != nullptr) {
-    out << *g.td;
+    out << *b.td;
   }
   return out;
 }
