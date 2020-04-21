@@ -1,6 +1,7 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 #include <vector>
+#include "observer.h"
 
 /*We have separated the collection of fields into two parts:  its Info
    and its State.
@@ -20,7 +21,7 @@
 template <typename InfoType, typename StateType> class Observer;
 
 template <typename InfoType, typename StateType> class Subject {
-  std::vector<Observer<InfoType, StateType>*> observers;
+  std::vector<Observer<InfoType, StateType> *> observers;
   StateType state;
  protected:
   void setState(StateType newS);
