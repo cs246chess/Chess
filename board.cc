@@ -1306,3 +1306,8 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
       }
     }
   }
+
+ Board::~Board() {
+      delete td;
+      delete ob;
+  }
