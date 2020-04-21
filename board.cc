@@ -1,4 +1,6 @@
 #include "board.h"
+#include "textdisplay.h"
+
 using namespace std;
 
 char convert(int i) {
@@ -9,7 +11,7 @@ int convertBackwards(char i){
   return ((i - 'a') + 1);
 }
 
-friend std::ostream &operator<<(std::ostream &out, const Board &b) {
+std::ostream &operator<<(std::ostream &out, const Board &b) {
   if (b.td != nullptr) {
     out << *b.td;
   }
@@ -23,23 +25,93 @@ void Board::init() {
   }
   for (int r = 0; r < 8; r++) {
     for (int c = 0; c < 8; c++) {
-      theBoard[r][c].r = r + 1;
-      theBoard[r][c].c = c + 1;
-      theBoard[r][c].isEmpty = true;
-      theBoard[r][c].piece = Piece::Empty;
-      theBoard[r][c].pieceColour = Colour::NoColour;
       if (c % 2 == 0 && r % 2 == 0) {
-        theBoard[c][r].colour = Colour::White;
-      } else if (c % 2 == 0 &&  r % 2 != 0) {
-        theBoard[c][r].colour = Colour::Black;
-      } else if (c % 2 != 0 &&  r % 2 == 0) {
-        theBoard[c][r].colour = Colour::Black;
-      } else {
-        theBoard[c][r].colour = Colour::White;
+        theBoard[r].push_back(Square(r, c, Colour::White));
+      }
+      else if (c % 2 == 0 &&  r % 2 != 0) {
+        theBoard[r].push_back(Square(r, c, Colour::Black));
+      }
+      else if (c % 2 != 0 &&  r % 2 == 0) {
+        theBoard[r].push_back(Square(r, c, Colour::Black));
+      }
+      else {
+        theBoard[r].push_back(Square(r, c, Colour::White));
       }
     }
   }
-  td = new Textdisplay();
+  for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (i == 0 && j == 0) {//top left
+                theBoard[i][j].attach(&theBoard[i][j+1]);
+                theBoard[i][j].attach(&theBoard[i+1][j+1]);
+                theBoard[i][j].attach(&theBoard[i+1][j]);
+                theBoard[i][j].attach(td);
+            }
+            else if (i == 0 && j == (size-1)) {//top right corner
+                theBoard[i][j].attach(&theBoard[i][j-1]);
+                theBoard[i][j].attach(&theBoard[i+1][j-1]);
+                theBoard[i][j].attach(&theBoard[i+1][j]);
+                theBoard[i][j].attach(td);
+            }
+            else if (i == size-1 && j == 0) {//bottom left corner
+                theBoard[i][j].attach(&theBoard[i-1][j]);
+                theBoard[i][j].attach(&theBoard[i-1][j+1]);
+                theBoard[i][j].attach(&theBoard[i][j+1]);
+                theBoard[i][j].attach(td);
+            }
+            else if (i == size-1 && j == size-1)  {//bottom right corner;
+                theBoard[i][j].attach(&theBoard[i-1][j]);
+                theBoard[i][j].attach(&theBoard[i-1][j-1]);
+                theBoard[i][j].attach(&theBoard[i][j-1]);
+                theBoard[i][j].attach(td);
+            }
+            else if (i == 0) {//top edge
+                theBoard[i][j].attach(&theBoard[i][j-1]);
+                theBoard[i][j].attach(&theBoard[i][j+1]);
+                theBoard[i][j].attach(&theBoard[i+1][j-1]);
+                theBoard[i][j].attach(&theBoard[i+1][j]);
+                theBoard[i][j].attach(&theBoard[i+1][j+1]);
+                theBoard[i][j].attach(td);
+            }
+            else if (i == size-1) {//bottom edge
+                theBoard[i][j].attach(&theBoard[i][j-1]);
+                theBoard[i][j].attach(&theBoard[i][j+1]);
+                theBoard[i][j].attach(&theBoard[i-1][j-1]);
+                theBoard[i][j].attach(&theBoard[i-1][j]);
+                theBoard[i][j].attach(&theBoard[i-1][j+1]);
+                theBoard[i][j].attach(td);
+            }
+            else if (j == 0) {//left edge
+                theBoard[i][j].attach(&theBoard[i+1][j]);
+                theBoard[i][j].attach(&theBoard[i-1][j]);
+                theBoard[i][j].attach(&theBoard[i][j+1]);
+                theBoard[i][j].attach(&theBoard[i+1][j+1]);
+                theBoard[i][j].attach(&theBoard[i-1][j+1]);
+                theBoard[i][j].attach(td);
+            }
+            else if (j == size-1) {//right edge
+                theBoard[i][j].attach(&theBoard[i+1][j]);
+                theBoard[i][j].attach(&theBoard[i-1][j]);
+                theBoard[i][j].attach(&theBoard[i][j-1]);
+                theBoard[i][j].attach(&theBoard[i+1][j-1]);
+                theBoard[i][j].attach(&theBoard[i+1][j-1]);
+                theBoard[i][j].attach(td);
+            }
+            else {//cell is surrounded by 8 cells 
+                theBoard[i][j].attach(&theBoard[i][j-1]);
+                theBoard[i][j].attach(&theBoard[i][j+1]);
+                theBoard[i][j].attach(&theBoard[i+1][j-1]);
+                theBoard[i][j].attach(&theBoard[i+1][j]);
+                theBoard[i][j].attach(&theBoard[i+1][j+1]);
+                theBoard[i][j].attach(&theBoard[i-1][j-1]);
+                theBoard[i][j].attach(&theBoard[i-1][j]);
+                theBoard[i][j].attach(&theBoard[i-1][j+1]);
+                theBoard[i][j].attach(td);
+            }
+        }
+    }
+    td = new TextDisplay();
+    gd = new GraphicsDisplay();
 }
 
 void Board::setPiece(int r, int c, Colour colour, Piece piece) {
