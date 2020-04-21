@@ -97,7 +97,7 @@ void Board::init() {
                 theBoard[i][j].attach(&theBoard[i+1][j-1]);
                 theBoard[i][j].attach(td);
             }
-            else {//cell is surrounded by 8 cells 
+            else {//cell is surrounded by 8 cells
                 theBoard[i][j].attach(&theBoard[i][j-1]);
                 theBoard[i][j].attach(&theBoard[i][j+1]);
                 theBoard[i][j].attach(&theBoard[i+1][j-1]);
@@ -182,7 +182,7 @@ bool Board::isAttacked() {
   }
 }
 
-bool Board::isPinned(Square &s) {
+bool Board::isPinned(Square s) {
   if (s.piece == Piece::King) {
     return false;
   }
@@ -315,7 +315,7 @@ bool Board::isPinned(Square &s) {
   return false;
 }
 
-vector<string> Board::validMoves(Square &s) const {
+vector<string> Board::validMoves(Square s) const {
   vector<string> moves;
   if (isPinned(s)) {
     return moves;

@@ -13,6 +13,15 @@ int abs(int x) {
   return x;
 }
 
+false getAttacked(Colour c) {
+  if (c == Colour::Black) {
+    return AttackedByBlack;
+  }
+  else if (c == Colour::White) {
+    return AttackedByWhite;
+  }
+  return false
+}
 
 Direction getDirection(Subject<Info, State> &here, Subject<Info, State> &from) {
     Info i = from.getInfo();
