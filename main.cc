@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
       if (cin.eof()) {
         cout << "Final Score:"<< endl;
 				cout << "White: " << whiteScore << endl;
-				cout<< "Black: " << blackScore << endl;
+				cout << "Black: " << blackScore << endl;
 				break;
       }
       if (cmd == game) {
@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
         cin >> p2;
         b.init();
         checkturn = 0;
+        cout << b << endl;
       }
       else if (cmd == resign) {
         if (checkturn == 0) {
@@ -79,12 +80,14 @@ int main(int argc, char *argv[]) {
           cout << "Illegal Move" << endl;
           continue;
         }
+        cout << b << endl;
       }
       else if (cmd == "setup") {
           while (true) {
             string operator;
             string p;
             b.init();
+            cout << b << endl;
             int checkcount = 0;
             int move_to_row;
             char move_to_col;
@@ -107,6 +110,7 @@ int main(int argc, char *argv[]) {
                 } else {
                   b.setPiece(move_to_row, colto, Color::Black, Piece::Pawn);
                 }
+                cout << b << endl;
               } else {
                 if (p == "K") {
                   b.setPiece(move_to_row, colto, Color::White, Piece::King);
@@ -121,6 +125,7 @@ int main(int argc, char *argv[]) {
                 } else {
                   b.setPiece(move_to_row, colto, Color::White, Piece::Pawn);
                 }
+                cout << b << endl;
               }
             } else if (operator == "-") {
               cin >> move_to_row >> move_to_col;
@@ -130,6 +135,7 @@ int main(int argc, char *argv[]) {
               } else {
                 b.setPiece(move_to_row, colto, Color::Black, Piece::Empty);
               }
+              cout <<b << endl;
             } else if (operator == "="){
               cin >> colorc;
               if (colorc == "Black") {
@@ -147,6 +153,7 @@ int main(int argc, char *argv[]) {
               if (b.kingLocations.size() == 2 && countpawn == 0 && (!b.isChecked(Color::White) || !b.isChecked(Color::Black))) {
                 break;
               } else {
+                 << "Conditions to leave setup not met" << endl;
                 continue;
               }
             }
