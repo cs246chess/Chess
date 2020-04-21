@@ -67,7 +67,8 @@ Square::Square(int r, int c, Colour colour) {
   this->colour = colour;
   piece = Piece::Empty;
   pieceColour = Colour::NoColour;
-
+  AttackedByWhite = false;
+  AttackedByBlack = false;
 }
 
 void Square::setPiece(Piece p, Colour c) {    // Place a piece of given colour here.

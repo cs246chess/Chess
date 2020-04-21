@@ -115,7 +115,7 @@ void Board::init() {
 }
 
 void Board::setPiece(int r, int c, Colour colour, Piece piece) {
-  theBoard[r-1][c-1].setPiece(piece, colour)
+  theBoard[r-1][c-1].setPiece(piece, colour);
   td->notify(theBoard[r-1][c-1]);
 }
 
