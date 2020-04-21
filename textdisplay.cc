@@ -22,7 +22,7 @@ TextDisplay::TextDisplay() {
   }
 };
 
-void TextDisplay::notify(Subject<Info, State> &whoNotified) {
+void TextDisplay::notify(Subject<Info, State> &whoFrom) {
   int row = whoNotified.getInfo().row;
   int col = whoNotified.getInfo().col;
   int color = whoNotified.getInfo().color;
