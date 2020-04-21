@@ -1,8 +1,7 @@
+#include "window.h"
+#include "graphicsdisplay.h"
 #include <iostream>
 #include <string>
-#include "window.h"
-
-#include "graphicsdisplay.h"
 
 using namespace std;
 

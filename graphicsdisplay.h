@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "square.h"
+#include "info.h"
 #include "state.h"
 #include "observer.h"
 #include "window.h"
