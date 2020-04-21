@@ -40,8 +40,8 @@ class Board {
   vector<string> validMoves(Square s); //returns a vector containing all valid squares the passed piece can move to
   bool isPinned(Square s);
   bool isChecked(Colour c);
-  bool isAttacked();
-  void setObserver(Observer<Info, State> *ob);
+  void isAttacked();
+  void setObserver(GraphicsDisplay *ob);
   bool isStalemate(Colour c);
   Colour isCheckmate(Colour c); // is there checkmate? and returns who won if so
   void init(); // Sets up an n x n grid.  Clears old grid, if necessary.

@@ -156,7 +156,7 @@ bool Board::isChecked(Colour c) { //checks if the specified player is in check
   return false;
 }
 
-bool Board::isAttacked() {
+void Board::isAttacked() {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       theBoard[i][j].AttackedByBlack = false;
