@@ -3,7 +3,7 @@
 #define SQUARE_H
 #include "subject.h"
 #include "observer.h"
-#inculde "info.h"
+#include "info.h"
 
 class Square : public Subject<Info, State>, public Observer<Info, State> {
 
