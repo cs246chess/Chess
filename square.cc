@@ -418,6 +418,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         }
     }
 }
+}
 
 Info Square::getInfo() const {
   Info i = {r, c, colour, p, pieceColour};
