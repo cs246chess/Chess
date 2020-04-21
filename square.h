@@ -11,6 +11,8 @@ class Square : public Subject, public Observer {
   Color colour;
   bool isEmpty;
   Colour pieceColour; //colour of PIECE
+  bool AttackedByWhite;
+  bool AttackedByBlack;
   // Add other private members if necessary
 
  public:
@@ -22,5 +24,8 @@ class Square : public Subject, public Observer {
   Info getInfo() const override;
 };
 
+class InvalidMove{
+
+};
 int abs(int x);
 #endif

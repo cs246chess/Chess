@@ -41,3 +41,4 @@ void Board::setPiece(int r, int c, Colour colour, Piece piece) {
 void Board::setObserver(Observer<Info, State> *ob) {
   this->ob = ob;
 }
+

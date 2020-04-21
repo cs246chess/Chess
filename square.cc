@@ -185,38 +185,54 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       case Piece::Pawn:
       Direction d = getDirection(*this, whoFrom);
       if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Color::White) {
-        State newS;
-        newS.type = StateType::Relay;
-        newS.direction = d;
-        newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece
-        this->setState(newS);
-        notifyObservers();
+        AttackedByWhite = true;
       }
       if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Color::Black) {
-        State newS;
-        newS.type = StateType::Relay;
-        newS.direction = d;
-        newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece
-        this->setState(newS);
-        notifyObservers();
+        AttackedByBlack = true;
       }
         break;
-      case Piece::King:
-        Direction d = getDirection(*this, whoFrom);
-        State newS;
-        newS.type = StateType::Relay;
-        newS.direction = d;
-        newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece;
-        this->setState(newS);
-        notifyObservers();
+      case Piece::King: //not really needed tbh
+        if (s.pieceColour == Color::White) {
+          AttackedByWhite = true;
+        }
+        else {
+          AttackedByBlack = true;
+        }
         break;
       case Piece::Bishop:
         //find the direction of the new piece
         Direction d = getDirection(*this, whoFrom);
         if ((d == Direction::NE) || (d == Direction::NW) || (d == Direction::SE) || (d == Direction::SW)) {
+          if (s.pieceColour == Color::Black) {
+            AttackedByBlack = true;
+          }
+          else if (s.pieceColour == Color::White) {
+            AttackedByWhite = true;
+          }
+          if (piece == Piece::Empty) {
+            State newS;
+            newS.type = StateType::Relay;
+            newS.direction = d;
+            newS.pieceColour = s.pieceColour;
+            newS.piece = s.piece
+            this->setState(newS);
+            notifyObservers();
+          }
+          else {
+            //do nothing
+          }
+        }
+        break;
+      case Piece::Rook:
+      Direction d = getDirection(*this, whoFrom);
+      if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
+        if (s.pieceColour == Color::Black) {
+          AttackedByBlack = true;
+        }
+        else if (s.pieceColour == Color::White) {
+          AttackedByWhite = true;
+        }
+        if (piece == Piece::Empty) {
           State newS;
           newS.type = StateType::Relay;
           newS.direction = d;
@@ -225,10 +241,19 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
           this->setState(newS);
           notifyObservers();
         }
+        else {
+          //do nothing
+        }
+      }
         break;
-      case Piece::Rook:
-      Direction d = getDirection(*this, whoFrom);
-      if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
+      case Piece::Queen:
+      if (s.pieceColour == Color::Black) {
+        AttackedByBlack = true;
+      }
+      else if (s.pieceColour == Color::White) {
+        AttackedByWhite = true;
+      }
+      if (piece == Piece::Empty) {
         State newS;
         newS.type = StateType::Relay;
         newS.direction = d;
@@ -237,214 +262,150 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         this->setState(newS);
         notifyObservers();
       }
-        break;
-      case Piece::Queen:
-        Direction d = getDirection(*this, whoFrom);
-        State newS;
-        newS.type = StateType::Relay;
-        newS.direction = d;
-        newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece;
-        this->setState(newS);
-        notifyObservers();
-        break;
+      else {
+        //do nothing
+      }
+      break;
+      case Piece::Empty:
+      State newS;
+      newS.type = StateType::Relay;
+      newS.direction = d;
+      newS.pieceColour = s.pieceColour;
+      newS.piece = s.piece
+      this->setState(newS);
+      notifyObservers();
     }
   }
   else if (s.type == StateType::Relay) {
       Direction d = getDirection(*this, whoFrom);
+      Direction reverse = getDirection(whoFrom, *this);
       //if the cell is in line with the direction of the relay
       //i.e. the direction of *this is the direction of the relay
-      if (s.direction == d) {
-          if (s.colour == colour) {
-              //if the colour of the new piece matches the current
-              //cell's colour then the current cell is a reply
+      if (s.piece == Piece::Knight) {
+        if (s.direction == Direction::N) {
+          if ((d == Direction::NW) || (d == Direction::NE)) {
+            if (s.pieceColour == Color::Black) {
+              AttackedByBlack = true;
+            }
+            else if (s.pieceColour == Color::White) {
+              AttackedByWhite = true;
+            }
+          }
+        }
+        else if (s.direction == Direction::S) {
+          if ((d == Direction::SW) || (d == Direction::SE)) {
+            if (s.pieceColour == Color::Black) {
+              AttackedByBlack = true;
+            }
+            else if (s.pieceColour == Color::White) {
+              AttackedByWhite = true;
+            }
+          }
+        }
+        else if ( s.direction == Direction::W) {
+          if ((d == Direction::SW) || (d == Direction::NW)) {
+            if (s.pieceColour == Color::Black) {
+              AttackedByBlack = true;
+            }
+            else if (s.pieceColour == Color::White) {
+              AttackedByWhite = true;
+            }
+          }
+        }
+        else if (s.direction == Direction::E) {
+          if ((d == Direction::NE) || (d == Direction::SE)) {
+            if (s.pieceColour == Color::Black) {
+              AttackedByBlack = true;
+            }
+            else if (s.pieceColour == Color::White) {
+              AttackedByWhite = true;
+            }
+          }
+        }
+      }
+      else if (s.direction == d) {
+        //even if there is a piece, the square is still under attack by the
+        // piece who is sending the notification
+        if (s.pieceColour == Color::Black) {
+          AttackedByBlack = true;
+        }
+        else if (s.pieceColour == Color::White) {
+          AttackedByWhite = true;
+        }
+          if (piece != Piece::Empty) {
+            swtich(piece) {
+              //the spaces a pawn can attack cannot be blocked
+              // so it does not need to be recalculated until moved
+              case Piece::Pawn:
+              }
+              break;
+              //Bishop may be able to attack more squares, so reply is needed
+              case Piece::Bishop:
               State newS;
               newS.type = StateType::Reply;
-              newS.direction = s.direction;
-              newS.colour = s.colour;
+              newS.direction = reverse;
+              newS.pieceColour = pieceColour;
               this->setState(newS);
               notifyObservers();
+              break;
+              //king follows the same idea as the pawn, so no need to
+              // recalculate the king's squares it is attacking
+              case Piece::King:
+              break;
+              //Queen may be able to attack more squares than before
+              case Piece::Queen:
+              State newS;
+              newS.type = StateType::Reply;
+              newS.direction = reverse;
+              newS.pieceColour = pieceColour;
+              this->setState(newS);
+              notifyObservers();
+              break;
+              //Rook may be able to attack more squares than before
+              case Piece::Rook:
+              State newS;
+              newS.type = StateType::Reply;
+              newS.direction = reverse;
+              newS.pieceColour = pieceColour;
+              this->setState(newS);
+              notifyObservers();
+              break;
+            }
           }
-          else {    //the current cell's colour doesnt match the new piece's colour so its a relay
+          else {    //no piece located so it just continues the relay
               State newS;
               newS.type = StateType::Relay;
               newS.direction = s.direction;
-              newS.colour = s.colour;
+              newS.pieceColour = s.pieceColour;
               this->setState(newS);
               notifyObservers();
           }
       }
-      else {
-          //do nothing because the current cell
-          //is not in line with the current line check
-      }
-  }
-  if (piece == Piece::NoPiece) {
-
-  }
-  else if (s.pieceColour == pieceColour) {
-    if (s.piece == Piece::Knight) {
-
-    }
-  }
-  else {//opposite colour
-
-
-  }
-  //get states and info from neighbour that called notify
-
-  //if the neighbour is a new piece we check its colour, and set our state
-  //accordingly then pass the message down if necessary
-    else {
-        //cout << "HAS A COLOUR" << endl;
-        if (s.type == StateType::NewPiece) {
-        //find the direction of the new piece
-            Direction d = getDirection(*this, whoFrom);
-            if (s.colour == colour) {}
-                //if the colour is the same as the new piece
-                //we dont have to do anything
-            else {//the new neighbouring piece is of opposite colour
-                State newS;
-                newS.type = StateType::Relay;
-                newS.direction = d;
-                newS.colour = i.colour;
-                this->setState(newS);
-                notifyObservers();
-            }
+      else { //type is a reply to check for discovered checks
+        Direction d = getDirection(*this, whoFrom);
+        Direction reverse = getDirection(whoFrom, *this);
+        //if the cell is in line with the direction of the relay
+        //i.e. the direction of *this is the direction of the relay
+        if (s.pieceColour == Color::Black) {
+          AttackedByBlack = true;
         }
-        else if (s.type == StateType::Relay) {
-            Direction d = getDirection(*this, whoFrom);
-            Direction reverse = getDirection(whoFrom, *this);
-            //if the cell is in line with the direction of the relay
-            //i.e. the direction of *this is the direction of the relay
-            if (s.piece == Piece::Knight) {
-              switch(s.direction) {
-                case Direction::N:
-                if ((d == Direction::NW) || (d == Direction::NE)) {
-                  State newS;
-                  newS.type = StateType::Relay;
-                  newS.direction = d;
-                  newS.pieceColour = s.pieceColour;
-                  this->setState(newS);
-                  notifyObservers();
-                }
-                break;
-                case Direction::S:
-                if ((d == Direction::SW) || (d == Direction::SE)) {
-                  State newS;
-                  newS.type = StateType::Relay;
-                  newS.direction = d;
-                  newS.colour = s.colour;
-                  this->setState(newS);
-                  notifyObservers();
-                }
-                break;
-                case Direction::W:
-                if ((d == Direction::SW) || (d == Direction::NW)) {
-                  State newS;
-                  newS.type = StateType::Relay;
-                  newS.direction = d;
-                  newS.colour = s.colour;
-                  this->setState(newS);
-                  notifyObservers();
-                }
-                break;
-                case Direction::E:
-                if ((d == Direction::NE) || (d == Direction::SE)) {
-                  State newS;
-                  newS.type = StateType::Relay;
-                  newS.direction = d;
-                  newS.colour = s.colour;
-                  this->setState(newS);
-                  notifyObservers();
-                }
-                break;
-              }
-            }
-            else if (s.direction == d) {
-                if (piece != Empty) {
-                  if (pieceColour == s.pieceColour) {
-                    //do nothing
-                  }
-                  else { //other colour
-                    swtich(piece) {
-                      case Piece::Pawn:
-                      break;
-                      case Piece::Knight:
-                      break;
-                      case Piece::Bishop:
-                      if ((d == NE) || (d == SW) || (d == SE) || (d == NW)) {
-                        State newS;
-                        newS.type = StateType::Reply;
-                        newS.direction = reverse;
-                        newS.pieceColour = s.pieceColour;
-                        this->setState(newS);
-                        notifyObservers();
-                      }
-                      break;
-                      case Piece::King:
-                      break;
-                      case Piece::Queen:
-                      State newS;
-                      newS.type = StateType::Reply;
-                      newS.direction = reverse;
-                      newS.pieceColour = s.pieceColour;
-                      this->setState(newS);
-                      notifyObservers();
-                      break;
-                      case Piece::Rook:
-                      break;
-                    }
-                    State newS;
-                    newS.type = StateType::Relay;
-                    newS.direction = s.direction;
-                    newS.colour = s.colour;
-                    this->setState(newS);
-                    notifyObservers();
-                  }
-                }
-                else {    //the current cell's colour doesnt match the new piece's colour so its a relay
-                    State newS;
-                    newS.type = StateType::Relay;
-                    newS.direction = s.direction;
-                    newS.colour = s.colour;
-                    this->setState(newS);
-                    notifyObservers();
-                }
-            }
-            else {
-                //do nothing because the current cell
-                //is not in line with the current line check
-            }
+        else if (s.pieceColour == Color::White) {
+          AttackedByWhite = true;
         }
-        else { //notified by reply so we should check to see if we need to change colours
-            //cout << "REPLY" << endl;
-            Direction d = getDirection(whoFrom, *this); //this is the opposite direction we previously found
-            //basically check to see if the current cell is between the reply and the new piece
-            if (s.direction == d) {
-                if (s.colour == colour) {//we have (presumably) arrived back at the new piece
-                    //cout << "NOTIFIED BY SAME COLOUR REPLY" << endl;
-                    //we don't need to do anything to the new piece
-                }
-                else {//colour of the cell does not match the colour of the new piece AND has been notified by a reply
-                //we therefore need to update its colour and make the cell a reply and then notify its neighbours
-                    //cout << "FLIP THIS" << endl;
-                    this->toggle();//update colour
-                    State newS;
-                    newS.type = StateType::Reply;
-                    newS.direction = s.direction;
-                    newS.colour = s.colour;
-                    this->setState(newS);
-                    notifyObservers();
-                }
-            }
-            else {
-                //do nothing because the current cell
-                //is not in line with the current reply/newpiece
-            }
+        if (piece != Piece::Empty) {
+          //already calculated so nothing needs to happen
+        }
+        else {    //no piece located so it just continues the reply
+            State newS;
+            newS.type = StateType::Reply;
+            newS.direction = s.direction;
+            newS.pieceColour = s.pieceColour;
+            this->setState(newS);
+            notifyObservers();
         }
     }
 }
+
 
 
 Info getInfo() const {

@@ -22,7 +22,7 @@ class GraphicsDisplay: public Observer<Info, State> {
   GraphicsDisplay();
   void notify(Subject<Info, State> &whoNotified) override;
   ~GraphicsDisplay();
-  friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
+  
 };
 
 
