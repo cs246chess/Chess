@@ -40,7 +40,7 @@ class Board {
   vector<string> validMoves(Square s) const; //returns a vector containing all valid squares the passed piece can move to
   bool isPinned(Square s);
   bool isChecked(Colour c);
-  void isAttacked();
+  bool isAttacked();
   void setObserver(Observer<Info, State> *ob);
   bool isStalemate(Colour c) const;
   Colour isCheckmate(Colour c) const; // is there checkmate? and returns who won if so

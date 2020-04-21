@@ -196,8 +196,8 @@ bool Board::isPinned(Square s) {
   else if (s.pieceColour == Colour::NoColour) {
     return false;
   }
+  int kingco1 = kingLocations[PieceColour][1];
   if (s.r == convertBackwards(kingLocations[PieceColour][0])) { //if on equal row
-    int kingco1 = kingLocations[PieceColour][1];
     if (s.c > kingcol) {
       for (int i = (kingcol); i < s.c - 1; i++) {
         if (theBoard[s.r - 1][i].piece != Piece::Empty) {
@@ -285,7 +285,7 @@ bool Board::isPinned(Square s) {
       return false;
     }
   }
-  if (abs(s.r - convertBackwards(kingLocations[PieceColour][0])) == abs(s.c - kingcol) {
+  if (abs(s.r - convertBackwards(kingLocations[PieceColour][0])) == abs(s.c - kingcol)) {
     int constSide = (s.r - convertBackwards(kingLocations[PieceColour][0])) / abs(s.r - convertBackwards(kingLocations[PieceColour][0]));
     int constUp = (s.c - kingcol) / abs(s.c - kingcol);
     int counter = s.c - 1 + constUp;
@@ -328,7 +328,7 @@ vector<string> Board::validMoves(Square s) const {
           spotPosition[0] = convert(s.c);
           spotPosition = spotPosition + to_string(s.r - 1);
           moves.emplace_back(spotPosition);
-          if (((this->theBoard[s.r - 3][s.c - 1]).piece == Piece::Empty) && (s.r == 7) {
+          if (((this->theBoard[s.r - 3][s.c - 1]).piece == Piece::Empty) && (s.r == 7)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c);
             spotPosition = spotPosition + to_string(s.r - 2);
@@ -358,7 +358,7 @@ vector<string> Board::validMoves(Square s) const {
       }
       if (s.r == 4) {
         if ((convert(s.c + 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
-          if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1]) {
+          if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1].piece == Piece::Pawn) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1].pieceColour != s.pieceColour) {
               string spotPosition = " ";
               spotPosition[0] = convert(s.c + 1);
@@ -385,7 +385,7 @@ vector<string> Board::validMoves(Square s) const {
         spotPosition[0] = convert(s.c);
         spotPosition = spotPosition + to_string(s.r + 1);
         moves.emplace_back(spotPosition);
-        if (((this->theBoard[s.r + 1][s.c - 1]).piece == Piece::Empty) && (s.r == 2) {
+        if (((this->theBoard[s.r + 1][s.c - 1]).piece == Piece::Empty) && (s.r == 2)) {
           string spotPosition = " ";
           spotPosition[0] = convert(s.c);
           spotPosition = spotPosition + to_string(s.r + 2);
@@ -414,7 +414,7 @@ vector<string> Board::validMoves(Square s) const {
       }
       if (s.r == 5) {
         if ((convert(s.c + 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
-          if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1]) {
+          if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1].piece == Piece::Pawn) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4])].pieceColour != s.pieceColour) {
               string spotPosition = " ";
               spotPosition[0] = convert(s.c + 1);
