@@ -15,7 +15,7 @@ class InvalidMove{};
 
 class Board {
   TextDisplay *td = nullptr; // The text display.
-  Observer<Info, State> *ob = nullptr; //graphics display pointer
+  GraphicsDisplay *gd = nullptr; //graphics display pointer
   int size = 8;
   //booleans to help with castling.
   bool hasBlackKingMoved;
