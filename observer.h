@@ -1,12 +1,12 @@
 #ifndef _OBSERVER_H_
 #define _OBSERVER_H_
 
-class Subject;
+template <typename InfoType, typename StateType> class Subject;
 class Square;
 
-class Observer {
+template <typename InfoType, typename StateType> class Observer {
  public:
-  virtual void notify(Subject &whoFrom) = 0; // pass the Subject that called the notify method
+  virtual void notify(Subject<Info, State> &whoFrom) = 0; // pass the Subject that called the notify method
   virtual ~Observer() = default;
 };
 #endif
