@@ -1,5 +1,6 @@
 #ifndef INFO_H
 #define INFO_H
+#include <cstddef>
 #include "state.h"
 
 struct Info {
