@@ -8,6 +8,7 @@
 #include "state.h"
 #include "info.h"
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 using namespace std;
 
 class TextDisplay;
