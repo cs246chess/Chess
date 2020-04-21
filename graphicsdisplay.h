@@ -6,11 +6,9 @@
 #include <vector>
 
 #include "square.h"
-#include "board.h"
 #include "state.h"
 #include "observer.h"
 #include "window.h"
-#include "piece.h"
 
 
 
