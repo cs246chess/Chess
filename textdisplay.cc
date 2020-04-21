@@ -60,7 +60,7 @@ void TextDisplay::notify(Subject<Info, State> &whoFrom) {
     if (piece == Piece::Bishop) {
       theDisplay[row][col] = 'B';
     }
-    if (piece == Piece::Knight) {s
+    if (piece == Piece::Knight) {
       theDisplay[row][col] = 'N';
     }
     if (piece == Piece::Queen) {
