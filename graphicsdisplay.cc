@@ -7,7 +7,6 @@
 using namespace std;
 
 GraphicsDisplay::GraphicsDisplay()  {
-  gd{500, 500};
   for (int row = 0; row < 8; i++) {
     gd.drawBigString(50, 100, to_string(8 - c), 1);
     for (int col = 0; col < 8; i++) {
