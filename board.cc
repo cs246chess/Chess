@@ -235,6 +235,7 @@ bool Board::isPinned(Square &s) {
     }
     return false;
   }
+  return false;
 }
 
 vector<string> Board::validMoves(Square &s) const {
@@ -381,8 +382,8 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r - 1;
-    int col = s.c - 1;
+    row = s.r - 1;
+    col = s.c - 1;
     while ((row >= 0) && (col <= 7)) {
       row--;
       col++;
@@ -403,8 +404,8 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r - 1;
-    int col = s.c - 1;
+    row = s.r - 1;
+    col = s.c - 1;
     while ((row <= 7) && (col >= 0)) {
       row++;
       col--;
@@ -425,8 +426,8 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r - 1;
-    int col = s.c - 1;
+    row = s.r - 1;
+    col = s.c - 1;
     while ((row >= 0) && (col >= 0)) {
       row--;
       col--;
@@ -891,8 +892,8 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r - 1;
-    int col = s.c - 1;
+    row = s.r - 1;
+    col = s.c - 1;
     while ((row >= 0) && (col <= 7)) {
       row--;
       col++;
@@ -913,8 +914,8 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r - 1;
-    int col = s.c - 1;
+    row = s.r - 1;
+    col = s.c - 1;
     while ((row <= 7) && (col >= 0)) {
       row++;
       col--;
@@ -935,8 +936,8 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r - 1;
-    int col = s.c - 1;
+    row = s.r - 1;
+    col = s.c - 1;
     while ((row >= 0) && (col >= 0)) {
       row--;
       col--;
@@ -958,8 +959,8 @@ vector<string> Board::validMoves(Square &s) const {
       }
     }
     //Moving like a Rook
-    int row = s.r - 1;
-    int col = s.c - 1;
+    row = s.r - 1;
+    col = s.c - 1;
     while ((row <= 6)) {
       row++;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -979,7 +980,7 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r;
+    row = s.r;
     while ((row >= 1)) {
       row--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -999,7 +1000,7 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r;
+    row = s.r;
     while ((col <= 6)) {
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1019,7 +1020,7 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int col = s.c;
+    col = s.c;
     while ((col >= 1)) {
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1063,7 +1064,7 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r;
+    row = s.r;
     while ((row >= 1)) {
       row--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1083,7 +1084,7 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int row = s.r;
+    row = s.r;
     while ((col <= 6)) {
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1103,7 +1104,7 @@ vector<string> Board::validMoves(Square &s) const {
         break;
       }
     }
-    int col = s.c;
+    col = s.c;
     while ((col >= 1)) {
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1124,9 +1125,7 @@ vector<string> Board::validMoves(Square &s) const {
       }
     }
   }
-  else {
-    return moves;
-  }
+  return moves;
 }
 
 Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns who won if so
@@ -1134,7 +1133,8 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
     string pos = kingLocations[1]; //black king loccation
     int kingrow = convertBackwards(pos[0]); //black king row
     int kingcol = pos[1]; //black king col
-    if (validMoves(theBoard[kingrow][kingcol]).size() != 0) {//i.e. the black king can move
+    int kingMoveSize = validMoves(theBoard[kingrow][kingcol]).size();
+    if (kingMoveSize != 0) {//i.e. the black king can move
       return Colour::NoColour;
     }
     else if (theBoard[kingrow][kingcol].piece == Piece::King && theBoard[kingrow][kingcol].AttackedByWhite) {//i.e. the BLACK king is checked
@@ -1145,7 +1145,7 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
         else {//black king is being checked by only one piece
           int checkingRow = convert(whiteCheckLocations[0][0]); //the row of the checking pieces
           int checkingCol = whiteCheckLocations[0][1]; //the col of the checking pieces
-          Piece checkingPiece = theBoard[checkingRow][checkingCol];
+          Piece checkingPiece = theBoard[checkingRow][checkingCol].piece;
           //first we check if we can capture the piece
           for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -1153,7 +1153,7 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
                 //check valid moves that black can make to get out of check
                 //in this case its just capturing the Knight
                 string checklocation = whiteCheckLocations[0];
-                vector<string> moves = validMoves(&theBoard[i][j]);
+                vector<string> moves = validMoves(theBoard[i][j]);
                 int numberofmoves = moves.size();
                 for (int k = 0; k < numberofmoves; k++) {
                   if (moves[k] == checklocation) {//i.e. it is legal for a black piece
@@ -1169,7 +1169,7 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
           }
           else if (checkingPiece == Piece::Pawn) {//if we can't capture a pawn and our king has no valid moves it's checkmate
             std::cout << "Checkmated by White Pawn" << std::endl;
-            return colour::White;
+            return Colour::White;
           }
           else if ((abs(kingrow-checkingRow) == 1 && abs(kingcol-checkingCol) == 0) ||
             (abs(kingrow-checkingRow) == 1 && abs(kingcol-checkingCol) == 1) ||
@@ -1224,8 +1224,9 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
               for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                   if (theBoard[i][j].pieceColour == c) {
-                    vector<string> possibleMoves = validMoves(&theBoard[i][j]);
-                    for (int posSize = 0; posSize < possibleMoves.size(); posSize++) {
+                    vector<string> possibleMoves = validMoves(theBoard[i][j]);
+                    int MoveListSize = possibleMoves.size();
+                    for (int posSize = 0; posSize < MoveListSize; posSize++) {
                       for (int trial = 0; trial < inbetweenSize; trial ++) {
                         if (possibleMoves[posSize] == inbetween[trial]) {
                           return Colour::NoColour;
@@ -1251,8 +1252,9 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
               for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                   if (theBoard[i][j].pieceColour == c) {
-                    vector<string> possibleMoves = validMoves(&theBoard[i][j]);
-                    for (int posSize = 0; posSize < possibleMoves.size(); posSize++) {
+                    vector<string> possibleMoves = validMoves(theBoard[i][j]);
+                    int MoveListSize = possibleMoves.size();
+                    for (int posSize = 0; posSize < MoveListSize; posSize++) {
                       for (int trial = 0; trial < inbetweenSize; trial ++) {
                         if (possibleMoves[posSize] == inbetween[trial]) {
                           return Colour::NoColour;
@@ -1269,7 +1271,7 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
               if (kingrow == checkingRow) {
 
               }
-              else if (kingcol = checkingCol) {
+              else if (kingcol == checkingCol) {
 
               }
               else {
@@ -1287,8 +1289,9 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
                 for (int i = 0; i < size; i++) {
                   for (int j = 0; j < size; j++) {
                     if (theBoard[i][j].pieceColour == c) {
-                      vector<string> possibleMoves = validMoves(&theBoard[i][j]);
-                      for (int posSize = 0; posSize < possibleMoves.size(); posSize++) {
+                      vector<string> possibleMoves = validMoves(theBoard[i][j]);
+                      int MoveListSize = possibleMoves.size();
+                      for (int posSize = 0; posSize < MoveListSize; posSize++) {
                         for (int trial = 0; trial < inbetweenSize; trial ++) {
                           if (possibleMoves[posSize] == inbetween[trial]) {
                             return Colour::NoColour;
@@ -1305,6 +1308,7 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
         }
       }
     }
+    return Colour::NoColour;
   }
 
  Board::~Board() {
