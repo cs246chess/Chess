@@ -2,13 +2,14 @@
 #include <string>
 #include <vector>
 #include "textdisplay.h"
+using namespace std;
 
 TextDisplay::TextDisplay() {
   for (int i = 0; i < 8; i++) {
     theDisplay[i].resize(8);
   }
-  for (int c = 0; c < 8; r++) {
-    for (int r = 0; r < 8; c++) {
+  for (int c = 0; c < 8; c++) {
+    for (int r = 0; r < 8; r++) {
       if (c % 2 == 0 && r % 2 == 0) {
         theDisplay[c][r].emplace_back(' ');
       } else if (c % 2 == 0 &&  r % 2 != 0) {
@@ -25,44 +26,44 @@ TextDisplay::TextDisplay() {
 void TextDisplay::notify(Subject<Info, State> &whoFrom) {
   int row = whoFrom.getInfo().row;
   int col = whoFrom.getInfo().col;
-  int color = whoFrom.getInfo().color;
+  int colour = whoFrom.getInfo().colour;
   Piece piece = whoFrom.getInfo().piece;
-  if (color = Color::Black) {
-    if (piece == "Pawn") {
+  if (colour = Colour::Black) {
+    if (piece == Piece::Pawn) {
       theDisplay[row][col] = "p";
     }
-    if (piece == "Rook") {
+    if (piece == Piece::Rook) {
       theDisplay[row][col] = "r";
     }
-    if (piece == "King") {
+    if (piece == Piece::King) {
       theDisplay[row][col] = "k";
     }
-    if (piece == "Bishop") {
+    if (piece == Piece::Bishop) {
       theDisplay[row][col] = "b";
     }
-    if (piece == "Knight") {
+    if (piece == Piece::Knight) {
       theDisplay[row][col] = "k";
     }
-    if (piece == "Queen") {
+    if (piece == Piece::Queen) {
       theDisplay[row][col] = "q";
     }
-  } else (color = Color::White) {
-    if (piece == "Pawn") {
+  } else if (colour = Colour::White) {
+    if (piece == Piece::Pawn) {
       theDisplay[row][col] = "P";
     }
-    if (piece == "Rook") {
+    if (piece == Piece::Rook) {
       theDisplay[row][col] = "R";
     }
-    if (piece == "King") {
+    if (piece == Piece::King) {
       theDisplay[row][col] = "K";
     }
-    if (piece == "Bishop") {
+    if (piece == Piece::Bishop) {
       theDisplay[row][col] = "B";
     }
-    if (piece == "Knight") {
+    if (piece == Piece::Knight) {
       theDisplay[row][col] = "K";
     }
-    if (piece == "Queen") {
+    if (piece == Piece::Queen) {
       theDisplay[row][col] = "Q";
     }
   } else {
@@ -88,4 +89,5 @@ std::ostream &operator<<(std::ostream &out, const TextDisplay &td) {
   }
   out << endl;
   out << "  " << "abcdefgh" << endl;
+  return out;
 }
