@@ -1,10 +1,7 @@
 #include "square.h"
 #include <vector>
 #include <string>
-using std::cout;
-using std::endl;
-using std::vector;
-using std::string;
+using namespace std;
 
 int abs(int x) {
   if (x < 0) {
@@ -64,7 +61,7 @@ Direction getDirection(Subject<Info, State> &here, Subject<Info, State> &from) {
 Square::Square(){
   AttackedByBlack = false;
   AttackedByWhite = false;
-  cout<< "Is this actually called?" << endl;
+  cout << "Is this actually called?" << endl;
 }
 
 Square::Square(int r, int c, Colour colour) {
@@ -83,7 +80,7 @@ void Square::setPiece(Piece p, Colour c) {    // Place a piece of given colour h
   this->notifyObservers();
 }
 
-void Square::validMove(int row, int col){
+bool Square::validMove(int row, int col){
   if (this->piece == Piece::Pawn) { //Pawn moves
     if (this->pieceColour == Colour::Black) {
       if (this->r - row != 1 || this->r - row != 2) {
@@ -184,9 +181,9 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
   cout << "Cell at " << r << " " << c << endl;
   */
   if (s.type == StateType::MovedPiece) {//neighbour just moved to the square, check if we need to pass more messages on
+    Direction d = getDirection(*this, whoFrom);
     switch(s.piece) {
       case Piece::Knight:
-      Direction d = getDirection(*this, whoFrom);
       if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
         State newS;
         newS.type = StateType::Relay;
@@ -198,7 +195,6 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       }
         break;
       case Piece::Pawn:
-      Direction d = getDirection(*this, whoFrom);
       if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Colour::White) {
         AttackedByWhite = true;
       }
@@ -216,7 +212,6 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         break;
       case Piece::Bishop:
         //find the direction of the new piece
-        Direction d = getDirection(*this, whoFrom);
         if ((d == Direction::NE) || (d == Direction::NW) || (d == Direction::SE) || (d == Direction::SW)) {
           if (s.pieceColour == Colour::Black) {
             AttackedByBlack = true;
@@ -239,7 +234,6 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         }
         break;
       case Piece::Rook:
-      Direction d = getDirection(*this, whoFrom);
       if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
         if (s.pieceColour == Colour::Black) {
           AttackedByBlack = true;
@@ -286,7 +280,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       newS.type = StateType::Relay;
       newS.direction = d;
       newS.pieceColour = s.pieceColour;
-      newS.piece = s.piece
+      newS.piece = s.piece;
       this->setState(newS);
       notifyObservers();
     }
@@ -347,8 +341,10 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         else if (s.pieceColour == Colour::White) {
           AttackedByWhite = true;
         }
-          if (piece != Piece::Empty) {
-            swtich(piece) {
+        if (piece != Piece::Empty) {
+            switch (piece) {
+              case /* value */:
+            }{
               //the spaces a pawn can attack cannot be blocked
               // so it does not need to be recalculated until moved
               case Piece::Pawn: {
@@ -427,6 +423,6 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
 
 
 
-Info getInfo() const {
+Info getInfo() {
   return Info{r, c, colour, p};
 }

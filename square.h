@@ -7,7 +7,7 @@
 class Square : public Subject<Info, State>, public Observer<Info, State> {
 
   public:
-  const int r, c;
+  int r, c;
   Piece piece;
   Colour colour;
   Colour pieceColour; //colour of PIECE
@@ -16,10 +16,10 @@ class Square : public Subject<Info, State>, public Observer<Info, State> {
   Square();
   Square(int r, int c, Colour colour);
   void getAttacked(Colour c, bool t);
-  void validMove(int row, int col);
+  bool validMove(int row, int col);
   void setPiece(Piece p, Colour c);    // Place a piece of given colour here.
   void notify(Subject<Info, State> &whoFrom) override;// My neighbours will call this
-  Info getInfo() const override;
+  Info getInfo() override;
 };
 int abs(int x);
 #endif
