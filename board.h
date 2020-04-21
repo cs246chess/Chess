@@ -7,6 +7,7 @@
 #include "square.h"
 #include "state.h"
 #include "info.h"
+#include "textdisplay.h"
 using namespace std;
 
 class TextDisplay;
@@ -17,13 +18,6 @@ class Board {
   TextDisplay *td = nullptr; // The text display.
   Observer<Info, State> *ob = nullptr; //graphics display pointer
   int size = 8;
-  //booleans to help with castling.
-  bool hasBlackKingMoved;
-  bool hasWhiteKingMoved;
-  bool hasWhiteRookAMoved;
-  bool hasWhiteRookHMoved;
-  bool hasBlackRookAMoved;
-  bool hasBlackRookHMoved;
   vector<string> whiteCheckLocations; //stores the locations of white pieces that are checking the black king
   vector<string> blackCheckLocations; //stores the locations of black pieces that are checking the white king
  public:
@@ -34,6 +28,13 @@ class Board {
    of current kings for set up purposes is useful
    we can also more easily check if a king is in checkmate
    index [0] has the location of the white king and index [1]*/
+   //booleans to help with castling.
+   bool hasBlackKingMoved;
+   bool hasWhiteKingMoved;
+   bool hasWhiteRookAMoved;
+   bool hasWhiteRookHMoved;
+   bool hasBlackRookAMoved;
+   bool hasBlackRookHMoved;
   ~Board();
   vector<string> validMoves(Square &s) const; //returns a vector containing all valid squares the passed piece can move to
   bool isPinned(Square &s);

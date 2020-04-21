@@ -56,18 +56,18 @@ Square::Square(int r, int c, Colour colour) {
   this->r = r;
   this->c = c;
   this->colour = colour;
-  p = Piece::Empty;
+  piece = Piece::Empty;
   pieceColour = Colour::NoColour;
 
 }
 
 void Square::setPiece(Piece p, Colour colour, Colour c) {    // Place a piece of given colour here.
-  this->p = p;
+  this->piece = p;
   this->pieceColour = c;
 }
 
 void Square::validMove(int row, int col){
-  if (this->p == Piece::Pawn) { //Pawn moves
+  if (this->piece == Piece::Pawn) { //Pawn moves
     if (this->pieceColour == Colour::Black) {
       if (this->r - row != 1 || this->r - row != 2) {
         return false;
@@ -97,23 +97,23 @@ void Square::validMove(int row, int col){
         }
       }
     }
-  } else if (this->p == Piece::Bishop) { //Bishop moves
+  } else if (this->piece == Piece::Bishop) { //Bishop moves
     if ((abs(this->r - row) != abs(this->c - col)) || this->r - row == 0 || this->c - col == 0) {
       return false;
     }
-  } else if (this->p == Piece::Rook) { //Rook Moves
+  } else if (this->piece == Piece::Rook) { //Rook Moves
     if ((this->r - row != 0) && (this->c - col != 0)) {
       return false;
     } else if ((this->r - row == 0) && (this->c - col == 0)) {
       return false;
     }
-  } else if (this->p == Piece::Queen) { //Queen moves
+  } else if (this->piece == Piece::Queen) { //Queen moves
     if ((abs(this->r - row) != abs(this->c - col)) && (this->r - row != 0) && (this->c - col != 0)) {
       return false;
     } else if ((this->r - row == 0) && (this->c - col == 0)) {
       return false;
     }
-  } else if (this->p == Piece::Knight) {
+  } else if (this->piece == Piece::Knight) {
     if ((abs(this->r - row) == 2) && (abs(this->c - col == 1))) {
       return true;
     } else if ((abs(this->r - row) == 1) && (abs(this->c - col) == 2)) {
@@ -121,7 +121,7 @@ void Square::validMove(int row, int col){
     } else {
       return false;
     }
-  } else if (this->p == Piece::King) {
+  } else if (this->piece == Piece::King) {
     if ((abs(this->r - row) > 1) && (abs(this->c - col) > 1)) {
       return false;
     } else if ((this->r - row == 0) && (this->c - col == 0)) {
