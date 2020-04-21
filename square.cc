@@ -13,12 +13,12 @@ int abso(int x) {
 
 bool getAttacked(Colour c) {
   if (c == Colour::Black) {
-    return AttackedByBlack;
+    return this->AttackedByBlack;
   }
   else if (c == Colour::White) {
-    return AttackedByWhite;
+    return this->AttackedByWhite;
   }
-  return false
+  return false;
 }
 
 Direction getDirection(Subject<Info, State> &here, Subject<Info, State> &from) {
@@ -199,7 +199,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Colour::White)) {
         AttackedByWhite = true;
       }
-      if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Colour::Black) {
+      if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Colour::Black)) {
         AttackedByBlack = true;
       }
         break;
@@ -418,7 +418,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
     }
 }
 
-Info getInfo() const {
+Info Square::getInfo() const {
   Info i = {r, c, colour, p};
   return i;
 }
