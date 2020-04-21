@@ -5,7 +5,7 @@
 #include "observer.h"
 #include "piece.h"
 
-class Square : public Subject, public Observer {
+class Square : public Subject<Info, State>, public Observer<Info, State> {
   const int r, c;
   Piece p;
   Colour colour;
