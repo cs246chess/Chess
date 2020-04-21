@@ -4,7 +4,8 @@
 #include "subject.h"
 #include "observer.h"
 
-class Square : public Subject, public Observer {
+class Square : public Subject<Info, State>, public Observer<Info, State> {
+
   public:
   const int r, c;
   Piece p;
