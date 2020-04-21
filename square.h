@@ -13,6 +13,7 @@ class Square : public Subject<Info, State>, public Observer<Info, State> {
   Colour pieceColour; //colour of PIECE
   bool AttackedByWhite;
   bool AttackedByBlack;
+  Square();
   Square(int r, int c, Colour colour);
   void getAttacked(Colour c, bool t);
   void validMove(int row, int col);
