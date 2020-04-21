@@ -12,9 +12,9 @@
       *same colour replies are redundant and are not necessary.
 */
 
-enum Class Piece { Pawn, Rook, King, Bishop, Knight, Queen, Empty};
+enum class Piece { Pawn, Rook, King, Bishop, Knight, Queen, Empty};
 enum class StateType { MovedPiece, Relay, Reply };
-enum class Color { NoColour, Black, White };
+enum class Colour { NoColour, Black, White };
 enum class Direction { NW, N, NE, W, E, SW, S, SE };
 
 //1. knight notifies neighbours

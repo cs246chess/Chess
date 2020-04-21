@@ -35,7 +35,7 @@ class Board {
   ~Board();
   vector<string> validMoves(Square &s) const;
   bool isPinned(Square &s);
-  bool isChecked(Color c);
+  bool isChecked(Colour c);
   void isAttacked();
   void setObserver(Observer<Info, State> *ob);
   bool isStalemate(Colour c) const;
