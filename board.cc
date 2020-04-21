@@ -75,12 +75,16 @@ bool Board::isStalemate(Colour c) const { //checks if the specified player is in
 
 bool Board::isChecked(Colour c) { //checks if the specified player is in check
   if (c == Colour::White) {
-    if (kingLocations[0].AttackedByBlack == true) {
+    string pos = kingLocation[0];
+    int row = pos[1];
+    if (theBoard[row - 1][convertBackwards(pos[0] ) - 1].AttackedByBlack == true) {
       return true;
     }
   }
   else if (c == Colour::Black) {
-    if (kingLocations[1].AttackedByWhite == true) {
+    string pos = kingLocation[1];
+    int row = pos[1];
+    if (theBoard[row - 1][convertBackwards(pos[0]) - 1].AttackedByWhite == true) {
       return true;
     }
   }
@@ -95,8 +99,8 @@ bool Board::isAttacked() {
     }
   }
   for (int i = 0; i < size; i++) {
-    for (int j = 0; j < sizel j++) {
-      state newS;
+    for (int j = 0; j < size; j++) {
+      State newS;
       newS.type = StateType::MovedPiece;
       newS.pieceColour = s.pieceColour;
       newS.piece = s.piece;
@@ -110,12 +114,11 @@ bool Board::isPinned(Square &s) {
   if (s.piece == Piece::King) {
     return false;
   }
-  int PieceColour = 2;
   if (s.pieceColour == Colour::White) {
-    PieceColour = 0;
+    int PieceColour = 0;
   }
   else if (s.pieceColour == Colour::Black) {
-    PieceColour = 1;
+    int PieceColour = 1;
   }
   else if (s.pieceColour == Colour::NoColour) {
     return false;
@@ -247,35 +250,35 @@ vector<string> Board::validMoves(Square &s) const {
     if (s.pieceColour == Colour::Black) {
       if (s.c > 0) {
         if ((this->theBoard[s.r - 2][s.c - 1]).piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c);
-          s = s + to_string(s.r - 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c);
+          spotPosition = spotPosition + to_string(s.r - 1);
+          moves.emplace_back(spotPosition);
           if (((this->theBoard[s.r - 3][s.c - 1]).piece == Piece::Empty) && (s.r == 7) {
-            string s = " ";
-            s[0] = convert(s.c);
-            s = s + to_string(s.r - 2);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c);
+            spotPosition = spotPosition + to_string(s.r - 2);
+            moves.emplace_back(spotPosition);
           }
         }
       }
       if ((s.c - 2) >= 0) {
         if ((this->theBoard[s.r - 2][s.c - 2]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r - 2][s.c - 2]).pieceColour) {
-            string s = " ";
-            s[0] = convert((s.c - 1));
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert((s.c - 1));
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
         }
       }
       if (s.c <= 7) {
         if ((this->theBoard[s.r - 2][s.c]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r - 2][s.c]).pieceColour) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
         }
       }
@@ -283,20 +286,20 @@ vector<string> Board::validMoves(Square &s) const {
         if ((convert(s.c + 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
           if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1]) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1].pieceColour != s.pieceColour) {
-              string s = " ";
-              s[0] = convert(s.c + 1);
-              s = s + to_string(s.r - 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c + 1);
+              spotPosition = spotPosition + to_string(s.r - 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
         else if ((convert(s.c - 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
           if (theBoard[s.r - 1][convertBackwards(lastMove[4])].piece == Piece::Pawn) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4])].pieceColour != s.pieceColour) {
-              string s = " ";
-              s[0] = convert(s.c - 1);
-              s = s + to_string(s.r - 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c - 1);
+              spotPosition = spotPosition + to_string(s.r - 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
@@ -304,34 +307,34 @@ vector<string> Board::validMoves(Square &s) const {
     }
     else if (s.pieceColour == Colour::White) {
       if ((this->theBoard[s.r][s.c - 1]).piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(s.c);
-        s = s + to_string(s.r + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(s.c);
+        spotPosition = spotPosition + to_string(s.r + 1);
+        moves.emplace_back(spotPosition);
         if (((this->theBoard[s.r + 1][s.c - 1]).piece == Piece::Empty) && (s.r == 2) {
-          string s = " ";
-          s[0] = convert(s.c);
-          s = s + to_string(s.r + 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c);
+          spotPosition = spotPosition + to_string(s.r + 2);
+          moves.emplace_back(spotPosition);
         }
       }
       if ((s.c - 2) >= 0) {
         if ((this->theBoard[s.r][s.c - 2]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r][s.c - 2]).pieceColour) {
-            string s = " ";
-            s[0] = convert(s.c - 1);
-            s = s + to_string(s.r + 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c - 1);
+            spotPosition = spotPosition + to_string(s.r + 1);
+            moves.emplace_back(spotPosition);
           }
         }
       }
       if (s.c <= 7) {
         if ((this->theBoard[s.r - 2][s.c]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r - 2][s.c]).pieceColour) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r + 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r + 1);
+            moves.emplace_back(spotPosition);
           }
         }
       }
@@ -339,20 +342,20 @@ vector<string> Board::validMoves(Square &s) const {
         if ((convert(s.c + 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
           if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1]) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4])].pieceColour != s.pieceColour) {
-              string s = " ";
-              s[0] = convert(s.c + 1);
-              s = s + to_string(s.r + 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c + 1);
+              spotPosition = spotPosition + to_string(s.r + 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
         else if ((convert(s.c - 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
           if (theBoard[s.r - 1][convertBackwards(lastMove[4])].piece == Piece::Pawn) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4])].pieceColour != s.pieceColour) {
-              string s = " ";
-              s[0] = convert(s.c - 1);
-              s = s + to_string(s.r + 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c - 1);
+              spotPosition = spotPosition + to_string(s.r + 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
@@ -366,16 +369,16 @@ vector<string> Board::validMoves(Square &s) const {
       row++;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -388,16 +391,16 @@ vector<string> Board::validMoves(Square &s) const {
       row--;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -410,16 +413,16 @@ vector<string> Board::validMoves(Square &s) const {
       row++;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -432,16 +435,16 @@ vector<string> Board::validMoves(Square &s) const {
       row--;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -453,120 +456,120 @@ vector<string> Board::validMoves(Square &s) const {
     if (s.r <= 7) { //moving 1 upwards
       if (s.c <= 6) { //moving 2 rightwards
         if (theBoard[s.r][s.c + 1].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c + 2);
-          s = s + to_string(s.r + 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 2);
+          spotPosition = spotPosition + to_string(s.r + 1);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r][s.c + 1].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c + 2);
-          s = s + to_string(s.r + 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 2);
+          spotPosition = spotPosition + to_string(s.r + 1);
+          moves.emplace_back(spotPosition);
         }
       }
       if (s.c >= 3) { //moving 2 leftwards
         if (theBoard[s.r][s.c - 3].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c - 2);
-          s = s + to_string(s.r + 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 2);
+          spotPosition = spotPosition + to_string(s.r + 1);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r][s.c - 3].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c - 2);
-          s = s + to_string(s.r + 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 2);
+          spotPosition = spotPosition + to_string(s.r + 1);
+          moves.emplace_back(spotPosition);
         }
       }
     }
     if (s.r >= 2) { //moving 1 downwards
       if (s.c <= 6) { //moving 2 rightwards
         if (theBoard[s.r - 2][s.c + 1].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c + 2);
-          s = s + to_string(s.r - 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 2);
+          spotPosition = spotPosition + to_string(s.r - 1);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 2][s.c + 1].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c + 2);
-          s = s + to_string(s.r - 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 2);
+          spotPosition = spotPosition + to_string(s.r - 1);
+          moves.emplace_back(spotPosition);
         }
       }
       if (s.c >= 3) { //moving 2 leftwards
         if (theBoard[s.r - 2][s.c - 3].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c - 2);
-          s = s + to_string(s.r - 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 2);
+          spotPosition = spotPosition + to_string(s.r - 1);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 2][s.c - 3].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c - 2);
-          s = s + to_string(s.r - 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 2);
+          spotPosition = spotPosition + to_string(s.r - 1);
+          moves.emplace_back(spotPosition);
         }
       }
     }
     if (s.c <= 7) { //moving 1 rightwards
       if (s.r <= 6) { //moving 2 upwards
         if (theBoard[s.r + 1][s.c].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c + 1);
-          s = s + to_string(s.r + 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 1);
+          spotPosition = spotPosition + to_string(s.r + 2);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r + 1][s.c].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c + 1);
-          s = s + to_string(s.r + 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 1);
+          spotPosition = spotPosition + to_string(s.r + 2);
+          moves.emplace_back(spotPosition);
         }
       }
       if (s.r >= 3) { //moving 2 downwards
         if (theBoard[s.r - 3][s.c].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c + 1);
-          s = s + to_string(s.r - 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 1);
+          spotPosition = spotPosition + to_string(s.r - 2);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 3][s.c].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c + 1);
-          s = s + to_string(s.r - 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 1);
+          spotPosition = spotPosition + to_string(s.r - 2);
+          moves.emplace_back(spotPosition);
         }
       }
     }
     if (s.c >= 2) { //moving 1 leftwards
       if (s.r <= 6) { //moving 2 upwards
         if (theBoard[s.r + 1][s.c - 2].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c - 1);
-          s = s + to_string(s.r + 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 1);
+          spotPosition = spotPosition + to_string(s.r + 2);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r + 1][s.c - 2].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c - 1);
-          s = s + to_string(s.r + 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 1);
+          spotPosition = spotPosition + to_string(s.r + 2);
+          moves.emplace_back(spotPosition);
         }
       }
       if (s.r >= 3) { //moving 2 downwards
         if (theBoard[s.r - 3][s.c - 2].piece == Piece::Empty) {
-          string s = " ";
-          s[0] = convert(s.c - 1);
-          s = s + to_string(s.r - 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 1);
+          spotPosition = spotPosition + to_string(s.r - 2);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 3][s.c - 2].pieceColour != s.pieceColour) {
-          string s = " ";
-          s[0] = convert(s.c - 1);
-          s = s + to_string(s.r - 2);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 1);
+          spotPosition = spotPosition + to_string(s.r - 2);
+          moves.emplace_back(spotPosition);
         }
       }
     }
@@ -576,294 +579,294 @@ vector<string> Board::validMoves(Square &s) const {
     if (s.pieceColour == Colour::White) { //White King
       if (s.r <= 7) { //moving up with the king
         if ((theBoard[s.r][(s.c - 1)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 1)].AttackedByBlack == false)) {
-          string s = " ";
-          s[0] = convert(s.c);
-          s = s + to_string(s.r);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c);
+          spotPosition = spotPosition + to_string(s.r);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r][(s.c - 1)].pieceColour != s.pieceColour) {
           if (theBoard[s.r][(s.c - 1)].AttackedByBlack == false) {
-            string s = " ";
-            s[0] = convert(s.c);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
         }
         if (s.c <= 7) {
           if ((theBoard[s.r][(s.c)].piece == Piece::Empty) && (theBoard[s.r][(s.c)].AttackedByBlack == false)) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r][(s.c)].pieceColour != s.pieceColour) {
             if (theBoard[s.r][(s.c)].AttackedByBlack == false) {
-              string s = " ";
-              s[0] = convert(s.c + 1);
-              s = s + to_string(s.r);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c + 1);
+              spotPosition = spotPosition + to_string(s.r);
+              moves.emplace_back(spotPosition);
             }
           }
         }
         if (s.c >= 2) {
           if ((theBoard[s.r][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 2)].AttackedByBlack == false)) {
-            string s = " ";
-            s[0] = convert(s.c - 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c - 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r][(s.c - 2)].pieceColour != s.pieceColour) {
             if (theBoard[s.r][(s.c - 2)].AttackedByBlack == false) {
-              string s = " ";
-              s[0] = convert(s.c - 1);
-              s = s + to_string(s.r);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c - 1);
+              spotPosition = spotPosition + to_string(s.r);
+              moves.emplace_back(spotPosition);
             }
           }
         }
       }
       if (s.r >= 2) { //moving down with the king
         if ((theBoard[s.r - 2][(s.c - 1)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c - 1)].AttackedByBlack == false)) {
-          string s = " ";
-          s[0] = convert(s.c);
-          s = s + to_string(s.r - 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c);
+          spotPosition = spotPosition + to_string(s.r - 1);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 2][(s.c - 1)].pieceColour != s.pieceColour) {
           if (theBoard[s.r - 2][(s.c - 1)].AttackedByBlack == false) {
-            string s = " ";
-            s[0] = convert(s.c);
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c);
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
         }
         if (s.c <= 7) {
           if ((theBoard[s.r - 2][(s.c)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c)].AttackedByBlack == false)) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r - 2][(s.c)].pieceColour != s.pieceColour) {
             if (theBoard[s.r - 2][(s.c)].AttackedByBlack == false) {
-              string s = " ";
-              s[0] = convert(s.c + 1);
-              s = s + to_string(s.r - 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c + 1);
+              spotPosition = spotPosition + to_string(s.r - 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
         if (s.c >= 2) {
           if ((theBoard[s.r - 2][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c - 2)].AttackedByBlack == false)) {
-            string s = " ";
-            s[0] = convert(s.c - 1);
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c - 1);
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r - 2][(s.c - 2)].pieceColour != s.pieceColour) {
             if (theBoard[s.r - 2][(s.c - 2)].AttackedByBlack == false) {
-              string s = " ";
-              s[0] = convert(s.c - 1);
-              s = s + to_string(s.r - 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c - 1);
+              spotPosition = spotPosition + to_string(s.r - 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
       }
       if (s.c >= 2) { //moving left
         if ((theBoard[s.r - 1][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r - 1][(s.c - 2)].AttackedByBlack == false)) {
-          string s = " ";
-          s[0] = convert(s.c - 1);
-          s = s + to_string(s.r);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 1);
+          spotPosition = spotPosition + to_string(s.r);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 1][(s.c - 2)].pieceColour != s.pieceColour) {
           if (theBoard[s.r - 1][(s.c - 2)].AttackedByBlack == false) {
-            string s = " ";
-            s[0] = convert(s.c - 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c - 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
         }
       }
       if (s.c <= 7) { //moving right
         if ((theBoard[s.r - 1][(s.c)].piece == Piece::Empty) && (theBoard[s.r - 1][(s.c)].AttackedByBlack == false)) {
-          string s = " ";
-          s[0] = convert(s.c + 1);
-          s = s + to_string(s.r);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 1);
+          spotPosition = spotPosition + to_string(s.r);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 1][(s.c)].pieceColour != s.pieceColour) {
           if (theBoard[s.r - 1][(s.c)].AttackedByBlack == false) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
         }
       }
       //Castling
       if ((hasWhiteKingMoved == false) && (hasWhiteRookAMoved == false)) {
         if ((theBoard[0][2].AttackedByBlack == false) && (theBoard[0][3].AttackedByBlack == false) && (theBoard[0][4].AttackedByBlack == false)) {
-          string s = " ";
-          s[0] = convert(3);
-          s = s + to_string(1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(3);
+          spotPosition = spotPosition + to_string(1);
+          moves.emplace_back(spotPosition);
         }
       }
       if ((hasWhiteKingMoved == false) && (hasWhiteRookHMoved == false)) {
         if ((theBoard[0][6].AttackedByBlack == false) && (theBoard[0][5].AttackedByBlack == false)) {
-          string s = " ";
-          s[0] = convert(7);
-          s = s + to_string(1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(7);
+          spotPosition = spotPosition + to_string(1);
+          moves.emplace_back(spotPosition);
         }
       }
     }
     else if (s.pieceColour == Colour::Black) { //Black King
       if (s.r <= 7) { //moving up with the king
         if ((theBoard[s.r][(s.c - 1)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 1)].AttackedByWhite == false)) {
-          string s = " ";
-          s[0] = convert(s.c);
-          s = s + to_string(s.r);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c);
+          spotPosition = spotPosition + to_string(s.r);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r][(s.c - 1)].pieceColour != s.pieceColour) {
           if (theBoard[s.r][(s.c - 1)].AttackedByWhite == false) {
-            string s = " ";
-            s[0] = convert(s.c);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
         }
         if (s.c <= 7) {
           if ((theBoard[s.r][(s.c)].piece == Piece::Empty) && (theBoard[s.r][(s.c)].AttackedByWhite == false)) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r][(s.c)].pieceColour != s.pieceColour) {
             if (theBoard[s.r][(s.c)].AttackedByWhite == false) {
-              string s = " ";
-              s[0] = convert(s.c + 1);
-              s = s + to_string(s.r);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c + 1);
+              spotPosition = spotPosition + to_string(s.r);
+              moves.emplace_back(spotPosition);
             }
           }
         }
         if (s.c >= 2) {
           if ((theBoard[s.r][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 2)].AttackedByWhite == false)) {
-            string s = " ";
-            s[0] = convert(s.c - 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c - 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r][(s.c - 2)].pieceColour != s.pieceColour) {
             if (theBoard[s.r][(s.c - 2)].AttackedByWhite == false) {
-              string s = " ";
-              s[0] = convert(s.c - 1);
-              s = s + to_string(s.r);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c - 1);
+              spotPosition = spotPosition + to_string(s.r);
+              moves.emplace_back(spotPosition);
             }
           }
         }
       }
       if (s.r >= 2) { //moving down with the king
         if ((theBoard[s.r - 2][(s.c - 1)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c - 1)].AttackedByWhite == false)) {
-          string s = " ";
-          s[0] = convert(s.c);
-          s = s + to_string(s.r - 1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c);
+          spotPosition = spotPosition + to_string(s.r - 1);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 2][(s.c - 1)].pieceColour != s.pieceColour) {
           if (theBoard[s.r - 2][(s.c - 1)].AttackedByWhite == false) {
-            string s = " ";
-            s[0] = convert(s.c);
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c);
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
         }
         if (s.c <= 7) {
           if ((theBoard[s.r - 2][(s.c)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c)].AttackedByWhite == false)) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r - 2][(s.c)].pieceColour != s.pieceColour) {
             if (theBoard[s.r - 2][(s.c)].AttackedByWhite == false) {
-              string s = " ";
-              s[0] = convert(s.c + 1);
-              s = s + to_string(s.r - 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c + 1);
+              spotPosition = spotPosition + to_string(s.r - 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
         if (s.c >= 2) {
           if ((theBoard[s.r - 2][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c - 2)].AttackedByWhite == false)) {
-            string s = " ";
-            s[0] = convert(s.c - 1);
-            s = s + to_string(s.r - 1);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c - 1);
+            spotPosition = spotPosition + to_string(s.r - 1);
+            moves.emplace_back(spotPosition);
           }
           else if (theBoard[s.r - 2][(s.c - 2)].pieceColour != s.pieceColour) {
             if (theBoard[s.r - 2][(s.c - 2)].AttackedByWhite == false) {
-              string s = " ";
-              s[0] = convert(s.c - 1);
-              s = s + to_string(s.r - 1);
-              moves.emplace_back(s);
+              string spotPosition = " ";
+              spotPosition[0] = convert(s.c - 1);
+              spotPosition = spotPosition + to_string(s.r - 1);
+              moves.emplace_back(spotPosition);
             }
           }
         }
       }
       if (s.c >= 2) { //moving left
         if ((theBoard[s.r - 1][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r - 1][(s.c - 2)].AttackedByWhite == false)) {
-          string s = " ";
-          s[0] = convert(s.c - 1);
-          s = s + to_string(s.r);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c - 1);
+          spotPosition = spotPosition + to_string(s.r);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 1][(s.c - 2)].pieceColour != s.pieceColour) {
           if (theBoard[s.r - 1][(s.c - 2)].AttackedByWhite == false) {
-            string s = " ";
-            s[0] = convert(s.c - 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c - 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
         }
       }
       if (s.c <= 7) { //moving right
         if ((theBoard[s.r - 1][(s.c)].piece == Piece::Empty) && (theBoard[s.r - 1][(s.c)].AttackedByWhite == false)) {
-          string s = " ";
-          s[0] = convert(s.c + 1);
-          s = s + to_string(s.r);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(s.c + 1);
+          spotPosition = spotPosition + to_string(s.r);
+          moves.emplace_back(spotPosition);
         }
         else if (theBoard[s.r - 1][(s.c)].pieceColour != s.pieceColour) {
           if (theBoard[s.r - 1][(s.c)].AttackedByWhite == false) {
-            string s = " ";
-            s[0] = convert(s.c + 1);
-            s = s + to_string(s.r);
-            moves.emplace_back(s);
+            string spotPosition = " ";
+            spotPosition[0] = convert(s.c + 1);
+            spotPosition = spotPosition + to_string(s.r);
+            moves.emplace_back(spotPosition);
           }
         }
       }
       //Castling
       if ((hasBlackKingMoved == false) && (hasBlackRookAMoved == false)) {
         if ((theBoard[7][2].AttackedByWhite == false) && (theBoard[7][3].AttackedByWhite == false) && (theBoard[7][4].AttackedByBlack == false)) {
-          string s = " ";
-          s[0] = convert(3);
-          s = s + to_string(1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(3);
+          spotPosition = spotPosition + to_string(1);
+          moves.emplace_back(spotPosition);
         }
       }
       if ((hasBlackKingMoved == false) && (hasBlackRookHMoved == false)) {
         if ((theBoard[7][6].AttackedByWhite == false) && (theBoard[7][5].AttackedByWhite == false)) {
-          string s = " ";
-          s[0] = convert(7);
-          s = s + to_string(1);
-          moves.emplace_back(s);
+          string spotPosition = " ";
+          spotPosition[0] = convert(7);
+          spotPosition = spotPosition + to_string(1);
+          moves.emplace_back(spotPosition);
         }
       }
     }
@@ -876,16 +879,16 @@ vector<string> Board::validMoves(Square &s) const {
       row++;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -898,16 +901,16 @@ vector<string> Board::validMoves(Square &s) const {
       row--;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -920,16 +923,16 @@ vector<string> Board::validMoves(Square &s) const {
       row++;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -942,16 +945,16 @@ vector<string> Board::validMoves(Square &s) const {
       row--;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -964,16 +967,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((row <= 6)) {
       row++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -984,16 +987,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((row >= 1)) {
       row--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -1004,16 +1007,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((col <= 6)) {
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -1024,16 +1027,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((col >= 1)) {
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -1048,16 +1051,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((row <= 6)) {
       row++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -1068,16 +1071,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((row >= 1)) {
       row--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -1088,16 +1091,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((col <= 6)) {
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {
@@ -1108,16 +1111,16 @@ vector<string> Board::validMoves(Square &s) const {
     while ((col >= 1)) {
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
       }
       else if (theBoard[row][col].pieceColour != s.pieceColour) {
-        string s = " ";
-        s[0] = convert(col + 1);
-        s = s + to_string(row + 1);
-        moves.emplace_back(s);
+        string spotPosition = " ";
+        spotPosition[0] = convert(col + 1);
+        spotPosition = spotPosition + to_string(row + 1);
+        moves.emplace_back(spotPosition);
         break;
       }
       else {

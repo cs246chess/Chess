@@ -334,40 +334,44 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
             swtich(piece) {
               //the spaces a pawn can attack cannot be blocked
               // so it does not need to be recalculated until moved
-              case Piece::Pawn:
+              case Piece::Pawn: {
+                break;
               }
-              break;
               //Bishop may be able to attack more squares, so reply is needed
-              case Piece::Bishop:
-              State newS;
-              newS.type = StateType::Reply;
-              newS.direction = reverse;
-              newS.pieceColour = pieceColour;
-              this->setState(newS);
-              notifyObservers();
-              break;
+              case Piece::Bishop: {
+                State newS;
+                newS.type = StateType::Reply;
+                newS.direction = reverse;
+                newS.pieceColour = pieceColour;
+                this->setState(newS);
+                notifyObservers();
+                break;
+              }
               //king follows the same idea as the pawn, so no need to
               // recalculate the king's squares it is attacking
-              case Piece::King:
-              break;
+              case Piece::King: {
+                break;
+              }
               //Queen may be able to attack more squares than before
-              case Piece::Queen:
-              State newS;
-              newS.type = StateType::Reply;
-              newS.direction = reverse;
-              newS.pieceColour = pieceColour;
-              this->setState(newS);
-              notifyObservers();
+              case Piece::Queen: {
+                State newS;
+                newS.type = StateType::Reply;
+                newS.direction = reverse;
+                newS.pieceColour = pieceColour;
+                this->setState(newS);
+                notifyObservers();
               break;
+              }
               //Rook may be able to attack more squares than before
-              case Piece::Rook:
-              State newS;
-              newS.type = StateType::Reply;
-              newS.direction = reverse;
-              newS.pieceColour = pieceColour;
-              this->setState(newS);
-              notifyObservers();
-              break;
+              case Piece::Rook: {
+                State newS;
+                newS.type = StateType::Reply;
+                newS.direction = reverse;
+                newS.pieceColour = pieceColour;
+                this->setState(newS);
+                notifyObservers();
+                break;
+              }
             }
           }
           else {    //no piece located so it just continues the relay
