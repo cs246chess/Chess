@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
                   countpawn++;
                 }
               }
-              if (b.kingLocations.size() == 2 && countpawn == 0 && checkcount == 0){
+              if (b.kingLocations.size() == 2 && countpawn == 0 && (!b.isChecked(Color::White) || !b.isChecked(Color::Black))) {
                 break;
               } else {
                 continue;
