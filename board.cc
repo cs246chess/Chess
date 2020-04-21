@@ -1,5 +1,6 @@
 #include "board.h"
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 
 using namespace std;
 
