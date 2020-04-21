@@ -15,9 +15,6 @@
    and a colour.  For more details, see state.h.
 */
 
-
-=======
->>>>>>> 47c725779d0a8d8d4feb43fb3dce58eeae5d7511
 template <typename InfoType, typename StateType> class Observer;
 
 template <typename InfoType, typename StateType> class Subject {
