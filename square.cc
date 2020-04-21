@@ -1,6 +1,7 @@
 #include "square.h"
 #include <vector>
 #include <string>
+#include <iostream>
 using namespace std;
 
 int abso(int x) {
@@ -10,7 +11,7 @@ int abso(int x) {
   return x;
 }
 
-false getAttacked(Colour c) {
+bool getAttacked(Colour c) {
   if (c == Colour::Black) {
     return AttackedByBlack;
   }
@@ -96,7 +97,7 @@ bool Square::validMove(int row, int col){
           return false;
         }
       }
-    } else if if (this->pieceColour == Colour::white) {
+    } else if (this->pieceColour == Colour::white) {
       if (row - this->r != 1 || row - this->r != 2) {
         return false;
       } else if (row - this->r == 2) {
@@ -189,7 +190,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         newS.type = StateType::Relay;
         newS.direction = d;
         newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece
+        newS.piece = s.piece;
         this->setState(newS);
         notifyObservers();
       }
@@ -224,7 +225,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
             newS.type = StateType::Relay;
             newS.direction = d;
             newS.pieceColour = s.pieceColour;
-            newS.piece = s.piece
+            newS.piece = s.piece;
             this->setState(newS);
             notifyObservers();
           }
@@ -246,7 +247,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
           newS.type = StateType::Relay;
           newS.direction = d;
           newS.pieceColour = s.pieceColour;
-          newS.piece = s.piece
+          newS.piece = s.piece;
           this->setState(newS);
           notifyObservers();
         }
@@ -267,7 +268,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         newS.type = StateType::Relay;
         newS.direction = d;
         newS.pieceColour = s.pieceColour;
-        newS.piece = s.piece
+        newS.piece = s.piece;
         this->setState(newS);
         notifyObservers();
       }
@@ -419,6 +420,6 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
 
 
 
-Info getInfo() {
+Info getInfo() const {
   return Info{r, c, colour, p};
 }
