@@ -32,62 +32,62 @@ GraphicsDisplay::GraphicsDisplay()  {
 void GraphicsDisplay::notify(Subject<Info, State> &whoNotified) {
   int row = whoNotified.getInfo().row;
   int col = whoNotified.getInfo().col;
-  int color = whoNotified.getInfo().color;
+  int colour = whoNotified.getInfo().colour;
   Piece piece = whoNotified.getInfo().piece;
-  if (color = Color::Black) {
-    if (piece == "Pawn") {
+  if (colour = Colour::Black) {
+    if (piece == Piece::Pawn) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::Black);
     }
-    if (piece == "Rook") {
+    if (piece == Piece::Rook) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::Black);
     }
-    if (piece == "King") {
+    if (piece == Piece::King) {
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillRectangle(50 * row, 50 * col, 10, 20, Xwindow::Black);
     }
-    if (piece == "Bishop") {
+    if (piece == Piece::Bishop) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillCircle(50 * row, 50 * col, 10, 20, Xwindow::Black);
     }
-    if (piece == "Knight") {
+    if (piece == Piece::Knight) {
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillArc(50 * row, 50 * col, 50, 50, Xwindow::Black);
     }
-    if (piece == "Queen") {
+    if (piece == Piece::Queen) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::Black);
       gd.fillCircle(50 * row, 50 * col, 10, 20, Xwindow::Black);
       gd.fillArc(50 * row, 50 * col, 50, 50, Xwindow::Black);
     }
-  } else (color = Color::White) {
-    if (piece == "Pawn") {
+  } else if (colour = Colour::White) {
+    if (piece == Piece::Pawn) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::White);
     }
-    if (piece == "Rook") {
+    if (piece == Piece::Rook) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::White);
     }
-    if (piece == "King") {
+    if (piece == Piece::King) {
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillRectangle(50 * row, 50 * col, 10, 20, Xwindow::White);
     }
-    if (piece == "Bishop") {
+    if (piece == Piece::Bishop) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillCircle(50 * row, 50 * col, 10, 20, Xwindow::White);
     }
-    if (piece == "Knight") {
+    if (piece == Piece::Knight) {
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillArc(50 * row, 50 * col, 50, 50, Xwindow::White);
     }
-    if (piece == "Queen") {
+    if (piece == Piece::Queen) {
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillRectangle(50 * row, 50 * col, 50, 50, Xwindow::White);
       gd.fillCircle(50 * row, 50 * col, 50, 50, Xwindow::White);
