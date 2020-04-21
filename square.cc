@@ -97,7 +97,7 @@ bool Square::validMove(int row, int col){
           return false;
         }
       }
-    } else if (this->pieceColour == Colour::white) {
+    } else if (this->pieceColour == Colour::White) {
       if (row - this->r != 1 || row - this->r != 2) {
         return false;
       } else if (row - this->r == 2) {
@@ -196,7 +196,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       }
         break;
       case Piece::Pawn:
-      if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Colour::White) {
+      if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Colour::White)) {
         AttackedByWhite = true;
       }
       if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Colour::Black) {
@@ -418,8 +418,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
     }
 }
 
-
-
 Info getInfo() const {
-  return Info{r, c, colour, p};
+  Info i = {r, c, colour, p};
+  return i;
 }
