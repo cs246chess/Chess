@@ -409,18 +409,18 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
           //already calculated so nothing needs to happen
         }
         else {    //no piece located so it just continues the reply
-            State newS;
-            newS.type = StateType::Reply;
-            newS.direction = s.direction;
-            newS.pieceColour = s.pieceColour;
-            this->setState(newS);
-            notifyObservers();
-        }
+          State newS;
+          newS.type = StateType::Reply;
+          newS.direction = s.direction;
+          newS.pieceColour = s.pieceColour;
+          this->setState(newS);
+          notifyObservers();
+      }
     }
-}
+  }
 }
 
 Info Square::getInfo() const {
-  Info i = {r, c, colour, p, pieceColour};
+  Info i = {r, c, colour, piece, pieceColour};
   return i;
 }
