@@ -16,7 +16,7 @@ class InvalidMove{};
 
 class Board {
   TextDisplay *td = nullptr; // The text display.
-  Observer<Info, State> *ob = nullptr; //graphics display pointer
+  GraphicsDisplay *gd = nullptr; //graphics display pointer
   int size = 8;
   vector<string> whiteCheckLocations; //stores the locations of white pieces that are checking the black king
   vector<string> blackCheckLocations; //stores the locations of black pieces that are checking the white king
