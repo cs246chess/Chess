@@ -114,6 +114,7 @@ bool Board::isPinned(Square &s) {
   if (s.piece == Piece::King) {
     return false;
   }
+  int PieceColour = 2;
   if (s.pieceColour == Colour::White) {
     int PieceColour = 0;
   }
@@ -123,9 +124,10 @@ bool Board::isPinned(Square &s) {
   else if (s.pieceColour == Colour::NoColour) {
     return false;
   }
-  if (s.r == kingLocations[PieceColour].r) { //if on equal row
-    if (s.c > kingLocations[PieceColour].c) {
-      for (int i = (kingLocations[PieceColour].c); i < s.c - 1; i++) {
+  if (s.r == convertBackwards(kingLocations[PieceColour][0])) { //if on equal row
+    int kingco1 = kingLocations[PieceColour][1];
+    if (s.c > kingcol) {
+      for (int i = (kingcol); i < s.c - 1; i++) {
         if (theBoard[s.r - 1][i].piece != Piece::Empty) {
           return false;
         }
@@ -145,8 +147,8 @@ bool Board::isPinned(Square &s) {
       }
       return false;
     }
-    if (s.c < kingLocations[PieceColour].c) {
-      for (int i = s.c; i < (kingLocations[PieceColour].c) - 1; i++) {
+    if (s.c < kingcol) {
+      for (int i = s.c; i < kingcol - 1; i++) {
         if (theBoard[s.r - 1][i].piece != Piece::Empty) {
           return false;
         }
@@ -167,9 +169,9 @@ bool Board::isPinned(Square &s) {
       return false;
     }
   }
-  if (s.c == kingLocations[PieceColour].c) { //if on equal column
-    if (s.r > kingLocations[PieceColour].r) {
-      for (int i = (kingLocations[PieceColour].r); i < s.r - 1; i++) {
+  if (s.c == kingcol) { //if on equal column
+    if (s.r > convertBackwards(kingLocations[PieceColour][0])) {
+      for (int i = convertBackwards(kingLocations[PieceColour][0]); i < s.r - 1; i++) {
         if (theBoard[i][s.c - 1].piece != Piece::Empty) {
           return false;
         }
@@ -189,8 +191,8 @@ bool Board::isPinned(Square &s) {
       }
       return false;
     }
-    if (s.r < kingLocations[PieceColour].r) {
-      for (int i = s.r; i < (kingLocations[PieceColour].r) - 1; i++) {
+    if (s.r < convertBackwards(kingLocations[PieceColour][0])) {
+      for (int i = s.r; i < convertBackwards(kingLocations[PieceColour][0]) - 1; i++) {
         if (theBoard[i][s.c - 1].piece != Piece::Empty) {
           return false;
         }
@@ -211,11 +213,11 @@ bool Board::isPinned(Square &s) {
       return false;
     }
   }
-  if (abs(s.r - kingLocations[PieceColour].r) == abs(s.c - kingLocations[PieceColour].c)) {
-    int constSide = (s.r - kingLocations[PieceColour].r) / abs(s.r - kingLocations[PieceColour].r);
-    int constUp = (s.c - kingLocations[PieceColour].c) / abs(s.c - kingLocations[PieceColour].c);
+  if (abs(s.r - convertBackwards(kingLocations[PieceColour][0])) == abs(s.c - kingcol) {
+    int constSide = (s.r - convertBackwards(kingLocations[PieceColour][0])) / abs(s.r - convertBackwards(kingLocations[PieceColour][0]));
+    int constUp = (s.c - kingcol) / abs(s.c - kingcol);
     int counter = s.c - 1 + constUp;
-    for (int i = (s.r - 1 + constSide); i != (kingLocations[PieceColour].r - 1); i = i + constSide) {
+    for (int i = (s.r - 1 + constSide); i != (convertBackwards(kingLocations[PieceColour][0]) - 1); i = i + constSide) {
       if (theBoard[i][counter].piece != Piece::Empty) {
         return false;
         counter += constUp;
