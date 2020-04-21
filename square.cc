@@ -70,9 +70,10 @@ Square::Square(int r, int c, Colour colour) {
 
 }
 
-void Square::setPiece(Piece p, Colour colour, Colour c) {    // Place a piece of given colour here.
+void Square::setPiece(Piece p, Colour c) {    // Place a piece of given colour here.
   this->piece = p;
   this->pieceColour = c;
+  this->notifyObservers();
 }
 
 void Square::validMove(int row, int col){

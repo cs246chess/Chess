@@ -42,8 +42,8 @@ class Board {
   bool isChecked(Colour c);
   bool isAttacked();
   void setObserver(Observer<Info, State> *ob);
-  bool isStalemate(Colour c) const;
-  Colour isCheckmate(Colour c) const; // is there checkmate? and returns who won if so
+  bool isStalemate(Colour c);
+  Colour isCheckmate(Colour c); // is there checkmate? and returns who won if so
   void init(); // Sets up an n x n grid.  Clears old grid, if necessary.
   void setPiece(int r, int c, Colour colour, Piece piece);  // Plays piece at row r, col c.
 
