@@ -7,6 +7,7 @@
 #include "square.h"
 #include "state.h"
 #include "info.h"
+using namespace std;
 
 class TextDisplay;
 template <typename InfoType, typename StateType> class Observer;
