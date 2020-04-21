@@ -55,12 +55,12 @@ Direction getDirection(Subject<Info, State> &here, Subject<Info, State> &from) {
 Square(int r, int c, Colour colour) {
 
 
-Square(int r, int c, Color colour) {
+Square(int r, int c, Colour colour) {
   this->r = r;
   this->c = c;
   this->colour = colour;
   p = Piece::Empty;
-  pColour = Color::NoColour;
+  pieceColour = Colour::NoColour;
 
 }
 
@@ -70,7 +70,7 @@ void Square::Square::setPiece(Piece p, Colour colour, Colour c) {    // Place a 
 }
 void Square::validMove(int row, int col){
   if (this->p == Piece::Pawn) { //Pawn moves
-    if (this->pieceColour == Color::Black) {
+    if (this->pieceColour == Colour::Black) {
       if (this->r - row != 1 || this->r - row != 2) {
         return false;
       } else if (this->r - row == 2) {
@@ -84,7 +84,7 @@ void Square::validMove(int row, int col){
           return false;
         }
       }
-    } else if if (this->pieceColour == Color::white) {
+    } else if if (this->pieceColour == Colour::white) {
       if (row - this->r != 1 || row - this->r != 2) {
         return false;
       } else if (row - this->r == 2) {
@@ -184,15 +184,15 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         break;
       case Piece::Pawn:
       Direction d = getDirection(*this, whoFrom);
-      if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Color::White) {
+      if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Colour::White) {
         AttackedByWhite = true;
       }
-      if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Color::Black) {
+      if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Colour::Black) {
         AttackedByBlack = true;
       }
         break;
       case Piece::King: //not really needed tbh
-        if (s.pieceColour == Color::White) {
+        if (s.pieceColour == Colour::White) {
           AttackedByWhite = true;
         }
         else {
@@ -203,10 +203,10 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         //find the direction of the new piece
         Direction d = getDirection(*this, whoFrom);
         if ((d == Direction::NE) || (d == Direction::NW) || (d == Direction::SE) || (d == Direction::SW)) {
-          if (s.pieceColour == Color::Black) {
+          if (s.pieceColour == Colour::Black) {
             AttackedByBlack = true;
           }
-          else if (s.pieceColour == Color::White) {
+          else if (s.pieceColour == Colour::White) {
             AttackedByWhite = true;
           }
           if (piece == Piece::Empty) {
@@ -226,10 +226,10 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       case Piece::Rook:
       Direction d = getDirection(*this, whoFrom);
       if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
-        if (s.pieceColour == Color::Black) {
+        if (s.pieceColour == Colour::Black) {
           AttackedByBlack = true;
         }
-        else if (s.pieceColour == Color::White) {
+        else if (s.pieceColour == Colour::White) {
           AttackedByWhite = true;
         }
         if (piece == Piece::Empty) {
@@ -247,10 +247,10 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       }
         break;
       case Piece::Queen:
-      if (s.pieceColour == Color::Black) {
+      if (s.pieceColour == Colour::Black) {
         AttackedByBlack = true;
       }
-      else if (s.pieceColour == Color::White) {
+      else if (s.pieceColour == Colour::White) {
         AttackedByWhite = true;
       }
       if (piece == Piece::Empty) {
@@ -284,40 +284,40 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       if (s.piece == Piece::Knight) {
         if (s.direction == Direction::N) {
           if ((d == Direction::NW) || (d == Direction::NE)) {
-            if (s.pieceColour == Color::Black) {
+            if (s.pieceColour == Colour::Black) {
               AttackedByBlack = true;
             }
-            else if (s.pieceColour == Color::White) {
+            else if (s.pieceColour == Colour::White) {
               AttackedByWhite = true;
             }
           }
         }
         else if (s.direction == Direction::S) {
           if ((d == Direction::SW) || (d == Direction::SE)) {
-            if (s.pieceColour == Color::Black) {
+            if (s.pieceColour == Colour::Black) {
               AttackedByBlack = true;
             }
-            else if (s.pieceColour == Color::White) {
+            else if (s.pieceColour == Colour::White) {
               AttackedByWhite = true;
             }
           }
         }
         else if ( s.direction == Direction::W) {
           if ((d == Direction::SW) || (d == Direction::NW)) {
-            if (s.pieceColour == Color::Black) {
+            if (s.pieceColour == Colour::Black) {
               AttackedByBlack = true;
             }
-            else if (s.pieceColour == Color::White) {
+            else if (s.pieceColour == Colour::White) {
               AttackedByWhite = true;
             }
           }
         }
         else if (s.direction == Direction::E) {
           if ((d == Direction::NE) || (d == Direction::SE)) {
-            if (s.pieceColour == Color::Black) {
+            if (s.pieceColour == Colour::Black) {
               AttackedByBlack = true;
             }
-            else if (s.pieceColour == Color::White) {
+            else if (s.pieceColour == Colour::White) {
               AttackedByWhite = true;
             }
           }
@@ -326,10 +326,10 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       else if (s.direction == d) {
         //even if there is a piece, the square is still under attack by the
         // piece who is sending the notification
-        if (s.pieceColour == Color::Black) {
+        if (s.pieceColour == Colour::Black) {
           AttackedByBlack = true;
         }
-        else if (s.pieceColour == Color::White) {
+        else if (s.pieceColour == Colour::White) {
           AttackedByWhite = true;
         }
           if (piece != Piece::Empty) {
@@ -386,10 +386,10 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         Direction reverse = getDirection(whoFrom, *this);
         //if the cell is in line with the direction of the relay
         //i.e. the direction of *this is the direction of the relay
-        if (s.pieceColour == Color::Black) {
+        if (s.pieceColour == Colour::Black) {
           AttackedByBlack = true;
         }
-        else if (s.pieceColour == Color::White) {
+        else if (s.pieceColour == Colour::White) {
           AttackedByWhite = true;
         }
         if (piece != Piece::Empty) {

@@ -7,6 +7,7 @@
 #include "square.h"
 #include "state.h"
 #include "info.h"
+using namespace std;
 
 class TextDisplay;
 template <typename InfoType, typename StateType> class Observer;
@@ -35,7 +36,7 @@ class Board {
   ~Board();
   vector<string> validMoves(Square &s) const;
   bool isPinned(Square &s);
-  bool isChecked(Color c);
+  bool isChecked(Colour c);
   void isAttacked();
   void setObserver(Observer<Info, State> *ob);
   bool isStalemate(Colour c) const;

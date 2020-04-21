@@ -27,15 +27,15 @@ void Board::init() {
       theBoard[r][c].c = c + 1;
       theBoard[r][c].isEmpty = true;
       theBoard[r][c].piece = Piece::Empty;
-      theBoard[r][c].pieceColour = Color::NoColour;
+      theBoard[r][c].pieceColour = Colour::NoColour;
       if (c % 2 == 0 && r % 2 == 0) {
-        theBoard[c][r].colour = Color::White;
+        theBoard[c][r].colour = Colour::White;
       } else if (c % 2 == 0 &&  r % 2 != 0) {
-        theBoard[c][r].colour = Color::Black;
+        theBoard[c][r].colour = Colour::Black;
       } else if (c % 2 != 0 &&  r % 2 == 0) {
-        theBoard[c][r].colour = Color::Black;
+        theBoard[c][r].colour = Colour::Black;
       } else {
-        theBoard[c][r].colour = Color::White;
+        theBoard[c][r].colour = Colour::White;
       }
     }
   }
@@ -73,13 +73,13 @@ bool Board::isStalemate(Colour c) const { //checks if the specified player is in
   return true;
 }
 
-bool Board::isChecked(Color c) { //checks if the specified player is in check
-  if (c == Color::White) {
+bool Board::isChecked(Colour c) { //checks if the specified player is in check
+  if (c == Colour::White) {
     if (kingLocations[0].AttackedByBlack == true) {
       return true;
     }
   }
-  else if (c == Color::Black) {
+  else if (c == Colour::Black) {
     if (kingLocations[1].AttackedByWhite == true) {
       return true;
     }
@@ -111,13 +111,13 @@ bool Board::isPinned(Square &s) {
     return false;
   }
   int PieceColour = 2;
-  if (s.pieceColour == Color::White) {
+  if (s.pieceColour == Colour::White) {
     PieceColour = 0;
   }
-  else if (s.pieceColour == Color::Black) {
+  else if (s.pieceColour == Colour::Black) {
     PieceColour = 1;
   }
-  else if (s.pieceColour == Color::NoColour) {
+  else if (s.pieceColour == Colour::NoColour) {
     return false;
   }
   if (s.r == kingLocations[PieceColour].r) { //if on equal row
@@ -243,7 +243,7 @@ vector<string> Board::validMoves(Square &s) const {
     return moves;
   }
   if (s.piece == Piece::Pawn) { //pawn legal moves
-    if (s.pieceColour == Color::Black) {
+    if (s.pieceColour == Colour::Black) {
       if (s.c > 0) {
         if ((this->theBoard[s.r - 2][s.c - 1]).piece == Piece::Empty) {
           string s = " ";
@@ -301,7 +301,7 @@ vector<string> Board::validMoves(Square &s) const {
         }
       }
     }
-    else if (s.pieceColour == Color::White) {
+    else if (s.pieceColour == Colour::White) {
       if ((this->theBoard[s.r][s.c - 1]).piece == Piece::Empty) {
         string s = " ";
         s[0] = convert(s.c);
@@ -572,7 +572,7 @@ vector<string> Board::validMoves(Square &s) const {
   }
   else if (s.piece == Piece::King) { //King legal moves
     isAttacked();
-    if (s.pieceColour == Color::White) { //White King
+    if (s.pieceColour == Colour::White) { //White King
       if (s.r <= 7) { //moving up with the king
         if ((theBoard[s.r][(s.c - 1)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 1)].AttackedByBlack == false)) {
           string s = " ";
@@ -719,7 +719,7 @@ vector<string> Board::validMoves(Square &s) const {
         }
       }
     }
-    else if (s.pieceColour == Color::Black) { //Black King
+    else if (s.pieceColour == Colour::Black) { //Black King
       if (s.r <= 7) { //moving up with the king
         if ((theBoard[s.r][(s.c - 1)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 1)].AttackedByWhite == false)) {
           string s = " ";
@@ -1228,7 +1228,7 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
                     for (int posSize = 0; posSize < possibleMoves.size(); posSize++) {
                       for (int trial = 0; trial < inbetweenSize; trial ++) {
                         if (possibleMoves[posSize] == inbetween[trial]) {
-                          return Color::NoColour;
+                          return Colour::NoColour;
                         }
                       }
                     }
@@ -1255,14 +1255,14 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
                     for (int posSize = 0; posSize < possibleMoves.size(); posSize++) {
                       for (int trial = 0; trial < inbetweenSize; trial ++) {
                         if (possibleMoves[posSize] == inbetween[trial]) {
-                          return Color::NoColour;
+                          return Colour::NoColour;
                         }
                       }
                     }
                   }
                 }
               }
-              return Color::White;
+              return Colour::White;
             }
 
             if (checkingPiece == Piece::Queen) {
@@ -1291,14 +1291,14 @@ Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns w
                       for (int posSize = 0; posSize < possibleMoves.size(); posSize++) {
                         for (int trial = 0; trial < inbetweenSize; trial ++) {
                           if (possibleMoves[posSize] == inbetween[trial]) {
-                            return Color::NoColour;
+                            return Colour::NoColour;
                           }
                         }
                       }
                     }
                   }
                 }
-                return Color::White;
+                return Colour::White;
               }
             }
           }
