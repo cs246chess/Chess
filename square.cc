@@ -11,7 +11,7 @@ int abso(int x) {
   return x;
 }
 
-bool getAttacked(Colour c) {
+bool Square::getAttacked(Colour c) {
   if (c == Colour::Black) {
     return this->AttackedByBlack;
   }
