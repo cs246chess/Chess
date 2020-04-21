@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   Board b;
   float whiteScore = 0;
   float blackScore = 0;
-  int checkturn = -1;
+  int checkturn = 0;
   try {
     while (true) {
       cin >> cmd;
@@ -31,12 +31,13 @@ int main(int argc, char *argv[]) {
         cin >> p1;
         cin >> p2;
         b.init();
+        checkturn = 0;
       }
       else if (cmd == resign) {
         if (checkturn == 0) {
-          cout << "White wins" << endl;
-        } else {
           cout << "Black wins" << endl;
+        } else {
+          cout << "White wins" << endl;
         }
       }
       else if (cmd == "move") {
@@ -56,13 +57,16 @@ int main(int argc, char *argv[]) {
           if (b.isCheckmate(currentSquarecol) == Color::Black) {
             blackScore++;
             b.init();
+            checkturn = 0;
           } else if (b.isCheckmate(currentSquarecol) == Color::White) {
             whiteScore++;
             b.init();
+            checkturn = 0;
           } else if (b.isStalemate(currentSquarecol)) {
             blackScore+= 0.5;
             whiteScore+= 0.5;
             b.init();
+            checkturn = 0;
           } else {
             continue;
           }
@@ -121,7 +125,11 @@ int main(int argc, char *argv[]) {
             } else if (operator == "-") {
               cin >> move_to_row >> move_to_col;
               int colto = move_to_col - 'a';
-              b.setPiece(move_to_row, colto, Color::Black, Piece::Empty);
+              if (checkturn == 0) {
+                b.setPiece(move_to_row, colto, Color::White, Piece::Empty);
+              } else {
+                b.setPiece(move_to_row, colto, Color::Black, Piece::Empty);
+              }
             } else if (operator == "="){
               cin >> colorc;
               if (colorc == "Black") {
