@@ -115,16 +115,18 @@ void Board::init() {
 }
 
 void Board::setPiece(int r, int c, Colour colour, Piece piece) {
-  theBoard[r-1][c-1].setPiece(piece, colour);
+  theBoard[r-1][c-1].piece = piece;
+  theBoard[r-1][c-1].pieceColour = colour;
+  theBoard[r-1][c-1].notifyObservers();
   td->notify(theBoard[r-1][c-1]);
 }
 
-void Board::setObserver(GraphicsDisplay *ob) {
+void Board::setObserver(Observer<Info, State> *ob) {
   this->gd = ob;
 }
 
 
-bool Board::isStalemate(Colour c) { //checks if the specified player is in stalemate
+bool Board::isStalemate(Colour c) const { //checks if the specified player is in stalemate
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (theBoard[i][j].pieceColour == c) {
@@ -156,7 +158,7 @@ bool Board::isChecked(Colour c) { //checks if the specified player is in check
   return false;
 }
 
-bool Board::isAttacked() {
+void Board::isAttacked() {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       theBoard[i][j].AttackedByBlack = false;
@@ -1193,7 +1195,7 @@ vector<string> Board::validMoves(Square s) {
   return moves;
 }
 
-Colour Board::isCheckmate(Colour c) { // is there checkmate? and returns who won if so
+Colour Board::isCheckmate(Colour c) const { // is there checkmate? and returns who won if so
   if (c == Colour::Black) {
     string pos = kingLocations[1]; //black king loccation
     int kingrow = convertBackwards(pos[0]); //black king row
