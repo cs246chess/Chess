@@ -1,5 +1,7 @@
 #ifndef _OBSERVER_H_
 #define _OBSERVER_H_
+#include "info.h"
+#include "state.h"
 
 template <typename InfoType, typename StateType> class Subject;
 class Square;
