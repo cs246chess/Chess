@@ -50,23 +50,26 @@ int main(int argc, char *argv[]) {
         int colfrom = move_from_col - 'a';
         int colto = move_to_col - 'a';
         Square currentSquare = b.theBoard[colfrom][move_from_row];
-        Colour currentSquarecol = currentSquare[colfrom][move_from_row].getInfo().colour;
+        Colour currentSquarecol = currentSquare.getInfo().colour;
 	int inlist = 0;
-	for (int i = 0; i < currentSquare.validMoves().size(); i++) {
+  int posMoveSize = b.validMoves(currentSquare).size();
+	for (int i = 0; i < posMoveSize ; i++) {
 		string row = to_string(move_to_row);
 		string col = to_string(move_to_col);
 		string rowcol = row + col;
-		if (rowcol == currentSquare.validMoves()[i]) {
+		if (rowcol == b.validMoves(currentSquare)[i]) {
 			inlist++;
 		} else {
 			inlist+=0;
 		}
 	}
-        if (inlist > 0
-            && (currentSquarecol == Colour::White && checkturn == 0)
+        if ((inlist > 0
+            && (currentSquarecol == Colour::White && checkturn == 0))
             || (currentSquarecol == Colour::Black && checkturn == 1)) {
           b.setPiece(move_to_row, colto, currentSquarecol, currentSquare.getInfo().piece);
           b.setPiece(move_from_row, colfrom, Colour::NoColour, Piece::Empty);
+          string row = to_string(move_to_row);
+      		string col = to_string(move_to_col);
           string rowprev = to_string(move_from_col);
           string colprev = to_string(move_from_col);
           string last_move = colprev + rowprev + row + col;
@@ -95,7 +98,6 @@ int main(int argc, char *argv[]) {
               b.hasBlackRookHMoved = true;
             }
           }
-          if ()
           if (b.isCheckmate(currentSquarecol) == Colour::Black) {
             blackScore++;
             b.init();
