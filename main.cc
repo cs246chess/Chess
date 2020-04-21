@@ -51,21 +51,51 @@ int main(int argc, char *argv[]) {
         int colto = move_to_col - 'a';
         Square currentSquare = b.theBoard[colfrom][move_from_row];
         Colour currentSquarecol = currentSquare[colfrom][move_from_row].getInfo().colour;
-	      int inlist = 0;
-	      for (int i = 0; i < currentSquare.validMoves().size(); i++) {
-		        string row = to_string(move_to_row);
-		        string col = to_string(move_to_col);
-		        string rowcol = row + col;
-		        if (rowcol == currentSquare.validMoves()[i]) {
-			           inlist++;
-		        } else {
-			           inlist+=0;
-		        }
-        }
+	int inlist = 0;
+	for (int i = 0; i < currentSquare.validMoves().size(); i++) {
+		string row = to_string(move_to_row);
+		string col = to_string(move_to_col);
+		string rowcol = row + col;
+		if (rowcol == currentSquare.validMoves()[i]) {
+			inlist++;
+		} else {
+			inlist+=0;
+		}
+	}
         if (inlist > 0
             && (currentSquarecol == Colour::White && checkturn == 0)
             || (currentSquarecol == Colour::Black && checkturn == 1)) {
           b.setPiece(move_to_row, colto, currentSquarecol, currentSquare.getInfo().piece);
+          b.setPiece(move_from_row, colfrom, Colour::NoColour, Piece::Empty);
+          string rowprev = to_string(move_from_col);
+          string colprev = to_string(move_from_col);
+          string last_move = colprev + rowprev + row + col;
+          b.lastMove = last_move;
+          if (currentSquare.getInfo().piece == Piece::King) {
+            if (currentSquare.getInfo().pieceColour == Colour::White) {
+              b.hasWhiteKingMoved = true;
+            }
+            else if (currentSquare.getInfo().pieceColour == Colour::Black) {
+              b.hasBlackKingMoved = true;
+            }
+          }
+          else if ((currentSquare.getInfo().piece == Piece::Rook) && (move_from_col == 'a')) {
+            if (currentSquare.getInfo().pieceColour == Colour::White) {
+              b.hasWhiteRookAMoved = true;
+            }
+            else if (currentSquare.getInfo().pieceColour == Colour::Black) {
+              b.hasBlackRookAMoved = true;
+            }
+          }
+          else if ((currentSquare.getInfo().piece == Piece::Rook) && (move_from_col == 'h')) {
+            if (currentSquare.getInfo().pieceColour == Colour::White) {
+              b.hasWhiteRookHMoved = true;
+            }
+            else if (currentSquare.getInfo().pieceColour == Colour::Black) {
+              b.hasBlackRookHMoved = true;
+            }
+          }
+          if ()
           if (b.isCheckmate(currentSquarecol) == Colour::Black) {
             blackScore++;
             b.init();
