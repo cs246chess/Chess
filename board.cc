@@ -130,7 +130,7 @@ bool Board::isStalemate(Colour c) const { //checks if the specified player is in
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (theBoard[i][j].pieceColour == c) {
-        vector<string> moves = validMoves(&theBoard[i][j]);
+        vector<string> moves = validMoves(theBoard[i][j]);
         if (moves.size() != 0) {
           return false;
         }
@@ -142,14 +142,14 @@ bool Board::isStalemate(Colour c) const { //checks if the specified player is in
 
 bool Board::isChecked(Colour c) { //checks if the specified player is in check
   if (c == Colour::White) {
-    string pos = kingLocation[0];
+    string pos = kingLocations[0];
     int row = pos[1];
     if (theBoard[row - 1][convertBackwards(pos[0] ) - 1].AttackedByBlack == true) {
       return true;
     }
   }
   else if (c == Colour::Black) {
-    string pos = kingLocation[1];
+    string pos = kingLocations[1];
     int row = pos[1];
     if (theBoard[row - 1][convertBackwards(pos[0]) - 1].AttackedByWhite == true) {
       return true;
@@ -167,11 +167,6 @@ bool Board::isAttacked() {
   }
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      State newS;
-      newS.type = StateType::MovedPiece;
-      newS.pieceColour = s.pieceColour;
-      newS.piece = s.piece;
-      s.setState(newS);
       notifyObservers();
     }
   }
@@ -191,7 +186,7 @@ bool Board::isPinned(Square s) {
   else if (s.pieceColour == Colour::NoColour) {
     return false;
   }
-  int kingco1 = kingLocations[PieceColour][1];
+  int kingcol = kingLocations[PieceColour][1];
   if (s.r == convertBackwards(kingLocations[PieceColour][0])) { //if on equal row
     if (s.c > kingcol) {
       for (int i = (kingcol); i < s.c - 1; i++) {
@@ -310,9 +305,9 @@ bool Board::isPinned(Square s) {
   return false;
 }
 
-vector<string> Board::validMoves(Square s) const {
+vector<string> Board::validMoves(Square s) {
   vector<string> moves;
-  if (isPinned(s)) {
+  if (this->isPinned(s)) {
     return moves;
   }
   if (s.piece == Piece::Pawn) { //pawn legal moves

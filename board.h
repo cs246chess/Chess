@@ -37,7 +37,7 @@ class Board {
    bool hasBlackRookAMoved;
    bool hasBlackRookHMoved;
   ~Board();
-  vector<string> validMoves(Square s) const; //returns a vector containing all valid squares the passed piece can move to
+  vector<string> validMoves(Square s); //returns a vector containing all valid squares the passed piece can move to
   bool isPinned(Square s);
   bool isChecked(Colour c);
   bool isAttacked();
