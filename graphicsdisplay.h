@@ -20,9 +20,9 @@ class GraphicsDisplay: public Observer<Info, State> {
   Xwindow gd;
  public:
   GraphicsDisplay();
-  void notify(Subject<Info, State> &whoNotified) override;
+  void notify(Subject<Info, S+tate> &whoNotified) override;
   ~GraphicsDisplay();
-  
+
 };
 
 
