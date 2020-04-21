@@ -7,6 +7,7 @@
 #include "square.h"
 #include "state.h"
 #include "info.h"
+#include "textdisplay.h"
 using namespace std;
 
 class TextDisplay;

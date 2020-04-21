@@ -8,7 +8,7 @@ class Square : public Subject<Info, State>, public Observer<Info, State> {
 
   public:
   const int r, c;
-  Piece p;
+  Piece piece;
   Colour colour;
   bool isEmpty;
   Colour pieceColour; //colour of PIECE
