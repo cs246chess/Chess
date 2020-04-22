@@ -4,6 +4,7 @@
 #include "subject.h"
 #include "observer.h"
 #include "info.h"
+#include <iostream>
 
 class Square : public Subject<Info, State>, public Observer<Info, State> {
 
