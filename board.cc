@@ -29,7 +29,6 @@ void Board::init() {
 
   theBoard.clear();
   theBoard.resize(8); //resize board vector to hold 8 ranks/rows
-  cout << "Size:" << size << endl;
   for (int r = 0; r < 8; r++) {
     for (int c = 0; c < 8; c++) {
       //create board by pushing back squares of appropriate color
@@ -48,7 +47,6 @@ void Board::init() {
       }
     }
   }
-  cout << "Size:" << size << endl;
   //attach observers
   for (int i = 0; i < size; i++) {
       for (int j = 0; j < size; j++) {

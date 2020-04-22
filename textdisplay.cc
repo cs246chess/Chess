@@ -25,8 +25,8 @@ TextDisplay::TextDisplay() {
 }
 
 void TextDisplay::notify(Subject<Info, State> &whoFrom) {
-  int row = whoFrom.getInfo().row;
-  int col = whoFrom.getInfo().col;
+  int col = whoFrom.getInfo().row;
+  int row = whoFrom.getInfo().col;
   Colour colour = whoFrom.getInfo().pieceColour;
   Piece piece = whoFrom.getInfo().piece;
   if (colour == Colour::Black) {
