@@ -103,7 +103,8 @@ void GraphicsDisplay::notify(Subject<Info, State> &whoNotified) {
       gd.fillRectangle(50 * row, 200, 250, 250, Xwindow::Yellow);
     }
   }
-};
+  cout << "I have GD" << endl;
+}
 
 
 GraphicsDisplay::~GraphicsDisplay() {}
