@@ -151,37 +151,116 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
   Info i = whoFrom.getInfo();
   State s = whoFrom.getState();
   //testing messages
-  /*if (i.colour == Colour::NoColour) {
-      cout << "Empty ";
+  if (i.colour == Colour::Black) {
+      cout << "Black Square with a ";
   }
   else if (i.colour == Colour::White) {
+      cout << "White Square with a ";
+  }
+  else  {
+      cout << "something went wrong ";
+  }
+  if (i.pieceColour == Colour::Black) {
+      cout << "Black ";
+  }
+  else if (i.pieceColour == Colour::White) {
       cout << "White ";
   }
   else  {
-      cout << "Black ";
+      cout << "something went wrong ";
   }
 
+  switch (i.piece) {
+    case Piece::Knight: {
+      cout << "Knight" << endl;
+      break;
+    }
+    case Piece::Queen: {
+      cout << "Queen" << endl;
+      break;
+    }
+    case Piece::Pawn: {
+      cout << "Pawn" << endl;
+      break;
+    }
+    case Piece::Rook: {
+      cout << "Rook" << endl;
+      break;
+    }
+    case Piece::King: {
+      cout << "King" << endl;
+      break;
+    }
+    case Piece::Empty: {
+      cout << "NoPiece" << endl;
+      break;
+    }
+    default: {
+      cout << "huh" << endl;
+    }
+  }
+  cout << "carrying a message of a ";
   if (s.type == StateType::NewPiece) {
-      cout << "NewPiece ";
+      cout << "NewPiece.";
   }
   else if (s.type == StateType::Relay) {
-      cout << "Relay ";
+      cout << "Relay.";
   }
   else  {
-      cout << "Reply ";
+      cout << "Reply.";
   }
-  cout << "Cell at " << i.row << " " << i.col << " called ";
-  if (colour == Colour::NoColour) {
-      cout << "Empty ";
+
+  cout << "The Square at " << i.row << " " << i.col << " called a ";
+  if (colour == Colour::Black) {
+      cout << "Black ";
   }
   else if (colour == Colour::White) {
       cout << "White ";
   }
   else  {
-      cout << "Black ";
+      cout << "something went wrong in notify ";
   }
-  cout << "Cell at " << r << " " << c << endl;
-  */
+  cout << "Square at " << r << " " << c << endl;
+  cout << "with a ";
+  if (pieceColour == Colour::Black) {
+      cout << "Black "";
+  }
+  else if (pieceColour == Colour::White) {
+      cout << "White ";
+  }
+  else  {
+      cout << "piece colour was set to nocolour";
+  }
+  switch (piece) {
+    case Piece::Knight: {
+      cout << "Knight" << endl;
+      break;
+    }
+    case Piece::Queen: {
+      cout << "Queen" << endl;
+      break;
+    }
+    case Piece::Pawn: {
+      cout << "Pawn" << endl;
+      break;
+    }
+    case Piece::Rook: {
+      cout << "Rook" << endl;
+      break;
+    }
+    case Piece::King: {
+      cout << "King" << endl;
+      break;
+    }
+    case Piece::Empty: {
+      cout << "NoPiece" << endl;
+      break;
+    }
+    default: {
+      cout << "huh" << endl;
+    }
+  }
+
   if (s.type == StateType::MovedPiece) {//neighbour just moved to the square, check if we need to pass more messages on
     Direction d = getDirection(*this, whoFrom);
       if (s.piece == Piece::Knight) {
