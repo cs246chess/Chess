@@ -440,7 +440,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         }
         //king follows the same idea as the pawn, so no need to
         // recalculate the king's squares it is attacking
-        if (piece == Piece::King) {0
+        if (piece == Piece::King) {
           //do nothing
         }
         //Queen may be able to attack more squares than before
