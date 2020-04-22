@@ -5,6 +5,7 @@
 using namespace std;
 
 TextDisplay::TextDisplay() {
+  theDisplay.resize(8);
   for (int i = 0; i < 8; i++) {
     theDisplay[i].resize(8);
   }
@@ -21,7 +22,7 @@ TextDisplay::TextDisplay() {
       }
     }
   }
-};
+}
 
 void TextDisplay::notify(Subject<Info, State> &whoFrom) {
   int row = whoFrom.getInfo().row;
