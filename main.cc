@@ -57,6 +57,8 @@ int main(int argc, char *argv[]) {
         b.setPiece(1, 6, Colour::White, Piece::Bishop);
         b.setPiece(1, 7, Colour::White, Piece::Knight);
         b.setPiece(1, 8, Colour::White, Piece::Rook);
+        b.kingLocations[0] = "e1";
+        b.kingLocations[1] = "e8";
         checkturn = 0;
         cout << b << endl;
       }
