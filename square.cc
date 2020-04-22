@@ -200,7 +200,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
     }
   }
   cout << "carrying a message of a ";
-  if (s.type == StateType::NewPiece) {
+  if (s.type == StateType::MovedPiece) {
       cout << "NewPiece.";
   }
   else if (s.type == StateType::Relay) {
@@ -223,7 +223,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
   cout << "Square at " << r << " " << c << endl;
   cout << "with a ";
   if (pieceColour == Colour::Black) {
-      cout << "Black "";
+      cout << "Black ";
   }
   else if (pieceColour == Colour::White) {
       cout << "White ";
