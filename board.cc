@@ -23,10 +23,10 @@ void Board::init() {
   TextDisplay *temp = td;
   td = new TextDisplay();
   delete temp;
-  TextDisplay *temp = gd;
+  GraphicsDisplay *temp = gd;
   gd = new GraphicsDisplay();
   delete temp;
-  
+
   theBoard.clear();
   theBoard.resize(8);
   cout << "Size:" << size << endl;
