@@ -73,6 +73,12 @@ Square::Square(int r, int c, Colour colour): r{r}, c{c}, colour{colour}, piece{p
 void Square::setPiece(Piece p, Colour c) {    // Place a piece of given colour here.
   this->piece = p;
   this->pieceColour = c;
+  State newS;
+  newS.type = StateType::MovedPiece;
+  newS.direction = Direction::N;
+  newS.pieceColour = this->pieceColour;
+  newS.piece = this->piece;
+  this->setState(newS);
   this->notifyObservers();
 }
 
