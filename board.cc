@@ -23,9 +23,9 @@ void Board::init() {
   TextDisplay *temp = td;
   td = new TextDisplay();
   delete temp;
-  GraphicsDisplay *temp = gd;
+  GraphicsDisplay *gdtemp = gd;
   gd = new GraphicsDisplay();
-  delete temp;
+  delete gdtemp;
 
   theBoard.clear();
   theBoard.resize(8);
