@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
   cin.exceptions(ios::eofbit|ios::failbit);
   string cmd;
   Board b;
-  b.kingLocations.push_back("");
-  b.kingLocations.push_back("");
+  b.kingLocations.push_back("  ");
+  b.kingLocations.push_back("  ");
   float whiteScore = 0; // keeps track of score of white set
   float blackScore = 0; // keeps track of score of black set
   int checkturn = 0; // to keep track of users turns 0 = white 1 = black
@@ -218,9 +218,9 @@ int main(int argc, char *argv[]) {
         Piece isKing = b.theBoard[move_to_row - 1][colto - 1].piece;
         if (isKing == Piece::King) {//removing king location from board
           if (b.theBoard[move_to_row - 1][colto - 1].pieceColour == Colour::White) {
-            b.kingLocations[0] = "";
+            b.kingLocations[0] = "  ";
           } else {
-            b.kingLocations[1] = "";
+            b.kingLocations[1] = "  ";
           }
         }
         b.setPiece(move_to_row, colto, Colour::NoColour, Piece::Empty);
@@ -239,7 +239,7 @@ int main(int argc, char *argv[]) {
                   countpawn++;
                 }
               }
-              if (b.kingLocations[0] != "" && b.kingLocations[1] != "" && countpawn == 0 && (!b.isChecked(Colour::White) || !b.isChecked(Colour::Black))) {
+              if (b.kingLocations[0] != "  " && b.kingLocations[1] != "  " && countpawn == 0 && (!b.isChecked(Colour::White) || !b.isChecked(Colour::Black))) {
                 break;
               } else {
                 cout << "Conditions to leave setup not met" << endl; // error message
