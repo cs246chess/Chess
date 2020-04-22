@@ -5,6 +5,7 @@
 using namespace std;
 
 TextDisplay::TextDisplay() {
+  theDisplay.resize(8);
   for (int i = 0; i < 8; i++) {
     theDisplay[i].resize(8);
   }
@@ -21,7 +22,7 @@ TextDisplay::TextDisplay() {
       }
     }
   }
-};
+}
 
 void TextDisplay::notify(Subject<Info, State> &whoFrom) {
   int row = whoFrom.getInfo().row;
@@ -81,7 +82,7 @@ void TextDisplay::notify(Subject<Info, State> &whoFrom) {
 
 std::ostream &operator<<(std::ostream &out, const TextDisplay &td) {
   for (int i = 0; i < 8; i++) {
-    out << 8 - i;
+    out << 8 - i << " ";
     for (int j = 0; j < 8; j++) {
       out << td.theDisplay[i][j];
     }
