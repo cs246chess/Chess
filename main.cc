@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
           b.setPiece(6, i, Colour::Black, Piece::Pawn);
           b.setPiece(1, i, Colour::White, Piece::Pawn);
         }
-        b.setPiece(7, 0, Colour::Black, Piece::Rook);
+      /*  b.setPiece(7, 0, Colour::Black, Piece::Rook);
         b.setPiece(7, 1, Colour::Black, Piece::Knight);
         b.setPiece(7, 2, Colour::Black, Piece::Bishop);
         b.setPiece(7, 3, Colour::Black, Piece::Queen);
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
         b.setPiece(0, 4, Colour::White, Piece::King);
         b.setPiece(0, 5, Colour::White, Piece::Bishop);
         b.setPiece(0, 6, Colour::White, Piece::Knight);
-        b.setPiece(0, 7, Colour::White, Piece::Rook);
+        b.setPiece(0, 7, Colour::White, Piece::Rook);*/
         checkturn = 0;
         cout << b << endl;
       }
