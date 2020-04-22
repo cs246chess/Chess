@@ -140,7 +140,10 @@ int main(int argc, char *argv[]) {
             string colorc;
             cin >> op;
             if (op == "+") {
-              cin >> p >> move_to_row >> move_to_col;
+              cin >> p;
+              cin >> op;
+              move_to_row = op[1];
+              move_to_col = convertBackwards(op[0]);
               int colto = move_to_col - 'a';
               if (p == "k") {
 		      b.setPiece(move_to_row, colto, Colour::Black, Piece::King);
