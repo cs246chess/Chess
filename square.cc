@@ -178,8 +178,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
   */
   if (s.type == StateType::MovedPiece) {//neighbour just moved to the square, check if we need to pass more messages on
     Direction d = getDirection(*this, whoFrom);
-    switch(s.piece) {
-      case Piece::Knight:
+      if (s.piece == Piece::Knight) {
       if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
         State newS;
         newS.type = StateType::Relay;
@@ -189,8 +188,8 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         this->setState(newS);
         notifyObservers();
       }
-        break;
-      case Piece::Pawn:
+    }
+    else if (s.piece == Piece::Pawn) {
       if (((d == Direction::NE) || (d == Direction::NW)) && (s.pieceColour == Colour::White)) {
         AttackedByWhite = true;
       }
@@ -205,8 +204,8 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         else {
           AttackedByBlack = true;
         }
-        break;
-      case Piece::Bishop:
+      }
+      else if (s.piece == Piece::Bishop) {
         //find the direction of the new piece
         if ((d == Direction::NE) || (d == Direction::NW) || (d == Direction::SE) || (d == Direction::SW)) {
           if (s.pieceColour == Colour::Black) {
@@ -228,8 +227,8 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
             //do nothing
           }
         }
-        break;
-      case Piece::Rook:
+      }
+      else if (s.piece == Piece::Rook) {
       if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
         if (s.pieceColour == Colour::Black) {
           AttackedByBlack = true;
@@ -250,8 +249,8 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
           //do nothing
         }
       }
-        break;
-      case Piece::Queen:
+    }
+      else if (s.piece == Piece::Queen) {
       if (s.pieceColour == Colour::Black) {
         AttackedByBlack = true;
       }
@@ -270,8 +269,8 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       else {
         //do nothing
       }
-      break;
-      case Piece::Empty:
+    }
+      else if (s.piece == Piece::Empty) {
       State newS;
       newS.type = StateType::Relay;
       newS.direction = d;
@@ -338,44 +337,40 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
           AttackedByWhite = true;
         }
         if (piece != Piece::Empty) {
-            switch (piece) {
-              case Piece::Pawn: {
-                break;
+              if (piece == Piece::Pawn) {
+                //do nothing
               }
               //Bishop may be able to attack more squares, so reply is needed
-              case Piece::Bishop: {
+              if (piece == Piece::Bishop) {
                 State newS;
                 newS.type = StateType::Reply;
                 newS.direction = reverse;
                 newS.pieceColour = pieceColour;
                 this->setState(newS);
                 notifyObservers();
-                break;
               }
               //king follows the same idea as the pawn, so no need to
               // recalculate the king's squares it is attacking
-              case Piece::King: {
-                break;
+              if (piece == Piece::King) {
+                //do nothing
               }
               //Queen may be able to attack more squares than before
-              case Piece::Queen: {
+              if (piece == Piece::Queen) {
                 State newS;
                 newS.type = StateType::Reply;
                 newS.direction = reverse;
                 newS.pieceColour = pieceColour;
                 this->setState(newS);
                 notifyObservers();
-              break;
               }
               //Rook may be able to attack more squares than before
-              case Piece::Rook: {
+              if (piece == Piece::Rook) {
                 State newS;
                 newS.type = StateType::Reply;
                 newS.direction = reverse;
                 newS.pieceColour = pieceColour;
                 this->setState(newS);
                 notifyObservers();
-                break;
               }
             }
           }
