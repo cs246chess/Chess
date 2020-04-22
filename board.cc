@@ -30,16 +30,16 @@ void Board::init() {
   for (int r = 0; r < 8; r++) {
     for (int c = 0; c < 8; c++) {
       if (c % 2 == 0 && r % 2 == 0) {
-        theBoard[r].push_back(Square(r, c, Colour::White));
+        theBoard[r].push_back(Square(r, c, Colour::Black));
       }
       else if (c % 2 == 0 &&  r % 2 != 0) {
-        theBoard[r].push_back(Square(r, c, Colour::Black));
+        theBoard[r].push_back(Square(r, c, Colour::White));
       }
       else if (c % 2 != 0 &&  r % 2 == 0) {
-        theBoard[r].push_back(Square(r, c, Colour::Black));
+        theBoard[r].push_back(Square(r, c, Colour::White);
       }
       else {
-        theBoard[r].push_back(Square(r, c, Colour::White));
+        theBoard[r].push_back(Square(r, c, Colour::Black));
       }
     }
   }
