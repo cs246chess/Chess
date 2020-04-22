@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
   cin.exceptions(ios::eofbit|ios::failbit);
   string cmd;
   Board b;
-  b.kingLocations[0] = "";
-  b.kingLocations[1] = "";
+  b.kingLocations.emplace_back("");
+  b.kingLocations.emplace_back("");
   float whiteScore = 0; // keeps track of score of white set
   float blackScore = 0; // keeps track of score of black set
   int checkturn = 0; // to keep track of users turns 0 = white 1 = black
@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
         move_to_row = op[1] - '0';
         move_to_col = (convertBackwards(op[0]));
         int colto = move_to_col;
-        Piece isKing = b.theBoard[move_to_row - 1][colto - 1].piece
+        Piece isKing = b.theBoard[move_to_row - 1][colto - 1].piece;
         if (isKing == Piece::King) {//removing king location from board
           if (b.theBoard[move_to_row - 1][colto - 1].pieceColour == Colour::White) {
             b.kingLocations[0] = "";
