@@ -9,7 +9,7 @@ class Square : public Subject<Info, State>, public Observer<Info, State> {
 
   public:
   int r, c;
-  Piece piece;
+  Piece piece = Piece::Empty;
   Colour colour;
   Colour pieceColour; //colour of PIECE
   bool AttackedByWhite;
