@@ -37,30 +37,28 @@ int main(int argc, char *argv[]) {
         //delete temp;
         //screen = new GraphicsDisplay();
         b.init();
-        b.setPiece(6, i, Colour::Black, Piece::Pawn);
-        cout << b << endl;
-        for (int i = 0; i <8; i++) { // sets the initial pieces on the board when the game starts
-          b.setPiece(6, i, Colour::Black, Piece::Pawn);
+        for (int i = 1; i =<8; i++) { // sets the initial pieces on the board when the game starts
+          b.setPiece(7, i, Colour::Black, Piece::Pawn);
           cout << b << endl;
-          b.setPiece(1, i, Colour::White, Piece::Pawn);
+          b.setPiece(2, i, Colour::White, Piece::Pawn);
           cout << i << endl;
         }
-      /*  b.setPiece(7, 0, Colour::Black, Piece::Rook);
-        b.setPiece(7, 1, Colour::Black, Piece::Knight);
-        b.setPiece(7, 2, Colour::Black, Piece::Bishop);
-        b.setPiece(7, 3, Colour::Black, Piece::Queen);
-        b.setPiece(7, 4, Colour::Black, Piece::King);
-        b.setPiece(7, 5, Colour::Black, Piece::Bishop);
-        b.setPiece(7, 6, Colour::Black, Piece::Knight);
-        b.setPiece(7, 7, Colour::Black, Piece::Rook);
-        b.setPiece(0, 0, Colour::White, Piece::Rook);
-        b.setPiece(0, 1, Colour::White, Piece::Knight);
-        b.setPiece(0, 2, Colour::White, Piece::Bishop);
-        b.setPiece(0, 3, Colour::White, Piece::Queen);
-        b.setPiece(0, 4, Colour::White, Piece::King);
-        b.setPiece(0, 5, Colour::White, Piece::Bishop);
-        b.setPiece(0, 6, Colour::White, Piece::Knight);
-        b.setPiece(0, 7, Colour::White, Piece::Rook);*/
+        b.setPiece(8, 1, Colour::Black, Piece::Rook);
+        b.setPiece(8, 2, Colour::Black, Piece::Knight);
+        b.setPiece(8, 3, Colour::Black, Piece::Bishop);
+        b.setPiece(8, 4, Colour::Black, Piece::Queen);
+        b.setPiece(8, 5, Colour::Black, Piece::King);
+        b.setPiece(8, 6, Colour::Black, Piece::Bishop);
+        b.setPiece(8, 7, Colour::Black, Piece::Knight);
+        b.setPiece(8, 8, Colour::Black, Piece::Rook);
+        b.setPiece(1, 1, Colour::White, Piece::Rook);
+        b.setPiece(1, 2, Colour::White, Piece::Knight);
+        b.setPiece(1, 3, Colour::White, Piece::Bishop);
+        b.setPiece(1, 4, Colour::White, Piece::Queen);
+        b.setPiece(1, 5, Colour::White, Piece::King);
+        b.setPiece(1, 6, Colour::White, Piece::Bishop);
+        b.setPiece(1, 7, Colour::White, Piece::Knight);
+        b.setPiece(1, 8, Colour::White, Piece::Rook);
         checkturn = 0;
         cout << b << endl;
       }
