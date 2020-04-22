@@ -20,6 +20,13 @@ std::ostream &operator<<(std::ostream &out, const Board &b) {
 }
 
 void Board::init() {
+  TextDisplay *temp = td;
+  td = new TextDisplay();
+  delete temp;
+  TextDisplay *temp = gd;
+  gd = new GraphicsDisplay();
+  delete temp;
+  
   theBoard.clear();
   theBoard.resize(8);
   cout << "Size:" << size << endl;
@@ -120,8 +127,7 @@ void Board::init() {
           }
         }
     }
-    td = new TextDisplay();
-    gd = new GraphicsDisplay();
+
 }
 
 void Board::setPiece(int r, int c, Colour colour, Piece piece) {
