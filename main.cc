@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
   float whiteScore = 0;
   float blackScore = 0;
   int checkturn = 0;
+  GraphicsDisplay * screen = nullptr;
   try {
     while (true) {
       cin >> cmd;
@@ -30,6 +31,9 @@ int main(int argc, char *argv[]) {
         string p2;
         cin >> p1;
         cin >> p2;
+        GraphicsDisplay * temp = screen;
+        delete temp;
+        screen = new GraphicsDisplay();
         b.init();
         checkturn = 0;
         cout << b << endl;
