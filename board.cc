@@ -196,6 +196,7 @@ bool Board::isPinned(Square s) {
   if (s.piece == Piece::King) {//king's cant be pinned
     return false;
   }
+  //figure out which colour
   int PieceColour = 2;
   if (s.pieceColour == Colour::White) {
     PieceColour = 0;
@@ -206,15 +207,16 @@ bool Board::isPinned(Square s) {
   else if (s.pieceColour == Colour::NoColour) {//there is no piece so it's not pinned
     return false;
   }
+  //determining location of king relative to piece
   int kingcol = kingLocations[PieceColour][1] - '0';
   if (s.r == convertBackwards(kingLocations[PieceColour][0])) { //if on equal row
-    if (s.c > kingcol) {
-      for (int i = (kingcol); i < s.c - 1; i++) {
+    if (s.c > kingcol) { //if piece higher than king
+      for (int i = (kingcol); i < s.c - 1; i++) { //check inbetween king and piece
         if (theBoard[s.r - 1][i].piece != Piece::Empty) {
           return false;
         }
       }
-      for (int i = s.c; i <= 7; i++) {
+      for (int i = s.c; i <= 7; i++) { //check if piece is pinned
         if ((theBoard[s.r - 1][i].piece == Piece::Queen) || (theBoard[s.r - 1][i].piece == Piece::Rook)) {
           if ((theBoard[s.r - 1][i].pieceColour != s.pieceColour)) {
             return true;
@@ -229,13 +231,13 @@ bool Board::isPinned(Square s) {
       }
       return false;
     }
-    if (s.c < kingcol) {
-      for (int i = s.c; i < kingcol - 1; i++) {
+    if (s.c < kingcol) { // if piece lower than king
+      for (int i = s.c; i < kingcol - 1; i++) { //check inbetween
         if (theBoard[s.r - 1][i].piece != Piece::Empty) {
           return false;
         }
       }
-      for (int i = s.c - 2; i >= 0; i--) {
+      for (int i = s.c - 2; i >= 0; i--) { //check for pin
         if ((theBoard[s.r - 1][i].piece == Piece::Queen) || (theBoard[s.r - 1][i].piece == Piece::Rook)) {
           if ((theBoard[s.r - 1][i].pieceColour != s.pieceColour)) {
             return true;
@@ -252,13 +254,13 @@ bool Board::isPinned(Square s) {
     }
   }
   if (s.c == kingcol) { //if on equal column
-    if (s.r > convertBackwards(kingLocations[PieceColour][0])) {
-      for (int i = convertBackwards(kingLocations[PieceColour][0]); i < s.r - 1; i++) {
+    if (s.r > convertBackwards(kingLocations[PieceColour][0])) { //to the right
+      for (int i = convertBackwards(kingLocations[PieceColour][0]); i < s.r - 1; i++) {//check inbetween
         if (theBoard[i][s.c - 1].piece != Piece::Empty) {
           return false;
         }
       }
-      for (int i = s.r; i <= 7; i++) {
+      for (int i = s.r; i <= 7; i++) {//check for pin
         if ((theBoard[i][s.c - 1].piece == Piece::Queen) || (theBoard[i][s.c - 1].piece == Piece::Rook)) {
           if ((theBoard[i][s.c - 1].pieceColour != s.pieceColour)) {
             return true;
@@ -273,13 +275,13 @@ bool Board::isPinned(Square s) {
       }
       return false;
     }
-    if (s.r < convertBackwards(kingLocations[PieceColour][0])) {
-      for (int i = s.r; i < convertBackwards(kingLocations[PieceColour][0]) - 1; i++) {
+    if (s.r < convertBackwards(kingLocations[PieceColour][0])) { //to the left of king
+      for (int i = s.r; i < convertBackwards(kingLocations[PieceColour][0]) - 1; i++) { //check inbetween
         if (theBoard[i][s.c - 1].piece != Piece::Empty) {
           return false;
         }
       }
-      for (int i = (s.r - 2); i >= 0; i--) {
+      for (int i = (s.r - 2); i >= 0; i--) { //check for pins
         if ((theBoard[i][s.c - 1].piece == Piece::Queen) || (theBoard[i][s.c - 1].piece == Piece::Rook)) {
           if ((theBoard[i][s.c - 1].pieceColour != s.pieceColour)) {
             return true;
@@ -295,18 +297,18 @@ bool Board::isPinned(Square s) {
       return false;
     }
   }
-  if (abso(s.r - convertBackwards(kingLocations[PieceColour][0])) == abso(s.c - kingcol)) {
+  if (abso(s.r - convertBackwards(kingLocations[PieceColour][0])) == abso(s.c - kingcol)) { //checks diagonal
     int constSide = (s.r - convertBackwards(kingLocations[PieceColour][0])) / abso(s.r - convertBackwards(kingLocations[PieceColour][0]));
     int constUp = (s.c - kingcol) / abso(s.c - kingcol);
     int counter = s.c - 1 + constUp;
-    for (int i = (s.r - 1 + constSide); i != (convertBackwards(kingLocations[PieceColour][0]) - 1); i = i + constSide) {
+    for (int i = (s.r - 1 + constSide); i != (convertBackwards(kingLocations[PieceColour][0]) - 1); i = i + constSide) {//checks inbetween
       if (theBoard[i][counter].piece != Piece::Empty) {
         return false;
         counter += constUp;
       }
     }
     int reverseCounter = s.c - 1 + (constUp * -1);
-    for (int i = (s.r - 1 + (constSide * - 1)); ((i >= 0) && (i <= 7)); i += (-1 * constSide)) {
+    for (int i = (s.r - 1 + (constSide * - 1)); ((i >= 0) && (i <= 7)); i += (-1 * constSide)) {//checks for pin
       if ((theBoard[i][reverseCounter].piece == Piece::Bishop) || (theBoard[i][reverseCounter].piece == Piece::Queen)) {
         if (theBoard[i][reverseCounter].pieceColour != s.pieceColour) {
           return true;
@@ -327,18 +329,18 @@ bool Board::isPinned(Square s) {
 
 vector<string> Board::validMoves(Square s) {
   vector<string> moves;
-  if (this->isPinned(s)) {
+  if (this->isPinned(s)) {//if piece is pinned, has no valid moves, so moves is empty
     return moves;
   }
   if (s.piece == Piece::Pawn) { //pawn legal moves
-    if (s.pieceColour == Colour::Black) {
-      if (s.c > 0) {
-        if ((this->theBoard[s.r - 2][s.c - 1]).piece == Piece::Empty) {
+    if (s.pieceColour == Colour::Black) {//black pawn
+      if (s.c > 1) {
+        if ((this->theBoard[s.r - 2][s.c - 1]).piece == Piece::Empty) {//moving forwards 1 space
           string spotPosition = " ";
           spotPosition[0] = convert(s.c);
           spotPosition = spotPosition + to_string(s.r - 1);
           moves.emplace_back(spotPosition);
-          if (((this->theBoard[s.r - 3][s.c - 1]).piece == Piece::Empty) && (s.r == 7)) {
+          if (((this->theBoard[s.r - 3][s.c - 1]).piece == Piece::Empty) && (s.r == 7)) {//moving forwards 2 spaces
             string spotPosition = " ";
             spotPosition[0] = convert(s.c);
             spotPosition = spotPosition + to_string(s.r - 2);
@@ -346,7 +348,7 @@ vector<string> Board::validMoves(Square s) {
           }
         }
       }
-      if ((s.c - 2) >= 0) {
+      if ((s.c - 2) >= 0) {//capturing to the left
         if ((this->theBoard[s.r - 2][s.c - 2]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r - 2][s.c - 2]).pieceColour) {
             string spotPosition = " ";
@@ -356,7 +358,7 @@ vector<string> Board::validMoves(Square s) {
           }
         }
       }
-      if (s.c <= 7) {
+      if (s.c <= 7) {//capturing to the right
         if ((this->theBoard[s.r - 2][s.c]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r - 2][s.c]).pieceColour) {
             string spotPosition = " ";
@@ -366,7 +368,7 @@ vector<string> Board::validMoves(Square s) {
           }
         }
       }
-      if (s.r == 4) {
+      if (s.r == 4) {//enpassent
         if ((convert(s.c + 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
           if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1].piece == Piece::Pawn) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1].pieceColour != s.pieceColour) {
@@ -389,20 +391,20 @@ vector<string> Board::validMoves(Square s) {
         }
       }
     }
-    else if (s.pieceColour == Colour::White) {
-      if ((this->theBoard[s.r][s.c - 1]).piece == Piece::Empty) {
+    else if (s.pieceColour == Colour::White) {//white pawn
+      if ((this->theBoard[s.r][s.c - 1]).piece == Piece::Empty) {//moving forwards one space
         string spotPosition = " ";
         spotPosition[0] = convert(s.c);
         spotPosition = spotPosition + to_string(s.r + 1);
         moves.emplace_back(spotPosition);
-        if (((this->theBoard[s.r + 1][s.c - 1]).piece == Piece::Empty) && (s.r == 2)) {
+        if (((this->theBoard[s.r + 1][s.c - 1]).piece == Piece::Empty) && (s.r == 2)) {//moving forwards 2 spaces
           string spotPosition = " ";
           spotPosition[0] = convert(s.c);
           spotPosition = spotPosition + to_string(s.r + 2);
           moves.emplace_back(spotPosition);
         }
       }
-      if ((s.c - 2) >= 0) {
+      if ((s.c - 2) >= 0) {//capturing to the left
         if ((this->theBoard[s.r][s.c - 2]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r][s.c - 2]).pieceColour) {
             string spotPosition = " ";
@@ -412,7 +414,7 @@ vector<string> Board::validMoves(Square s) {
           }
         }
       }
-      if (s.c <= 7) {
+      if (s.c <= 7) {//capturing to the right
         if ((this->theBoard[s.r - 2][s.c]).piece != Piece::Empty) {
           if (s.pieceColour != (this->theBoard[s.r - 2][s.c]).pieceColour) {
             string spotPosition = " ";
@@ -422,7 +424,7 @@ vector<string> Board::validMoves(Square s) {
           }
         }
       }
-      if (s.r == 5) {
+      if (s.r == 5) {//enpassent
         if ((convert(s.c + 1) == lastMove[2]) && (lastMove[2] == lastMove[0])) {
           if (theBoard[s.r - 1][convertBackwards(lastMove[4]) - 1].piece == Piece::Pawn) {
             if (theBoard[s.r - 1][convertBackwards(lastMove[4])].pieceColour != s.pieceColour) {
@@ -449,7 +451,7 @@ vector<string> Board::validMoves(Square s) {
   else if (s.piece == Piece::Bishop) { //Bishop legal moves
     int row = s.r - 1;
     int col = s.c - 1;
-    while ((row <= 7) && (col <= 7)) {
+    while ((row <= 7) && (col <= 7)) {//moving up right
       row++;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -471,7 +473,7 @@ vector<string> Board::validMoves(Square s) {
     }
     row = s.r - 1;
     col = s.c - 1;
-    while ((row >= 0) && (col <= 7)) {
+    while ((row >= 0) && (col <= 7)) {//moving down right
       row--;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -493,7 +495,7 @@ vector<string> Board::validMoves(Square s) {
     }
     row = s.r - 1;
     col = s.c - 1;
-    while ((row <= 7) && (col >= 0)) {
+    while ((row <= 7) && (col >= 0)) {//moving up left
       row++;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -515,7 +517,7 @@ vector<string> Board::validMoves(Square s) {
     }
     row = s.r - 1;
     col = s.c - 1;
-    while ((row >= 0) && (col >= 0)) {
+    while ((row >= 0) && (col >= 0)) {//moving down left
       row--;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -676,7 +678,7 @@ vector<string> Board::validMoves(Square s) {
             moves.emplace_back(spotPosition);
           }
         }
-        if (s.c <= 7) {
+        if (s.c <= 7) {//moving up right
           if ((theBoard[s.r][(s.c)].piece == Piece::Empty) && (theBoard[s.r][(s.c)].AttackedByBlack == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c + 1);
@@ -692,7 +694,7 @@ vector<string> Board::validMoves(Square s) {
             }
           }
         }
-        if (s.c >= 2) {
+        if (s.c >= 2) {//moving up left
           if ((theBoard[s.r][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 2)].AttackedByBlack == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c - 1);
@@ -724,7 +726,7 @@ vector<string> Board::validMoves(Square s) {
             moves.emplace_back(spotPosition);
           }
         }
-        if (s.c <= 7) {
+        if (s.c <= 7) {//moving down right
           if ((theBoard[s.r - 2][(s.c)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c)].AttackedByBlack == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c + 1);
@@ -740,7 +742,7 @@ vector<string> Board::validMoves(Square s) {
             }
           }
         }
-        if (s.c >= 2) {
+        if (s.c >= 2) {//moving down left
           if ((theBoard[s.r - 2][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c - 2)].AttackedByBlack == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c - 1);
@@ -823,7 +825,7 @@ vector<string> Board::validMoves(Square s) {
             moves.emplace_back(spotPosition);
           }
         }
-        if (s.c <= 7) {
+        if (s.c <= 7) {//moving up right
           if ((theBoard[s.r][(s.c)].piece == Piece::Empty) && (theBoard[s.r][(s.c)].AttackedByWhite == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c + 1);
@@ -839,7 +841,7 @@ vector<string> Board::validMoves(Square s) {
             }
           }
         }
-        if (s.c >= 2) {
+        if (s.c >= 2) {//moving up left
           if ((theBoard[s.r][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r][(s.c - 2)].AttackedByWhite == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c - 1);
@@ -871,7 +873,7 @@ vector<string> Board::validMoves(Square s) {
             moves.emplace_back(spotPosition);
           }
         }
-        if (s.c <= 7) {
+        if (s.c <= 7) {//moving down right
           if ((theBoard[s.r - 2][(s.c)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c)].AttackedByWhite == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c + 1);
@@ -887,7 +889,7 @@ vector<string> Board::validMoves(Square s) {
             }
           }
         }
-        if (s.c >= 2) {
+        if (s.c >= 2) {//moving down left
           if ((theBoard[s.r - 2][(s.c - 2)].piece == Piece::Empty) && (theBoard[s.r - 2][(s.c - 2)].AttackedByWhite == false)) {
             string spotPosition = " ";
             spotPosition[0] = convert(s.c - 1);
@@ -959,7 +961,7 @@ vector<string> Board::validMoves(Square s) {
     //Moving like a Bishop
     int row = s.r - 1;
     int col = s.c - 1;
-    while ((row <= 7) && (col <= 7)) {
+    while ((row <= 7) && (col <= 7)) {//moving up right
       row++;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -981,7 +983,7 @@ vector<string> Board::validMoves(Square s) {
     }
     row = s.r - 1;
     col = s.c - 1;
-    while ((row >= 0) && (col <= 7)) {
+    while ((row >= 0) && (col <= 7)) {//moving down right
       row--;
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1003,7 +1005,7 @@ vector<string> Board::validMoves(Square s) {
     }
     row = s.r - 1;
     col = s.c - 1;
-    while ((row <= 7) && (col >= 0)) {
+    while ((row <= 7) && (col >= 0)) {//moving up left
       row++;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1025,7 +1027,7 @@ vector<string> Board::validMoves(Square s) {
     }
     row = s.r - 1;
     col = s.c - 1;
-    while ((row >= 0) && (col >= 0)) {
+    while ((row >= 0) && (col >= 0)) {//moving down left
       row--;
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
@@ -1048,7 +1050,7 @@ vector<string> Board::validMoves(Square s) {
     //Moving like a Rook
     row = s.r - 1;
     col = s.c - 1;
-    while ((row <= 6)) {
+    while ((row <= 6)) {//moving up
       row++;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1068,7 +1070,7 @@ vector<string> Board::validMoves(Square s) {
       }
     }
     row = s.r;
-    while ((row >= 1)) {
+    while ((row >= 1)) { // moving down
       row--;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1088,7 +1090,7 @@ vector<string> Board::validMoves(Square s) {
       }
     }
     row = s.r;
-    while ((col <= 6)) {
+    while ((col <= 6)) { //moving right
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1108,7 +1110,7 @@ vector<string> Board::validMoves(Square s) {
       }
     }
     col = s.c;
-    while ((col >= 1)) {
+    while ((col >= 1)) { //moving left
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1132,7 +1134,7 @@ vector<string> Board::validMoves(Square s) {
   else if (s.piece == Piece::Rook) { //Rook legal moves
     int row = s.r - 1;
     int col = s.c - 1;
-    while ((row <= 6)) {
+    while ((row <= 6)) {//moving up
       row++;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1152,7 +1154,7 @@ vector<string> Board::validMoves(Square s) {
       }
     }
     row = s.r;
-    while ((row >= 1)) {
+    while ((row >= 1)) {//moving down
       row--;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1172,7 +1174,7 @@ vector<string> Board::validMoves(Square s) {
       }
     }
     row = s.r;
-    while ((col <= 6)) {
+    while ((col <= 6)) {//moving right
       col++;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1192,7 +1194,7 @@ vector<string> Board::validMoves(Square s) {
       }
     }
     col = s.c;
-    while ((col >= 1)) {
+    while ((col >= 1)) {//moving left
       col--;
       if (theBoard[row][col].piece == Piece::Empty) {
         string spotPosition = " ";
@@ -1212,7 +1214,7 @@ vector<string> Board::validMoves(Square s) {
       }
     }
   }
-  return moves;
+  return moves; //final list of legal moves
 }
 
 Colour Board::isCheckmate(Colour c) { // is there checkmate? and returns who won if so
@@ -1355,13 +1357,63 @@ Colour Board::isCheckmate(Colour c) { // is there checkmate? and returns who won
             }
 
             if (checkingPiece == Piece::Queen) {
-              if (kingrow == checkingRow) {
-
+              if (checkingCol == kingcol) {//rook is in same column as king, moving like a rook
+                if (checkingRow > kingrow) {//checking piece is above the black king (fron whites perspective)
+                  for (int i = kingrow+1; i < checkingRow; i++) {
+                    string s = " ";
+                    s[0] = convert(kingcol);
+                    s = s + to_string(i);
+                    inbetween.emplace_back(s);
+                  }
+                }
+                else {
+                  for (int i = checkingRow+1; i < kingrow; i++) {
+                    string s = " ";
+                    s[0] = convert(kingcol);
+                    s = s + to_string(i);
+                    inbetween.emplace_back(s);
+                  }
+                }
               }
-              else if (kingcol == checkingCol) {
-
+              else if (checkingRow == kingrow) {//this should already be true but i'm just making sure
+                if (checkingCol > kingcol) {//checking piece is above the black king (fron whites perspective)
+                  for (int i = kingcol+1; i < checkingCol; i++) {
+                    string s = " ";
+                    s[0] = convert(kingrow);
+                    s = s + to_string(i);
+                    inbetween.emplace_back(s);
+                  }
+                }
+                else {
+                  for (int i = checkingCol+1; i < kingcol; i++) {
+                    string s = " ";
+                    s[0] = convert(kingrow);
+                    s = s + to_string(i);
+                    inbetween.emplace_back(s);
+                  }
+                }
               }
               else {
+                std::cout << "something went terribly wrong in board.cc checkmate rook path" << std::endl;
+              }
+
+              int inbetweenSize = inbetween.size();
+              for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                  if (theBoard[i][j].pieceColour == c) {
+                    vector<string> possibleMoves = validMoves(theBoard[i][j]);
+                    int MoveListSize = possibleMoves.size();
+                    for (int posSize = 0; posSize < MoveListSize; posSize++) {
+                      for (int trial = 0; trial < inbetweenSize; trial ++) {
+                        if (possibleMoves[posSize] == inbetween[trial]) {
+                          return Colour::NoColour;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              if (abso(kingcol - checkingCol) == abso(kingrow - checkingRow)){ //moving like a bishop
                 int up = (kingcol - checkingCol) / abso(kingcol - checkingCol);
                 int side = (kingrow - checkingRow) / abso(kingrow - checkingRow);
                 int counter = checkingCol;
