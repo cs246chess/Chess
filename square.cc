@@ -418,3 +418,56 @@ Info Square::getInfo() const {
   Info i = {r, c, colour, piece, pieceColour};
   return i;
 }
+
+ostream &operator<<(ostream &out, const Square &sq) {
+  out << "Row: " << r << endl;
+  out << "Column: " << c << endl;
+  switch (piece) {
+    case Piece::Knight:
+      out << "Knight" << endl;
+      break;
+    case Piece::Queen:
+      out << "Queen" << endl;
+      break;
+    case Piece::Pawn:
+      out << "Pawn" << endl;
+      break;
+    case Piece::Rook:
+      out << "Rook" << endl;
+      break;
+    case Piece::King:
+      out << "King" << endl;
+      break;
+    case Piece::Empty:
+      out << "NoPiece" << endl;
+      break;
+    default:
+      out << "huh" << endl;
+  }
+  switch (colour) {
+    case Colour::Black:
+      out << "Black Square" << endl;
+      break;
+    case Piece::White:
+      out << "White Square" << endl;
+      break;
+    default:
+      out << "No colour square????" << endl;
+  }
+  switch (pieceColour) {
+    case Colour::Black:
+      out << "Black Piece" << endl;
+      break;
+    case Piece::White:
+      out << "White Piece" << endl;
+      break;
+    default:
+      out << "No piece/no colour piece" << endl;
+  }
+  if (AttackedByBlack) {
+    out << "Square attacked by Black" << endl;
+  }
+  if (AttackedByWhite) {
+    out << "Square attacked by White" << endl;
+  }
+}

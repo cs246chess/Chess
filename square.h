@@ -21,6 +21,7 @@ class Square : public Subject<Info, State>, public Observer<Info, State> {
   void setPiece(Piece p, Colour c);    // Place a piece of given colour here.
   void notify(Subject<Info, State> &whoFrom) override;// My neighbours will call this
   Info getInfo() const override;
+  friend std::ostream &operator<<(std::ostream &out, const Square &sq);
 };
 int abso(int x);
 #endif
