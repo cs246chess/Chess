@@ -206,7 +206,7 @@ bool Board::isPinned(Square s) {
   else if (s.pieceColour == Colour::NoColour) {//there is no piece so it's not pinned
     return false;
   }
-  int kingcol = kingLocations[PieceColour][1];
+  int kingcol = kingLocations[PieceColour][1] - '0';
   if (s.r == convertBackwards(kingLocations[PieceColour][0])) { //if on equal row
     if (s.c > kingcol) {
       for (int i = (kingcol); i < s.c - 1; i++) {
