@@ -13,8 +13,6 @@ int main(int argc, char *argv[]) {
   cin.exceptions(ios::eofbit|ios::failbit);
   string cmd;
   Board b;
-  b.kingLocations.push_back("  ");
-  b.kingLocations.push_back("  ");
   float whiteScore = 0; // keeps track of score of white set
   float blackScore = 0; // keeps track of score of black set
   int checkturn = 0; // to keep track of users turns 0 = white 1 = black
@@ -23,9 +21,6 @@ int main(int argc, char *argv[]) {
     while (true) {
       cin >> cmd;
       if (cin.eof()) {
-        cout << "Final Score:"<< endl;
-				cout << "White: " << whiteScore << endl;
-				cout << "Black: " << blackScore << endl;
 				break;
       }
       if (cmd == "game") { // initiates the chess board
@@ -65,8 +60,10 @@ int main(int argc, char *argv[]) {
       else if (cmd == "resign") { // player forfeits the match and the win goes to the opponent
         if (checkturn == 0) {
           cout << "Black wins" << endl;
+          blackScore += 1;
         } else {
           cout << "White wins" << endl;
+          whiteScore += 1;
         }
       }
       else if (cmd == "move") { // command to place chess pieces during the game
@@ -251,6 +248,9 @@ int main(int argc, char *argv[]) {
         break;
       }
     }
+    cout << "Final Score:"<< endl;
+    cout << "White: " << whiteScore << endl;
+    cout << "Black: " << blackScore << endl;
   }
   catch (ios::failure &) {}  // Any I/O failure quits
 }
