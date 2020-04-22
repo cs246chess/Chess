@@ -424,58 +424,58 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         AttackedByWhite = true;
       }
       if (piece != Piece::Empty) {
-            if (piece == Piece::Pawn) {
-              //do nothing
-            }
-            //Bishop may be able to attack more squares, so reply is needed
-            if (piece == Piece::Bishop) {
-              if ((reverse == Direction::NW) || (reverse == Direction::NE) || (reverse == Direction::SE) || (reverse == Direction::SW)) {
-                State newS;
-                newS.type = StateType::Reply;
-                newS.piece = this->piece;
-                newS.direction = reverse;
-                newS.pieceColour = pieceColour;
-                this->setState(newS);
-                notifyObservers();
-              }
-            }
-            //king follows the same idea as the pawn, so no need to
-            // recalculate the king's squares it is attacking
-            if (piece == Piece::King) {
-              //do nothing
-            }
-            //Queen may be able to attack more squares than before
-            if (piece == Piece::Queen) {
-              State newS;
-              newS.type = StateType::Reply;
-              newS.direction = reverse;
-              newS.piece = this->piece;
-              newS.pieceColour = pieceColour;
-              this->setState(newS);
-              notifyObservers();
-            }
-            //Rook may be able to attack more squares than before
-            if (piece == Piece::Rook) {
-              if ((reverse == Direction::S) || (reverse == Direction::N) || (reverse == Direction::E) || (reverse == Direction::W)) {
-                State newS;
-                newS.type = StateType::Reply;
-                newS.direction = reverse;
-                newS.piece = this->piece;
-                newS.pieceColour = pieceColour;
-                this->setState(newS);
-                notifyObservers();
-              }
-            }
+        if (piece == Piece::Pawn) {
+          //do nothing
+        }
+        //Bishop may be able to attack more squares, so reply is needed
+        if (piece == Piece::Bishop) {
+          if ((reverse == Direction::NW) || (reverse == Direction::NE) || (reverse == Direction::SE) || (reverse == Direction::SW)) {
+            State newS;
+            newS.type = StateType::Reply;
+            newS.piece = this->piece;
+            newS.direction = reverse;
+            newS.pieceColour = pieceColour;
+            this->setState(newS);
+            notifyObservers();
+          }
+        }
+        //king follows the same idea as the pawn, so no need to
+        // recalculate the king's squares it is attacking
+        if (piece == Piece::King) {
+          //do nothing
+        }
+        //Queen may be able to attack more squares than before
+        if (piece == Piece::Queen) {
+          State newS;
+          newS.type = StateType::Reply;
+          newS.direction = reverse;
+          newS.piece = this->piece;
+          newS.pieceColour = pieceColour;
+          this->setState(newS);
+          notifyObservers();
+        }
+        //Rook may be able to attack more squares than before
+        if (piece == Piece::Rook) {
+          if ((reverse == Direction::S) || (reverse == Direction::N) || (reverse == Direction::E) || (reverse == Direction::W)) {
+            State newS;
+            newS.type = StateType::Reply;
+            newS.direction = reverse;
+            newS.piece = this->piece;
+            newS.pieceColour = pieceColour;
+            this->setState(newS);
+            notifyObservers();
+          }
           }
         }
         else {    //no piece located so it just continues the relay
-            State newS;
-            newS.type = StateType::Relay;
-            newS.direction = s.direction;
-            newS.pieceColour = s.pieceColour;
-            this->setState(newS);
-            notifyObservers();
+          State newS;
+          newS.type = StateType::Relay;
+          newS.direction = s.direction;
+          newS.pieceColour = s.pieceColour;
+          this->setState(newS);
+          notifyObservers();
         }
+      }
     }
     else { //type is a reply to check for discovered checks
       Direction d = getDirection(*this, whoFrom);
