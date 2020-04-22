@@ -198,10 +198,10 @@ bool Board::isPinned(Square s) {
   }
   int PieceColour = 2;
   if (s.pieceColour == Colour::White) {
-    int PieceColour = 0;
+    PieceColour = 0;
   }
   else if (s.pieceColour == Colour::Black) {
-    int PieceColour = 1;
+    PieceColour = 1;
   }
   else if (s.pieceColour == Colour::NoColour) {//there is no piece so it's not pinned
     return false;
