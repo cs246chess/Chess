@@ -78,7 +78,8 @@ void TextDisplay::notify(Subject<Info, State> &whoFrom) {
       theDisplay[row-1][col-1] = '_';
     }
   }
-};
+  cout << "I got called" << endl;
+}
 
 std::ostream &operator<<(std::ostream &out, const TextDisplay &td) {
   for (int i = 0; i < 8; i++) {
