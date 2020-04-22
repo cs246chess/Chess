@@ -35,6 +35,26 @@ int main(int argc, char *argv[]) {
         delete temp;
         screen = new GraphicsDisplay();
         b.init();
+        for (int i = 0; i <8; i++) {
+          b.setPiece(6, i, Colour::Black, Piece::Pawn);
+          b.setPiece(1, i, Colour::White, Piece::Pawn);
+        }
+        b.setPiece(7, 0, Colour::Black, Piece::Rook);
+        b.setPiece(7, 1, Colour::Black, Piece::Knight);
+        b.setPiece(7, 2, Colour::Black, Piece::Bishop);
+        b.setPiece(7, 3, Colour::Black, Piece::Queen);
+        b.setPiece(7, 4, Colour::Black, Piece::King);
+        b.setPiece(7, 5, Colour::Black, Piece::Bishop);
+        b.setPiece(7, 6, Colour::Black, Piece::Knight);
+        b.setPiece(7, 7, Colour::Black, Piece::Rook);
+        b.setPiece(0, 0, Colour::White, Piece::Rook);
+        b.setPiece(0, 1, Colour::White, Piece::Knight);
+        b.setPiece(0, 2, Colour::White, Piece::Bishop);
+        b.setPiece(0, 3, Colour::White, Piece::Queen);
+        b.setPiece(0, 4, Colour::White, Piece::King);
+        b.setPiece(0, 5, Colour::White, Piece::Bishop);
+        b.setPiece(0, 6, Colour::White, Piece::Knight);
+        b.setPiece(0, 7, Colour::White, Piece::Rook);
         checkturn = 0;
         cout << b << endl;
       }
@@ -55,18 +75,18 @@ int main(int argc, char *argv[]) {
         int colto = move_to_col - 'a';
         Square currentSquare = b.theBoard[colfrom][move_from_row];
         Colour currentSquarecol = currentSquare.getInfo().colour;
-	int inlist = 0;
-  int posMoveSize = b.validMoves(currentSquare).size();
-	for (int i = 0; i < posMoveSize ; i++) {
-		string row = to_string(move_to_row);
-		string col = to_string(move_to_col);
-		string rowcol = row + col;
-		if (rowcol == b.validMoves(currentSquare)[i]) {
-			inlist++;
-		} else {
-			inlist+=0;
-		}
-	}
+	      int inlist = 0;
+        int posMoveSize = b.validMoves(currentSquare).size();
+	      for (int i = 0; i < posMoveSize ; i++) {
+		        string row = to_string(move_to_row);
+		        string col = to_string(move_to_col);
+		        string rowcol = row + col;
+		        if (rowcol == b.validMoves(currentSquare)[i]) {
+			           inlist++;
+		        } else {
+			           inlist+=0;
+		        }
+	      }
         if ((inlist > 0
             && (currentSquarecol == Colour::White && checkturn == 0))
             || (currentSquarecol == Colour::Black && checkturn == 1)) {
@@ -140,7 +160,10 @@ int main(int argc, char *argv[]) {
             string colorc;
             cin >> op;
             if (op == "+") {
-              cin >> p >> move_to_row >> move_to_col;
+              cin >> p;
+              cin >> op;
+              move_to_row = op[1];
+              move_to_col = convertBackwards(op[0]);
               int colto = move_to_col - 'a';
               if (p == "k") {
 		      b.setPiece(move_to_row, colto, Colour::Black, Piece::King);
