@@ -51,7 +51,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j+1]);
               theBoard[i][j].attach(&theBoard[i+1][j]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  3"<<endl;
           }
           else if (i == 0 && j == (size-1)) {//bottom right corner
@@ -59,7 +59,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j-1]);
               theBoard[i][j].attach(&theBoard[i+1][j]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  3"<<endl;
           }
           else if (i == size-1 && j == 0) {//top left corner
@@ -67,7 +67,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(&theBoard[i][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  3"<<endl;
           }
           else if (i == size-1 && j == size-1)  {//top right corner
@@ -75,7 +75,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i-1][j-1]);
               theBoard[i][j].attach(&theBoard[i][j-1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  3"<<endl;
           }
           else if (i == 0) {//bottom edge
@@ -85,7 +85,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j]);
               theBoard[i][j].attach(&theBoard[i+1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  5"<<endl;
           }
           else if (i == size-1) {//top edge
@@ -95,7 +95,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i-1][j]);
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  5"<<endl;
           }
           else if (j == 0) {//left edge
@@ -105,7 +105,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j+1]);
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  5"<<endl;
           }
           else if (j == size-1) {//right edge
@@ -115,7 +115,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j-1]);
               theBoard[i][j].attach(&theBoard[i-1][j-1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  5"<<endl;
           }
           else {//cell is surrounded by 8 cells
@@ -128,7 +128,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i-1][j]);
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+            //  theBoard[i][j].attach(gd);
               cout << "Row:" << i << "  Col:" << j << "  8"<<endl;
           }
         }
@@ -141,9 +141,9 @@ void Board::setPiece(int r, int c, Colour colour, Piece p) {
   td->notify(theBoard[r-1][c-1]);
 }
 
-void Board::setObserver(GraphicsDisplay *ob) {
+/*void Board::setObserver(GraphicsDisplay *ob) {
   this->gd = ob;
-}
+}*/
 
 
 bool Board::isStalemate(Colour c) { //checks if the specified player is in stalemate
