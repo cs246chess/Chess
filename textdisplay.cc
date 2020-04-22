@@ -81,9 +81,9 @@ void TextDisplay::notify(Subject<Info, State> &whoFrom) {
 }
 
 std::ostream &operator<<(std::ostream &out, const TextDisplay &td) {
-  for (int i = 7; i >= 0; i--) {
-    out << i + 1 << " ";
-    for (int j = 0; j < 8; j++) {
+  for (int i = 0; i < 8; i++) {
+    out << 8 - i << " ";
+    for (int j = 7; j >= 0; j--) {
       out << td.theDisplay[i][j];
     }
     out << endl;
