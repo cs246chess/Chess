@@ -162,9 +162,9 @@ int main(int argc, char *argv[]) {
             if (op == "+") {
               cin >> p;
               cin >> op;
-              move_to_row = op[1];
+              move_to_row = op[1] - '0';
               move_to_col = convertBackwards(op[0]);
-              int colto = move_to_col - 'a';
+              int colto = move_to_col;
               if (p == "k") {
 		      b.setPiece(move_to_row, colto, Colour::Black, Piece::King);
               } else if (p == "q") {
@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
             } else if (op == "done") {
               int countpawn = 0;
               for (int i = 0; i < 8; i++) {
-                if (b.theBoard[0][i].getInfo().piece == Piece::Pawn || b.theBoard[8][i].getInfo().piece == Piece::Pawn) {
+                if (b.theBoard[0][i].getInfo().piece == Piece::Pawn || b.theBoard[7][i].getInfo().piece == Piece::Pawn) {
                   countpawn++;
                 }
               }
