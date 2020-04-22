@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i <8; i++) { // sets the initial pieces on the board when the game starts
           b.setPiece(6, i, Colour::Black, Piece::Pawn);
           b.setPiece(1, i, Colour::White, Piece::Pawn);
+          cout << i << endl;
         }
       /*  b.setPiece(7, 0, Colour::Black, Piece::Rook);
         b.setPiece(7, 1, Colour::Black, Piece::Knight);
