@@ -27,7 +27,7 @@ TextDisplay::TextDisplay() {
 void TextDisplay::notify(Subject<Info, State> &whoFrom) {
   int row = whoFrom.getInfo().row;
   int col = whoFrom.getInfo().col;
-  Colour colour = whoFrom.getInfo().colour;
+  Colour colour = whoFrom.getInfo().pieceColour;
   Piece piece = whoFrom.getInfo().piece;
   if (colour == Colour::Black) {
     if (piece == Piece::Pawn) {
@@ -69,20 +69,20 @@ void TextDisplay::notify(Subject<Info, State> &whoFrom) {
     }
   } else {
     if (row % 2 == 0 && col % 2 == 0) {
-      theDisplay[row-1][col-1] = ' ';
+      theDisplay[row-1][col-1] = '_';
     } else if (row % 2 == 0 &&  col % 2 != 0) {
-      theDisplay[row-1][col-1] = '_';
-    } else if (row % 2 != 0 &&  col % 2 == 0) {
-      theDisplay[row-1][col-1] = '_';
-    } else {
       theDisplay[row-1][col-1] = ' ';
+    } else if (row % 2 != 0 &&  col % 2 == 0) {
+      theDisplay[row-1][col-1] = ' ';
+    } else {
+      theDisplay[row-1][col-1] = '_';
     }
   }
-};
+}
 
 std::ostream &operator<<(std::ostream &out, const TextDisplay &td) {
-  for (int i = 0; i < 8; i++) {
-    out << 8 - i << " ";
+  for (int i = 7; i >= 0; i--) {
+    out << i + 1 << " ";
     for (int j = 0; j < 8; j++) {
       out << td.theDisplay[i][j];
     }

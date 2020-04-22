@@ -1,6 +1,6 @@
 #include "board.h"
 #include "textdisplay.h"
-#include "graphicsdisplay.h"
+//#include "graphicsdisplay.h"
 
 using namespace std;
 
@@ -35,16 +35,16 @@ void Board::init() {
       //create board by pushing back squares of appropriate color
       //based on the rank and column
       if (c % 2 == 0 && r % 2 == 0) {
-        theBoard[r].push_back(Square(r, c, Colour::White));
+        theBoard[r].push_back(Square(r, c, Colour::Black));
       }
       else if (c % 2 == 0 &&  r % 2 != 0) {
-        theBoard[r].push_back(Square(r, c, Colour::Black));
+        theBoard[r].push_back(Square(r, c, Colour::White));
       }
       else if (c % 2 != 0 &&  r % 2 == 0) {
-        theBoard[r].push_back(Square(r, c, Colour::Black));
+        theBoard[r].push_back(Square(r, c, Colour::White));
       }
       else {
-        theBoard[r].push_back(Square(r, c, Colour::White));
+        theBoard[r].push_back(Square(r, c, Colour::Black));
       }
     }
   }
@@ -57,28 +57,28 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j+1]);
               theBoard[i][j].attach(&theBoard[i+1][j]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else if (i == 0 && j == (size-1)) {//bottom right corner
               theBoard[i][j].attach(&theBoard[i][j-1]);
               theBoard[i][j].attach(&theBoard[i+1][j-1]);
               theBoard[i][j].attach(&theBoard[i+1][j]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else if (i == size-1 && j == 0) {//top left corner
               theBoard[i][j].attach(&theBoard[i-1][j]);
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(&theBoard[i][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else if (i == size-1 && j == size-1)  {//top right corner
               theBoard[i][j].attach(&theBoard[i-1][j]);
               theBoard[i][j].attach(&theBoard[i-1][j-1]);
               theBoard[i][j].attach(&theBoard[i][j-1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else if (i == 0) {//bottom edge
               theBoard[i][j].attach(&theBoard[i][j-1]);
@@ -87,7 +87,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j]);
               theBoard[i][j].attach(&theBoard[i+1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else if (i == size-1) {//top edge
               theBoard[i][j].attach(&theBoard[i][j-1]);
@@ -96,7 +96,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i-1][j]);
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else if (j == 0) {//left edge
               theBoard[i][j].attach(&theBoard[i+1][j]);
@@ -105,7 +105,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j+1]);
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else if (j == size-1) {//right edge
               theBoard[i][j].attach(&theBoard[i+1][j]);
@@ -114,7 +114,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i+1][j-1]);
               theBoard[i][j].attach(&theBoard[i-1][j-1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+              //theBoard[i][j].attach(gd);
           }
           else {//cell is surrounded by 8 cells
               theBoard[i][j].attach(&theBoard[i][j-1]);
@@ -126,7 +126,7 @@ void Board::init() {
               theBoard[i][j].attach(&theBoard[i-1][j]);
               theBoard[i][j].attach(&theBoard[i-1][j+1]);
               theBoard[i][j].attach(td);
-              theBoard[i][j].attach(gd);
+            //  theBoard[i][j].attach(gd);
           }
         }
     }
@@ -138,9 +138,9 @@ void Board::setPiece(int r, int c, Colour colour, Piece p) {
   td->notify(theBoard[r-1][c-1]);
 }
 
-void Board::setObserver(GraphicsDisplay *ob) {
+/*void Board::setObserver(GraphicsDisplay *ob) {
   this->gd = ob;
-}
+}*/
 
 
 bool Board::isStalemate(Colour c) { //checks if the specified player is in stalemate
@@ -1397,5 +1397,5 @@ Colour Board::isCheckmate(Colour c) { // is there checkmate? and returns who won
 
  Board::~Board() {
       delete td;
-      delete gd;
+      //delete gd;
   }

@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   float whiteScore = 0;
   float blackScore = 0;
   int checkturn = 0;
-  GraphicsDisplay * screen = nullptr;
+  //GraphicsDisplay * screen = nullptr;
   try {
     while (true) {
       cin >> cmd;
@@ -31,9 +31,9 @@ int main(int argc, char *argv[]) {
         string p2;
         cin >> p1;
         cin >> p2;
-        GraphicsDisplay * temp = screen;
-        delete temp;
-        screen = new GraphicsDisplay();
+        //GraphicsDisplay * temp = screen;
+        //delete temp;
+        //screen = new GraphicsDisplay();
         b.init();
         for (int i = 0; i <8; i++) {
           b.setPiece(6, i, Colour::Black, Piece::Pawn);
@@ -150,20 +150,20 @@ int main(int argc, char *argv[]) {
         cout << b << endl;
       }
       else if (cmd == "setup") {
+        b.init();
           while (true) {
             string op;
             string p;
-            b.init();
             cout << b << endl;
             int move_to_row;
-            char move_to_col;
+            int move_to_col;
             string colorc;
             cin >> op;
             if (op == "+") {
               cin >> p;
               cin >> op;
               move_to_row = op[1] - '0';
-              move_to_col = convertBackwards(op[0]);
+              move_to_col = (convertBackwards(op[0]));
               int colto = move_to_col;
               if (p == "k") {
 		      b.setPiece(move_to_row, colto, Colour::Black, Piece::King);
