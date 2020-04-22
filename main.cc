@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
         move_to_col = (convertBackwards(op[0]));
         int colfrom = move_from_col; // converts col from char to int
         int colto = move_to_col; // converts col to from char to int
-        Square currentSquare = b.theBoard[move_from_row - 1][colfrom - 1];
+        Square currentSquare = b.theBoard[move_from_row][colfrom];
         Colour currentSquarecol = currentSquare.getInfo().colour;
 	      int inlist = 0; // no of possible moves in validMoves
         int posMoveSize = b.validMoves(currentSquare).size();
@@ -145,6 +145,7 @@ int main(int argc, char *argv[]) {
             b.init();
             checkturn = 0;
           } else {
+            b.init();
             continue;
           }
           if (currentSquarecol == Colour::White) { // swtiches turn after a move is made
