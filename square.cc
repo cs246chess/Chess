@@ -152,7 +152,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
   Info i = whoFrom.getInfo();
   State s = whoFrom.getState();
   //testing messages
-  if (i.colour == Colour::Black) {
+  /*if (i.colour == Colour::Black) {
       cout << "Black Square with a ";
   }
   else if (i.colour == Colour::White) {
@@ -231,7 +231,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       cout << "White ";
   }
   else  {
-      cout << "piece colour was set to nocolour";
+      cout << "empty square";
   }
   switch (piece) {
     case Piece::Knight: {
@@ -261,7 +261,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
     default: {
       cout << "huh" << endl;
     }
-  }
+  } */
 
   if (s.type == StateType::MovedPiece) {//neighbour just moved to the square, check if we need to pass more messages on
     Direction d = getDirection(*this, whoFrom);
