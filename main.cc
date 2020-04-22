@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
         //delete temp;
         //screen = new GraphicsDisplay();
         b.init();
-        for (int i = 1; i =<8; i++) { // sets the initial pieces on the board when the game starts
+        for (int i = 1; i <= 8; i++) { // sets the initial pieces on the board when the game starts
           b.setPiece(7, i, Colour::Black, Piece::Pawn);
           cout << b << endl;
           b.setPiece(2, i, Colour::White, Piece::Pawn);
