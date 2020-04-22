@@ -66,14 +66,8 @@ Square::Square(){
   cout << "Is this actually called?" << endl;
 }
 
-Square::Square(int r, int c, Colour colour) {
-  this->r = r;
-  this->c = c;
-  this->colour = colour;
-  piece = Piece::Empty;
-  pieceColour = Colour::NoColour;
-  AttackedByWhite = false;
-  AttackedByBlack = false;
+Square::Square(int r, int c, Colour colour): r{r}, c{c}, colour{colour}, piece{piece}, pieceColour{Colour::NoColour},
+  AttackedByWhite{false}, AttackedByBlack{false} {
 }
 
 void Square::setPiece(Piece p, Colour c) {    // Place a piece of given colour here.
