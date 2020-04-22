@@ -440,7 +440,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         }
         //king follows the same idea as the pawn, so no need to
         // recalculate the king's squares it is attacking
-        if (piece == Piece::King) {
+        if (piece == Piece::King) {0
           //do nothing
         }
         //Queen may be able to attack more squares than before
@@ -466,7 +466,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
           }
           }
         }
-        else {    //no piece located so it just continues the relay
+        else {//no piece located so it just continues the relay
           State newS;
           newS.type = StateType::Relay;
           newS.direction = s.direction;

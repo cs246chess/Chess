@@ -38,12 +38,13 @@ class Board {
    bool hasBlackRookHMoved;
   ~Board();
   vector<string> validMoves(Square s); //returns a vector containing all valid squares the passed piece can move to
-  bool isPinned(Square s);
+  bool isPinned(Square s); //returns true if a piece on a given square is pinned against its king and false if it is not
   bool isChecked(Colour c);
-  void isAttacked();
-  void setObserver(GraphicsDisplay *ob);
-  bool isStalemate(Colour c);
-  Colour isCheckmate(Colour c); // is there checkmate? and returns who won if so
+  void isAttacked();//goes over the board and checks to see if squares are attacked by white/black
+  void setObserver(GraphicsDisplay *ob);//graphics display purposes
+  bool isStalemate(Colour c);//checks if a given colour player has any valid moves to make
+  Colour isCheckmate(Colour c); //checks if the given colour's king is in checkmate, and
+  //returns the colour of the player who won if they are in checkmate.
   void init(); // Sets up an n x n grid.  Clears old grid, if necessary.
   void setPiece(int r, int c, Colour colour, Piece piece);  // Plays piece at row r, col c.
 

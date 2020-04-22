@@ -4,31 +4,36 @@
 
 using namespace std;
 
-char convert(int i) {
+char convert(int i) {//converts integers into column letters
   return ('a' + (i - 1));
 }
 
-int convertBackwards(char i){
+int convertBackwards(char i){//converts column letters into integers
   return ((i - 'a') + 1);
 }
 
-std::ostream &operator<<(std::ostream &out, const Board &b) {
-  if (b.td != nullptr) {
+std::ostream &operator<<(std::ostream &out, const Board &b) {//ostream operator for board
+  if (b.td != nullptr) {//just outs td
     out << *b.td;
   }
   return out;
 }
 
 void Board::init() {
+  //delete the old text display pointer
+  //if we had a board before it'll get wiped and the text display will be refreshed
+  //if we are making a fresh board nothing will happen
   TextDisplay *temp = td;
   td = new TextDisplay();
   delete temp;
 
   theBoard.clear();
-  theBoard.resize(8);
+  theBoard.resize(8); //resize board vector to hold 8 ranks/rows
   cout << "Size:" << size << endl;
   for (int r = 0; r < 8; r++) {
     for (int c = 0; c < 8; c++) {
+      //create board by pushing back squares of appropriate color
+      //based on the rank and column
       if (c % 2 == 0 && r % 2 == 0) {
         theBoard[r].push_back(Square(r, c, Colour::Black));
       }
@@ -44,6 +49,7 @@ void Board::init() {
     }
   }
   cout << "Size:" << size << endl;
+  //attach observers
   for (int i = 0; i < size; i++) {
       for (int j = 0; j < size; j++) {
           if (i == 0 && j == 0) {//bottom left
@@ -127,6 +133,7 @@ void Board::init() {
 
 }
 
+//this function just calls square.h's setPiece
 void Board::setPiece(int r, int c, Colour colour, Piece p) {
   theBoard[r-1][c-1].setPiece(p, colour);
   td->notify(theBoard[r-1][c-1]);
@@ -141,14 +148,14 @@ bool Board::isStalemate(Colour c) { //checks if the specified player is in stale
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (theBoard[i][j].pieceColour == c) {
-        vector<string> moves = validMoves(theBoard[i][j]);
-        if (moves.size() != 0) {
+        vector<string> moves = validMoves(theBoard[i][j]); //gets a vector of strings representing valid moves from the piece
+        if (moves.size() != 0) {// if any piece has a valid move it's not stalemate
           return false;
         }
       }
     }
   }
-  return true;
+  return true; //otherwise no piece had a valid move so it's stalemate; return false
 }
 
 bool Board::isChecked(Colour c) { //checks if the specified player is in check
@@ -156,6 +163,7 @@ bool Board::isChecked(Colour c) { //checks if the specified player is in check
     string pos = kingLocations[0];
     int row = pos[1];
     if (theBoard[row - 1][convertBackwards(pos[0] ) - 1].AttackedByBlack == true) {
+      //if the white king is ona square that is attacked by black it's in check so we return true
       return true;
     }
   }
@@ -163,6 +171,7 @@ bool Board::isChecked(Colour c) { //checks if the specified player is in check
     string pos = kingLocations[1];
     int row = pos[1];
     if (theBoard[row - 1][convertBackwards(pos[0]) - 1].AttackedByWhite == true) {
+      //if the black king is ona square that is attacked by white it's in check so we return true
       return true;
     }
   }
@@ -172,19 +181,21 @@ bool Board::isChecked(Colour c) { //checks if the specified player is in check
 void Board::isAttacked() {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
+      //reset board
       theBoard[i][j].AttackedByBlack = false;
       theBoard[i][j].AttackedByWhite = false;
     }
   }
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
+      //basically just places pieces on their current location to update attacked squares
       setPiece(i+1, j+1, theBoard[i][j].pieceColour, theBoard[i][j].piece);
     }
   }
 }
 
 bool Board::isPinned(Square s) {
-  if (s.piece == Piece::King) {
+  if (s.piece == Piece::King) {//king's cant be pinned
     return false;
   }
   int PieceColour = 2;
@@ -194,7 +205,7 @@ bool Board::isPinned(Square s) {
   else if (s.pieceColour == Colour::Black) {
     int PieceColour = 1;
   }
-  else if (s.pieceColour == Colour::NoColour) {
+  else if (s.pieceColour == Colour::NoColour) {//there is no piece so it's not pinned
     return false;
   }
   int kingcol = kingLocations[PieceColour][1];
