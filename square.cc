@@ -66,8 +66,9 @@ Square::Square(){
   cout << "Is this actually called?" << endl;
 }
 
-Square::Square(int r, int c, Colour colour): r{r}, c{c}, colour{colour}, piece{piece}, pieceColour{Colour::NoColour},
+Square::Square(int r, int c, Colour colour): r{r}, c{c}, colour{colour}, piece{Piece::Empty}, pieceColour{Colour::NoColour},
   AttackedByWhite{false}, AttackedByBlack{false} {
+
 }
 
 void Square::setPiece(Piece p, Colour c) {    // Place a piece of given colour here.
@@ -205,6 +206,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
   }
   else if (s.type == StateType::Relay) {
       cout << "Relay.";
+
   }
   else  {
       cout << "Reply.";
