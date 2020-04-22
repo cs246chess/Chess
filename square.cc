@@ -466,7 +466,7 @@ ostream &operator<<(ostream &out, const Square &sq) {
       out << "Black Piece" << endl;
       break;
     }
-    case Piece::White: {
+    case Colour::White: {
       out << "White Piece" << endl;
       break;
     }
@@ -480,4 +480,5 @@ ostream &operator<<(ostream &out, const Square &sq) {
   if (sq.AttackedByWhite) {
     out << "Square attacked by White" << endl;
   }
+  return out;
 }
