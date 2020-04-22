@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
   cin.exceptions(ios::eofbit|ios::failbit);
   string cmd;
   Board b;
-  b.kingLocations.emplace_back("");
-  b.kingLocations.emplace_back("");
+  b.kingLocations.push_back("");
+  b.kingLocations.push_back("");
   float whiteScore = 0; // keeps track of score of white set
   float blackScore = 0; // keeps track of score of black set
   int checkturn = 0; // to keep track of users turns 0 = white 1 = black
