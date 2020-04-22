@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
             } else if (op == "done") {
               int countpawn = 0;
               for (int i = 0; i < 8; i++) {
-                if (b.theBoard[0][i].getInfo().piece == Piece::Pawn || b.theBoard[8][i].getInfo().piece == Piece::Pawn) {
+                if (b.theBoard[0][i].getInfo().piece == Piece::Pawn || b.theBoard[7][i].getInfo().piece == Piece::Pawn) {
                   countpawn++;
                 }
               }
