@@ -150,10 +150,10 @@ int main(int argc, char *argv[]) {
         cout << b << endl;
       }
       else if (cmd == "setup") {
+        b.init();
           while (true) {
             string op;
             string p;
-            b.init();
             cout << b << endl;
             int move_to_row;
             int move_to_col;

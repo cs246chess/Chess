@@ -63,7 +63,6 @@ Direction getDirection(Subject<Info, State> &here, Subject<Info, State> &from) {
 Square::Square(){
   AttackedByBlack = false;
   AttackedByWhite = false;
-  cout << "Is this actually called?" << endl;
 }
 
 Square::Square(int r, int c, Colour colour): r{r}, c{c}, colour{colour}, piece{Piece::Empty}, pieceColour{Colour::NoColour},
