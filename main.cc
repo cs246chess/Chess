@@ -148,10 +148,10 @@ int main(int argc, char *argv[]) {
             cout << b << endl;
             continue;
           }
-          if (currentSquarecol == Colour::White) { // swtiches turn after a move is made
-            checkturn = 1;
-          } else {
+          if (checkturn) { // swtiches turn after a move is made
             checkturn = 0;
+          } else {
+            checkturn = 1;
           }
         } else {
           cout << "Illegal Move" << endl; // error message
