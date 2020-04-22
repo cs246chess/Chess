@@ -8,7 +8,6 @@
 #include "state.h"
 #include "info.h"
 #include "textdisplay.h"
-#include "graphicsdisplay.h"
 using namespace std;
 
 class TextDisplay;
@@ -24,7 +23,7 @@ class Board {
  public:
    string lastMove;
    std::vector<std::vector<Square>> theBoard;  // The actual grid.
-   vector<string> kingLocations; /*stores locations of kings for a variety of reasons
+   vector<string> kingLocations(2); /*stores locations of kings for a variety of reasons
    one is that there can be only one king on the board so storing the location
    of current kings for set up purposes is useful
    we can also more easily check if a king is in checkmate
