@@ -420,29 +420,36 @@ Info Square::getInfo() const {
 }
 
 ostream &operator<<(ostream &out, const Square &sq) {
-  out << "Row: " << r << endl;
-  out << "Column: " << c << endl;
-  switch (piece) {
-    case Piece::Knight:
+  out << "Row: " << sq.r << endl;
+  out << "Column: " << sq.c << endl;
+  switch (sq.piece) {
+    case Piece::Knight: {
       out << "Knight" << endl;
       break;
-    case Piece::Queen:
+    }
+    case Piece::Queen: {
       out << "Queen" << endl;
       break;
-    case Piece::Pawn:
+    }
+    case Piece::Pawn: {
       out << "Pawn" << endl;
       break;
-    case Piece::Rook:
+    }
+    case Piece::Rook: {
       out << "Rook" << endl;
       break;
-    case Piece::King:
+    }
+    case Piece::King: {
       out << "King" << endl;
       break;
-    case Piece::Empty:
+    }
+    case Piece::Empty: {
       out << "NoPiece" << endl;
       break;
-    default:
+    }
+    default: {
       out << "huh" << endl;
+    }
   }
   switch (colour) {
     case Colour::Black:
@@ -454,20 +461,23 @@ ostream &operator<<(ostream &out, const Square &sq) {
     default:
       out << "No colour square????" << endl;
   }
-  switch (pieceColour) {
-    case Colour::Black:
+  switch (sq.pieceColour) {
+    case Colour::Black: {
       out << "Black Piece" << endl;
       break;
-    case Piece::White:
+    }
+    case Piece::White: {
       out << "White Piece" << endl;
       break;
-    default:
+    }
+    default: {
       out << "No piece/no colour piece" << endl;
+    }
   }
-  if (AttackedByBlack) {
+  if (sq.AttackedByBlack) {
     out << "Square attacked by Black" << endl;
   }
-  if (AttackedByWhite) {
+  if (sq.AttackedByWhite) {
     out << "Square attacked by White" << endl;
   }
 }
