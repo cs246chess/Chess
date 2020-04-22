@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
 		        string row = to_string(move_to_row);
 		        string col = " ";
             col[0] = convert(move_to_col);
-		        string rowcol = row + col; // concatenates to check for rowcol in validMoves
+		        string rowcol = col + row; // concatenates to check for rowcol in validMoves
 		        if (rowcol == b.validMoves(currentSquare)[i]) { // check to see if the move is valid
 			           inlist++;
 		        } else {
