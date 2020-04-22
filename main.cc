@@ -13,9 +13,9 @@ int main(int argc, char *argv[]) {
   cin.exceptions(ios::eofbit|ios::failbit);
   string cmd;
   Board b;
-  float whiteScore = 0;
-  float blackScore = 0;
-  int checkturn = 0;
+  float whiteScore = 0; // keeps track of score of white set
+  float blackScore = 0; // keeps track of score of black set
+  int checkturn = 0; // to keep track of users turns 0 = white 1 = black
   //GraphicsDisplay * screen = nullptr;
   try {
     while (true) {
@@ -26,16 +26,16 @@ int main(int argc, char *argv[]) {
 				cout << "Black: " << blackScore << endl;
 				break;
       }
-      if (cmd == "game") {
-        string p1;
-        string p2;
+      if (cmd == "game") { // initiates the chess board
+        string p1; // player1
+        string p2; // player2
         cin >> p1;
         cin >> p2;
         //GraphicsDisplay * temp = screen;
         //delete temp;
         //screen = new GraphicsDisplay();
         b.init();
-        for (int i = 0; i <8; i++) {
+        for (int i = 0; i <8; i++) { // sets the initial pieces on the board when the game starts
           b.setPiece(6, i, Colour::Black, Piece::Pawn);
           b.setPiece(1, i, Colour::White, Piece::Pawn);
         }
@@ -58,37 +58,38 @@ int main(int argc, char *argv[]) {
         checkturn = 0;
         cout << b << endl;
       }
-      else if (cmd == "resign") {
+      else if (cmd == "resign") { // player forfeits the match and the win goes to the opponent
         if (checkturn == 0) {
           cout << "Black wins" << endl;
         } else {
           cout << "White wins" << endl;
         }
       }
-      else if (cmd == "move") {
-        int move_to_row;
-        char move_to_col;
-        int move_from_row;
-        char move_from_col;
+      else if (cmd == "move") { // command to place chess pieces during the game
+        int move_to_row; // row to move piece to
+        char move_to_col; // column to move piece to
+        int move_from_row; // stores the row the piece currently is in
+        char move_from_col; // stores the column the piece currently is in
         cin >> move_from_row >> move_from_col >> move_to_row >> move_to_col;
-        int colfrom = move_from_col - 'a';
-        int colto = move_to_col - 'a';
+        int colfrom = move_from_col - 'a'; // converts col from char to int
+        int colto = move_to_col - 'a'; // converts col to from char to int
         Square currentSquare = b.theBoard[colfrom][move_from_row];
         Colour currentSquarecol = currentSquare.getInfo().colour;
-	      int inlist = 0;
+	      int inlist = 0; // no of possible moves in validMoves
         int posMoveSize = b.validMoves(currentSquare).size();
 	      for (int i = 0; i < posMoveSize ; i++) {
 		        string row = to_string(move_to_row);
 		        string col = to_string(move_to_col);
-		        string rowcol = row + col;
-		        if (rowcol == b.validMoves(currentSquare)[i]) {
+		        string rowcol = row + col; // concatenates to check for rowcol in validMoves
+		        if (rowcol == b.validMoves(currentSquare)[i]) { // check to see if the move is valid
 			           inlist++;
 		        } else {
 			           inlist+=0;
 		        }
 	      }
         if ((inlist > 0
-            && (currentSquarecol == Colour::White && checkturn == 0))
+            && (currentSquarecol == Colour::White && checkturn == 0)) // check to see if the piece
+                                                                      //being moved is consistent with players turn
             || (currentSquarecol == Colour::Black && checkturn == 1)) {
           b.setPiece(move_to_row, colto, currentSquarecol, currentSquare.getInfo().piece);
           b.setPiece(move_from_row, colfrom, Colour::NoColour, Piece::Empty);
@@ -122,7 +123,7 @@ int main(int argc, char *argv[]) {
               b.hasBlackRookHMoved = true;
             }
           }
-          if (b.isCheckmate(currentSquarecol) == Colour::Black) {
+          if (b.isCheckmate(currentSquarecol) == Colour::Black) { // checks for checkmate and adds score
             blackScore++;
             b.init();
             checkturn = 0;
@@ -149,7 +150,7 @@ int main(int argc, char *argv[]) {
         }
         cout << b << endl;
       }
-      else if (cmd == "setup") {
+      else if (cmd == "setup") { // allows the player to set pieces on board before starting game
         b.init();
           while (true) {
             string op;
@@ -159,7 +160,7 @@ int main(int argc, char *argv[]) {
             int move_to_col;
             string colorc;
             cin >> op;
-            if (op == "+") {
+            if (op == "+") { // reads a piece and a square location to set it on the board
               cin >> p;
               cin >> op;
               move_to_row = (op[1] - '0');
@@ -192,7 +193,7 @@ int main(int argc, char *argv[]) {
               }
 	      cout << b << endl;
 
-            } else if (op == "-") {
+      } else if (op == "-") { // removes a set piece from the board and replaces it with an empty piece
               cin >> move_to_row >> move_to_col;
               int colto = move_to_col - 'a';
               if (checkturn == 0) {
@@ -201,14 +202,14 @@ int main(int argc, char *argv[]) {
                 b.setPiece(move_to_row, colto, Colour::Black, Piece::Empty);
               }
               cout << b << endl;
-            } else if (op == "="){
+            } else if (op == "="){ // switches users turn to the opponent
               cin >> colorc;
               if (colorc == "Black") {
                 checkturn = 1;
               } else {
                 checkturn = 0;
               }
-            } else if (op == "done") {
+            } else if (op == "done") { // user leaves setup mode if all conditions are met
               int countpawn = 0;
               for (int i = 0; i < 8; i++) {
                 if (b.theBoard[0][i].getInfo().piece == Piece::Pawn || b.theBoard[7][i].getInfo().piece == Piece::Pawn) {
@@ -218,12 +219,12 @@ int main(int argc, char *argv[]) {
               if (b.kingLocations.size() == 2 && countpawn == 0 && (!b.isChecked(Colour::White) || !b.isChecked(Colour::Black))) {
                 break;
               } else {
-                cout << "Conditions to leave setup not met" << endl;
+                cout << "Conditions to leave setup not met" << endl; // error message
                 continue;
               }
             }
           }
-      } else if (cmd == "quit") {
+      } else if (cmd == "quit") { // to break out of the game
         break;
       }
     }
