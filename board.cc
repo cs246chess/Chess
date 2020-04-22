@@ -22,6 +22,7 @@ std::ostream &operator<<(std::ostream &out, const Board &b) {
 void Board::init() {
   theBoard.clear();
   theBoard.resize(8);
+  cout << "Size:" << size << endl;
   for (int r = 0; r < 8; r++) {
     for (int c = 0; c < 8; c++) {
       if (c % 2 == 0 && r % 2 == 0) {
@@ -40,74 +41,83 @@ void Board::init() {
   }
   cout << "Size:" << size << endl;
   for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            if (i == 0 && j == 0) {//top left
-                theBoard[i][j].attach(&theBoard[i][j+1]);
-                theBoard[i][j].attach(&theBoard[i+1][j+1]);
-                theBoard[i][j].attach(&theBoard[i+1][j]);
-                theBoard[i][j].attach(td);
-            }
-            else if (i == 0 && j == (size-1)) {//top right corner
-                theBoard[i][j].attach(&theBoard[i][j-1]);
-                theBoard[i][j].attach(&theBoard[i+1][j-1]);
-                theBoard[i][j].attach(&theBoard[i+1][j]);
-                theBoard[i][j].attach(td);
-            }
-            else if (i == size-1 && j == 0) {//bottom left corner
-                theBoard[i][j].attach(&theBoard[i-1][j]);
-                theBoard[i][j].attach(&theBoard[i-1][j+1]);
-                theBoard[i][j].attach(&theBoard[i][j+1]);
-                theBoard[i][j].attach(td);
-            }
-            else if (i == size-1 && j == size-1)  {//bottom right corner;
-                theBoard[i][j].attach(&theBoard[i-1][j]);
-                theBoard[i][j].attach(&theBoard[i-1][j-1]);
-                theBoard[i][j].attach(&theBoard[i][j-1]);
-                theBoard[i][j].attach(td);
-            }
-            else if (i == 0) {//top edge
-                theBoard[i][j].attach(&theBoard[i][j-1]);
-                theBoard[i][j].attach(&theBoard[i][j+1]);
-                theBoard[i][j].attach(&theBoard[i+1][j-1]);
-                theBoard[i][j].attach(&theBoard[i+1][j]);
-                theBoard[i][j].attach(&theBoard[i+1][j+1]);
-                theBoard[i][j].attach(td);
-            }
-            else if (i == size-1) {//bottom edge
-                theBoard[i][j].attach(&theBoard[i][j-1]);
-                theBoard[i][j].attach(&theBoard[i][j+1]);
-                theBoard[i][j].attach(&theBoard[i-1][j-1]);
-                theBoard[i][j].attach(&theBoard[i-1][j]);
-                theBoard[i][j].attach(&theBoard[i-1][j+1]);
-                theBoard[i][j].attach(td);
-            }
-            else if (j == 0) {//left edge
-                theBoard[i][j].attach(&theBoard[i+1][j]);
-                theBoard[i][j].attach(&theBoard[i-1][j]);
-                theBoard[i][j].attach(&theBoard[i][j+1]);
-                theBoard[i][j].attach(&theBoard[i+1][j+1]);
-                theBoard[i][j].attach(&theBoard[i-1][j+1]);
-                theBoard[i][j].attach(td);
-            }
-            else if (j == size-1) {//right edge
-                theBoard[i][j].attach(&theBoard[i+1][j]);
-                theBoard[i][j].attach(&theBoard[i-1][j]);
-                theBoard[i][j].attach(&theBoard[i][j-1]);
-                theBoard[i][j].attach(&theBoard[i+1][j-1]);
-                theBoard[i][j].attach(&theBoard[i+1][j-1]);
-                theBoard[i][j].attach(td);
-            }
-            else {//cell is surrounded by 8 cells
-                theBoard[i][j].attach(&theBoard[i][j-1]);
-                theBoard[i][j].attach(&theBoard[i][j+1]);
-                theBoard[i][j].attach(&theBoard[i+1][j-1]);
-                theBoard[i][j].attach(&theBoard[i+1][j]);
-                theBoard[i][j].attach(&theBoard[i+1][j+1]);
-                theBoard[i][j].attach(&theBoard[i-1][j-1]);
-                theBoard[i][j].attach(&theBoard[i-1][j]);
-                theBoard[i][j].attach(&theBoard[i-1][j+1]);
-                theBoard[i][j].attach(td);
-            }
+      for (int j = 0; j < size; j++) {
+          if (i == 0 && j == 0) {//bottom left
+              theBoard[i][j].attach(&theBoard[i][j+1]);
+              theBoard[i][j].attach(&theBoard[i+1][j+1]);
+              theBoard[i][j].attach(&theBoard[i+1][j]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else if (i == 0 && j == (size-1)) {//bottom right corner
+              theBoard[i][j].attach(&theBoard[i][j-1]);
+              theBoard[i][j].attach(&theBoard[i+1][j-1]);
+              theBoard[i][j].attach(&theBoard[i+1][j]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else if (i == size-1 && j == 0) {//top left corner
+              theBoard[i][j].attach(&theBoard[i-1][j]);
+              theBoard[i][j].attach(&theBoard[i-1][j+1]);
+              theBoard[i][j].attach(&theBoard[i][j+1]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else if (i == size-1 && j == size-1)  {//top right corner
+              theBoard[i][j].attach(&theBoard[i-1][j]);
+              theBoard[i][j].attach(&theBoard[i-1][j-1]);
+              theBoard[i][j].attach(&theBoard[i][j-1]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else if (i == 0) {//bottom edge
+              theBoard[i][j].attach(&theBoard[i][j-1]);
+              theBoard[i][j].attach(&theBoard[i][j+1]);
+              theBoard[i][j].attach(&theBoard[i+1][j-1]);
+              theBoard[i][j].attach(&theBoard[i+1][j]);
+              theBoard[i][j].attach(&theBoard[i+1][j+1]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else if (i == size-1) {//top edge
+              theBoard[i][j].attach(&theBoard[i][j-1]);
+              theBoard[i][j].attach(&theBoard[i][j+1]);
+              theBoard[i][j].attach(&theBoard[i-1][j-1]);
+              theBoard[i][j].attach(&theBoard[i-1][j]);
+              theBoard[i][j].attach(&theBoard[i-1][j+1]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else if (j == 0) {//left edge
+              theBoard[i][j].attach(&theBoard[i+1][j]);
+              theBoard[i][j].attach(&theBoard[i-1][j]);
+              theBoard[i][j].attach(&theBoard[i][j+1]);
+              theBoard[i][j].attach(&theBoard[i+1][j+1]);
+              theBoard[i][j].attach(&theBoard[i-1][j+1]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else if (j == size-1) {//right edge
+              theBoard[i][j].attach(&theBoard[i+1][j]);
+              theBoard[i][j].attach(&theBoard[i-1][j]);
+              theBoard[i][j].attach(&theBoard[i][j-1]);
+              theBoard[i][j].attach(&theBoard[i+1][j-1]);
+              theBoard[i][j].attach(&theBoard[i-1][j-1]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
+          else {//cell is surrounded by 8 cells
+              theBoard[i][j].attach(&theBoard[i][j-1]);
+              theBoard[i][j].attach(&theBoard[i][j+1]);
+              theBoard[i][j].attach(&theBoard[i+1][j-1]);
+              theBoard[i][j].attach(&theBoard[i+1][j]);
+              theBoard[i][j].attach(&theBoard[i+1][j+1]);
+              theBoard[i][j].attach(&theBoard[i-1][j-1]);
+              theBoard[i][j].attach(&theBoard[i-1][j]);
+              theBoard[i][j].attach(&theBoard[i-1][j+1]);
+              theBoard[i][j].attach(td);
+              theBoard[i][j].attach(gd);
+          }
         }
     }
     td = new TextDisplay();
