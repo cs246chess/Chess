@@ -21,9 +21,7 @@ std::ostream &operator<<(std::ostream &out, const Board &b) {
 
 void Board::init() {
   theBoard.clear();
-  for (int i = 0; i < 8; i++) {
-    theBoard[i].resize(8);
-  }
+  theBoard.resize(8);
   for (int r = 0; r < 8; r++) {
     for (int c = 0; c < 8; c++) {
       if (c % 2 == 0 && r % 2 == 0) {
