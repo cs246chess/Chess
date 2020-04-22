@@ -39,7 +39,7 @@ class Board {
   ~Board();
   vector<string> validMoves(Square s); //returns a vector containing all valid squares the passed piece can move to
   bool isPinned(Square s); //returns true if a piece on a given square is pinned against its king and false if it is not
-  bool isChecked(Colour c);
+  bool isChecked(Colour c); //returns true if the given colour king is in check
   void isAttacked();//goes over the board and checks to see if squares are attacked by white/black
   void setObserver(GraphicsDisplay *ob);//graphics display purposes
   bool isStalemate(Colour c);//checks if a given colour player has any valid moves to make
