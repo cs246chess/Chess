@@ -39,9 +39,7 @@ int main(int argc, char *argv[]) {
         b.init();
         for (int i = 1; i <= 8; i++) { // sets the initial pieces on the board when the game starts
           b.setPiece(7, i, Colour::Black, Piece::Pawn);
-          cout << b << endl;
           b.setPiece(2, i, Colour::White, Piece::Pawn);
-          cout << i << endl;
         }
         b.setPiece(8, 1, Colour::Black, Piece::Rook);
         b.setPiece(8, 2, Colour::Black, Piece::Knight);
@@ -74,7 +72,15 @@ int main(int argc, char *argv[]) {
         char move_to_col; // column to move piece to
         int move_from_row; // stores the row the piece currently is in
         char move_from_col; // stores the column the piece currently is in
-        cin >> move_from_row >> move_from_col >> move_to_row >> move_to_col;
+        cin >> op;
+        move_from_row = op[1] - '0';
+        move_from_col = (convertBackwards(op[0]));
+        int colfrom = move_to_col;
+        cin >> op;
+        move_to_row = op[1] - '0';
+        move_to_col = (convertBackwards(op[0]));
+        int colto = move_to_col;
+        move_from_row >> move_from_col >> move_to_row >> move_to_col;
         int colfrom = move_from_col - 'a'; // converts col from char to int
         int colto = move_to_col - 'a'; // converts col to from char to int
         Square currentSquare = b.theBoard[colfrom][move_from_row];
