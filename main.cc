@@ -86,7 +86,8 @@ int main(int argc, char *argv[]) {
         int posMoveSize = b.validMoves(currentSquare).size();
 	      for (int i = 0; i < posMoveSize ; i++) {
 		        string row = to_string(move_to_row);
-		        string col = to_string(move_to_col);
+		        string col = " ";
+            col[0] = convert(move_to_col);
 		        string rowcol = row + col; // concatenates to check for rowcol in validMoves
 		        if (rowcol == b.validMoves(currentSquare)[i]) { // check to see if the move is valid
 			           inlist++;
