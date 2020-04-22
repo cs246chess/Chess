@@ -161,7 +161,7 @@ bool Board::isStalemate(Colour c) { //checks if the specified player is in stale
 bool Board::isChecked(Colour c) { //checks if the specified player is in check
   if (c == Colour::White) {
     string pos = kingLocations[0];
-    int row = pos[1];
+    int row = pos[1] - '0';
     if (theBoard[row - 1][convertBackwards(pos[0] ) - 1].AttackedByBlack == true) {
       //if the white king is ona square that is attacked by black it's in check so we return true
       return true;
