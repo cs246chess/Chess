@@ -348,8 +348,10 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
             }
             //Bishop may be able to attack more squares, so reply is needed
             if (piece == Piece::Bishop) {
+              if ((reverse == Direction::NW) || (reverse == Direction::NE) || (reverse == Direction::SE) || (reverse == Direction::SW))
               State newS;
               newS.type = StateType::Reply;
+              newS.piece = this->piece;
               newS.direction = reverse;
               newS.pieceColour = pieceColour;
               this->setState(newS);
@@ -365,15 +367,18 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
               State newS;
               newS.type = StateType::Reply;
               newS.direction = reverse;
+              newS.piece = this->piece;
               newS.pieceColour = pieceColour;
               this->setState(newS);
               notifyObservers();
             }
             //Rook may be able to attack more squares than before
             if (piece == Piece::Rook) {
+              if ((reverse == Direction::S) || (reverse == Direction::N) || (reverse == Direction::E) || (reverse == Direction::W))
               State newS;
               newS.type = StateType::Reply;
               newS.direction = reverse;
+              newS.piece = this->piece;
               newS.pieceColour = pieceColour;
               this->setState(newS);
               notifyObservers();
