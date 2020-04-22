@@ -451,11 +451,11 @@ ostream &operator<<(ostream &out, const Square &sq) {
       out << "huh" << endl;
     }
   }
-  switch (colour) {
+  switch (sq.colour) {
     case Colour::Black:
       out << "Black Square" << endl;
       break;
-    case Piece::White:
+    case Colour::White:
       out << "White Square" << endl;
       break;
     default:
