@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
         }
       }
       else if (cmd == "move") { // command to place chess pieces during the game
+        string op;
         int move_to_row; // row to move piece to
         char move_to_col; // column to move piece to
         int move_from_row; // stores the row the piece currently is in
@@ -75,14 +76,11 @@ int main(int argc, char *argv[]) {
         cin >> op;
         move_from_row = op[1] - '0';
         move_from_col = (convertBackwards(op[0]));
-        int colfrom = move_to_col;
         cin >> op;
         move_to_row = op[1] - '0';
         move_to_col = (convertBackwards(op[0]));
-        int colto = move_to_col;
-        move_from_row >> move_from_col >> move_to_row >> move_to_col;
-        int colfrom = move_from_col - 'a'; // converts col from char to int
-        int colto = move_to_col - 'a'; // converts col to from char to int
+        int colfrom = move_from_col; // converts col from char to int
+        int colto = move_to_col; // converts col to from char to int
         Square currentSquare = b.theBoard[colfrom][move_from_row];
         Colour currentSquarecol = currentSquare.getInfo().colour;
 	      int inlist = 0; // no of possible moves in validMoves
