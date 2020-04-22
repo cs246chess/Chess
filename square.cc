@@ -66,8 +66,9 @@ Square::Square(){
   cout << "Is this actually called?" << endl;
 }
 
-Square::Square(int r, int c, Colour colour): r{r}, c{c}, colour{colour}, piece{piece}, pieceColour{Colour::NoColour},
+Square::Square(int r, int c, Colour colour): r{r}, c{c}, colour{colour}, piece{Piece::Empty}, pieceColour{Colour::NoColour},
   AttackedByWhite{false}, AttackedByBlack{false} {
+
 }
 
 void Square::setPiece(Piece p, Colour c) {    // Place a piece of given colour here.
@@ -151,37 +152,117 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
   Info i = whoFrom.getInfo();
   State s = whoFrom.getState();
   //testing messages
-  /*if (i.colour == Colour::NoColour) {
-      cout << "Empty ";
+  /*if (i.colour == Colour::Black) {
+      cout << "Black Square with a ";
   }
   else if (i.colour == Colour::White) {
+      cout << "White Square with a ";
+  }
+  else  {
+      cout << "something went wrong ";
+  }
+  if (i.pieceColour == Colour::Black) {
+      cout << "Black ";
+  }
+  else if (i.pieceColour == Colour::White) {
       cout << "White ";
   }
   else  {
-      cout << "Black ";
+      cout << "something went wrong ";
   }
 
-  if (s.type == StateType::NewPiece) {
-      cout << "NewPiece ";
+  switch (i.piece) {
+    case Piece::Knight: {
+      cout << "Knight" << endl;
+      break;
+    }
+    case Piece::Queen: {
+      cout << "Queen" << endl;
+      break;
+    }
+    case Piece::Pawn: {
+      cout << "Pawn" << endl;
+      break;
+    }
+    case Piece::Rook: {
+      cout << "Rook" << endl;
+      break;
+    }
+    case Piece::King: {
+      cout << "King" << endl;
+      break;
+    }
+    case Piece::Empty: {
+      cout << "NoPiece" << endl;
+      break;
+    }
+    default: {
+      cout << "huh" << endl;
+    }
+  }
+  cout << "carrying a message of a ";
+  if (s.type == StateType::MovedPiece) {
+      cout << "NewPiece.";
   }
   else if (s.type == StateType::Relay) {
-      cout << "Relay ";
+      cout << "Relay.";
+
   }
   else  {
-      cout << "Reply ";
+      cout << "Reply.";
   }
-  cout << "Cell at " << i.row << " " << i.col << " called ";
-  if (colour == Colour::NoColour) {
-      cout << "Empty ";
+
+  cout << "The Square at " << i.row << " " << i.col << " called a ";
+  if (colour == Colour::Black) {
+      cout << "Black ";
   }
   else if (colour == Colour::White) {
       cout << "White ";
   }
   else  {
+      cout << "something went wrong in notify ";
+  }
+  cout << "Square at " << r << " " << c << endl;
+  cout << "with a ";
+  if (pieceColour == Colour::Black) {
       cout << "Black ";
   }
-  cout << "Cell at " << r << " " << c << endl;
-  */
+  else if (pieceColour == Colour::White) {
+      cout << "White ";
+  }
+  else  {
+      cout << "empty square";
+  }
+  switch (piece) {
+    case Piece::Knight: {
+      cout << "Knight" << endl;
+      break;
+    }
+    case Piece::Queen: {
+      cout << "Queen" << endl;
+      break;
+    }
+    case Piece::Pawn: {
+      cout << "Pawn" << endl;
+      break;
+    }
+    case Piece::Rook: {
+      cout << "Rook" << endl;
+      break;
+    }
+    case Piece::King: {
+      cout << "King" << endl;
+      break;
+    }
+    case Piece::Empty: {
+      cout << "NoPiece" << endl;
+      break;
+    }
+    default: {
+      cout << "huh" << endl;
+    }
+  } */
+
   if (s.type == StateType::MovedPiece) {//neighbour just moved to the square, check if we need to pass more messages on
     Direction d = getDirection(*this, whoFrom);
       if (s.piece == Piece::Knight) {
@@ -343,58 +424,58 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         AttackedByWhite = true;
       }
       if (piece != Piece::Empty) {
-            if (piece == Piece::Pawn) {
-              //do nothing
-            }
-            //Bishop may be able to attack more squares, so reply is needed
-            if (piece == Piece::Bishop) {
-              if ((reverse == Direction::NW) || (reverse == Direction::NE) || (reverse == Direction::SE) || (reverse == Direction::SW)) {
-                State newS;
-                newS.type = StateType::Reply;
-                newS.piece = this->piece;
-                newS.direction = reverse;
-                newS.pieceColour = pieceColour;
-                this->setState(newS);
-                notifyObservers();
-              }
-            }
-            //king follows the same idea as the pawn, so no need to
-            // recalculate the king's squares it is attacking
-            if (piece == Piece::King) {
-              //do nothing
-            }
-            //Queen may be able to attack more squares than before
-            if (piece == Piece::Queen) {
-              State newS;
-              newS.type = StateType::Reply;
-              newS.direction = reverse;
-              newS.piece = this->piece;
-              newS.pieceColour = pieceColour;
-              this->setState(newS);
-              notifyObservers();
-            }
-            //Rook may be able to attack more squares than before
-            if (piece == Piece::Rook) {
-              if ((reverse == Direction::S) || (reverse == Direction::N) || (reverse == Direction::E) || (reverse == Direction::W)) {
-                State newS;
-                newS.type = StateType::Reply;
-                newS.direction = reverse;
-                newS.piece = this->piece;
-                newS.pieceColour = pieceColour;
-                this->setState(newS);
-                notifyObservers();
-              }
-            }
+        if (piece == Piece::Pawn) {
+          //do nothing
+        }
+        //Bishop may be able to attack more squares, so reply is needed
+        if (piece == Piece::Bishop) {
+          if ((reverse == Direction::NW) || (reverse == Direction::NE) || (reverse == Direction::SE) || (reverse == Direction::SW)) {
+            State newS;
+            newS.type = StateType::Reply;
+            newS.piece = this->piece;
+            newS.direction = reverse;
+            newS.pieceColour = pieceColour;
+            this->setState(newS);
+            notifyObservers();
+          }
+        }
+        //king follows the same idea as the pawn, so no need to
+        // recalculate the king's squares it is attacking
+        if (piece == Piece::King) {
+          //do nothing
+        }
+        //Queen may be able to attack more squares than before
+        if (piece == Piece::Queen) {
+          State newS;
+          newS.type = StateType::Reply;
+          newS.direction = reverse;
+          newS.piece = this->piece;
+          newS.pieceColour = pieceColour;
+          this->setState(newS);
+          notifyObservers();
+        }
+        //Rook may be able to attack more squares than before
+        if (piece == Piece::Rook) {
+          if ((reverse == Direction::S) || (reverse == Direction::N) || (reverse == Direction::E) || (reverse == Direction::W)) {
+            State newS;
+            newS.type = StateType::Reply;
+            newS.direction = reverse;
+            newS.piece = this->piece;
+            newS.pieceColour = pieceColour;
+            this->setState(newS);
+            notifyObservers();
+          }
           }
         }
         else {    //no piece located so it just continues the relay
-            State newS;
-            newS.type = StateType::Relay;
-            newS.direction = s.direction;
-            newS.pieceColour = s.pieceColour;
-            this->setState(newS);
-            notifyObservers();
+          State newS;
+          newS.type = StateType::Relay;
+          newS.direction = s.direction;
+          newS.pieceColour = s.pieceColour;
+          this->setState(newS);
+          notifyObservers();
         }
+      }
     }
     else { //type is a reply to check for discovered checks
       Direction d = getDirection(*this, whoFrom);
