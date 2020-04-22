@@ -162,8 +162,8 @@ int main(int argc, char *argv[]) {
             if (op == "+") {
               cin >> p;
               cin >> op;
-              move_to_row = (op[1] - '0') - 1;
-              move_to_col = (convertBackwards(op[0])) - 1;
+              move_to_row = (op[1] - '0');
+              move_to_col = (convertBackwards(op[0]));
               int colto = move_to_col;
               if (p == "k") {
 		      b.setPiece(move_to_row, colto, Colour::Black, Piece::King);
