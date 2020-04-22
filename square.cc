@@ -196,8 +196,8 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
       if (((d == Direction::SE) || (d == Direction::SW)) && (s.pieceColour == Colour::Black)) {
         AttackedByBlack = true;
       }
-        break;
-      case Piece::King: //not really needed tbh
+    }
+      if (s.piece == Piece::King) {//not really needed tbh
         if (s.pieceColour == Colour::White) {
           AttackedByWhite = true;
         }
