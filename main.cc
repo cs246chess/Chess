@@ -123,15 +123,15 @@ int main(int argc, char *argv[]) {
               b.hasBlackRookHMoved = true;
             }
           }
-          if (b.isCheckmate(currentSquarecol) == Colour::Black) { // checks for checkmate and adds score
+          if (b.isCheckmate(currentSquarecol) == Colour::Black) { // checks for checkmate and adds score to the player
             blackScore++;
             b.init();
             checkturn = 0;
-          } else if (b.isCheckmate(currentSquarecol) == Colour::White) {
+          } else if (b.isCheckmate(currentSquarecol) == Colour::White) { // checks for checkmate and adds score to the player
             whiteScore++;
             b.init();
             checkturn = 0;
-          } else if (b.isStalemate(currentSquarecol)) {
+          } else if (b.isStalemate(currentSquarecol)) { //checks for stalemate and adds half a point to each player
             blackScore+= 0.5;
             whiteScore+= 0.5;
             b.init();
@@ -139,13 +139,13 @@ int main(int argc, char *argv[]) {
           } else {
             continue;
           }
-          if (currentSquarecol == Colour::White) {
+          if (currentSquarecol == Colour::White) { // swtiches turn after a move is made
             checkturn = 1;
           } else {
             checkturn = 0;
           }
         } else {
-          cout << "Illegal Move" << endl;
+          cout << "Illegal Move" << endl; // error message
           continue;
         }
         cout << b << endl;

@@ -69,13 +69,13 @@ void TextDisplay::notify(Subject<Info, State> &whoFrom) {
     }
   } else {
     if (row % 2 == 0 && col % 2 == 0) {
-      theDisplay[row-1][col-1] = '_';
+      theDisplay[row-1][col-1] = ' ';
     } else if (row % 2 == 0 &&  col % 2 != 0) {
-      theDisplay[row-1][col-1] = ' ';
-    } else if (row % 2 != 0 &&  col % 2 == 0) {
-      theDisplay[row-1][col-1] = ' ';
-    } else {
       theDisplay[row-1][col-1] = '_';
+    } else if (row % 2 != 0 &&  col % 2 == 0) {
+      theDisplay[row-1][col-1] = '_';
+    } else {
+      theDisplay[row-1][col-1] = ' ';
     }
   }
 }
