@@ -197,39 +197,17 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         AttackedByBlack = true;
       }
     }
-      if (s.piece == Piece::King) {//not really needed tbh
-        if (s.pieceColour == Colour::White) {
-          AttackedByWhite = true;
-        }
-        else {
-          AttackedByBlack = true;
-        }
+    else if (s.piece == Piece::King) {//not really needed tbh
+      if (s.pieceColour == Colour::White) {
+        AttackedByWhite = true;
       }
-      else if (s.piece == Piece::Bishop) {
-        //find the direction of the new piece
-        if ((d == Direction::NE) || (d == Direction::NW) || (d == Direction::SE) || (d == Direction::SW)) {
-          if (s.pieceColour == Colour::Black) {
-            AttackedByBlack = true;
-          }
-          else if (s.pieceColour == Colour::White) {
-            AttackedByWhite = true;
-          }
-          if (piece == Piece::Empty) {
-            State newS;
-            newS.type = StateType::Relay;
-            newS.direction = d;
-            newS.pieceColour = s.pieceColour;
-            newS.piece = s.piece;
-            this->setState(newS);
-            notifyObservers();
-          }
-          else {
-            //do nothing
-          }
-        }
+      else {
+        AttackedByBlack = true;
       }
-      else if (s.piece == Piece::Rook) {
-      if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
+    }
+    else if (s.piece == Piece::Bishop) {
+      //find the direction of the new piece
+      if ((d == Direction::NE) || (d == Direction::NW) || (d == Direction::SE) || (d == Direction::SW)) {
         if (s.pieceColour == Colour::Black) {
           AttackedByBlack = true;
         }
@@ -250,7 +228,29 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         }
       }
     }
-      else if (s.piece == Piece::Queen) {
+    else if (s.piece == Piece::Rook) {
+      if ((d == Direction::N) || (d == Direction::W) || (d == Direction::E) || (d == Direction::S)) {
+        if (s.pieceColour == Colour::Black) {
+          AttackedByBlack = true;
+        }
+        else if (s.pieceColour == Colour::White) {
+          AttackedByWhite = true;
+        }
+        if (piece == Piece::Empty) {
+          State newS;
+          newS.type = StateType::Relay;
+          newS.direction = d;
+          newS.pieceColour = s.pieceColour;
+          newS.piece = s.piece;
+          this->setState(newS);
+          notifyObservers();
+        }
+        else {
+        //do nothing
+        }
+      }
+    }
+    else if (s.piece == Piece::Queen) {
       if (s.pieceColour == Colour::Black) {
         AttackedByBlack = true;
       }
@@ -270,7 +270,7 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
         //do nothing
       }
     }
-      else if (s.piece == Piece::Empty) {
+    else if (s.piece == Piece::Empty) {
       State newS;
       newS.type = StateType::Relay;
       newS.direction = d;
@@ -281,130 +281,129 @@ void Square::notify(Subject<Info, State> &whoFrom) {// My neighbours will call t
     }
   }
   else if (s.type == StateType::Relay) {
+    Direction d = getDirection(*this, whoFrom);
+    Direction reverse = getDirection(whoFrom, *this);
+  //if the cell is in line with the direction of the relay
+    //i.e. the direction of *this is the direction of the relay
+    if (s.piece == Piece::Knight) {
+      if (s.direction == Direction::N) {
+        if ((d == Direction::NW) || (d == Direction::NE)) {
+          if (s.pieceColour == Colour::Black) {
+            AttackedByBlack = true;
+          }
+          else if (s.pieceColour == Colour::White) {
+            AttackedByWhite = true;
+          }
+        }
+      }
+      else if (s.direction == Direction::S) {
+        if ((d == Direction::SW) || (d == Direction::SE)) {
+          if (s.pieceColour == Colour::Black) {
+            AttackedByBlack = true;
+          }
+          else if (s.pieceColour == Colour::White) {
+            AttackedByWhite = true;
+          }
+        }
+      }
+      else if ( s.direction == Direction::W) {
+        if ((d == Direction::SW) || (d == Direction::NW)) {
+          if (s.pieceColour == Colour::Black) {
+            AttackedByBlack = true;
+          }
+          else if (s.pieceColour == Colour::White) {
+            AttackedByWhite = true;
+          }
+        }
+      }
+      else if (s.direction == Direction::E) {
+        if ((d == Direction::NE) || (d == Direction::SE)) {
+          if (s.pieceColour == Colour::Black) {
+            AttackedByBlack = true;
+          }
+          else if (s.pieceColour == Colour::White) {
+            AttackedByWhite = true;
+          }
+        }
+      }
+    }
+    else if (s.direction == d) {
+      //even if there is a piece, the square is still under attack by the
+      // piece who is sending the notification
+      if (s.pieceColour == Colour::Black) {
+        AttackedByBlack = true;
+      }
+      else if (s.pieceColour == Colour::White) {
+        AttackedByWhite = true;
+      }
+      if (piece != Piece::Empty) {
+            if (piece == Piece::Pawn) {
+              //do nothing
+            }
+            //Bishop may be able to attack more squares, so reply is needed
+            if (piece == Piece::Bishop) {
+              State newS;
+              newS.type = StateType::Reply;
+              newS.direction = reverse;
+              newS.pieceColour = pieceColour;
+              this->setState(newS);
+              notifyObservers();
+            }
+            //king follows the same idea as the pawn, so no need to
+            // recalculate the king's squares it is attacking
+            if (piece == Piece::King) {
+              //do nothing
+            }
+            //Queen may be able to attack more squares than before
+            if (piece == Piece::Queen) {
+              State newS;
+              newS.type = StateType::Reply;
+              newS.direction = reverse;
+              newS.pieceColour = pieceColour;
+              this->setState(newS);
+              notifyObservers();
+            }
+            //Rook may be able to attack more squares than before
+            if (piece == Piece::Rook) {
+              State newS;
+              newS.type = StateType::Reply;
+              newS.direction = reverse;
+              newS.pieceColour = pieceColour;
+              this->setState(newS);
+              notifyObservers();
+            }
+          }
+        }
+        else {    //no piece located so it just continues the relay
+            State newS;
+            newS.type = StateType::Relay;
+            newS.direction = s.direction;
+            newS.pieceColour = s.pieceColour;
+            this->setState(newS);
+            notifyObservers();
+        }
+    }
+    else { //type is a reply to check for discovered checks
       Direction d = getDirection(*this, whoFrom);
       Direction reverse = getDirection(whoFrom, *this);
       //if the cell is in line with the direction of the relay
       //i.e. the direction of *this is the direction of the relay
-      if (s.piece == Piece::Knight) {
-        if (s.direction == Direction::N) {
-          if ((d == Direction::NW) || (d == Direction::NE)) {
-            if (s.pieceColour == Colour::Black) {
-              AttackedByBlack = true;
-            }
-            else if (s.pieceColour == Colour::White) {
-              AttackedByWhite = true;
-            }
-          }
-        }
-        else if (s.direction == Direction::S) {
-          if ((d == Direction::SW) || (d == Direction::SE)) {
-            if (s.pieceColour == Colour::Black) {
-              AttackedByBlack = true;
-            }
-            else if (s.pieceColour == Colour::White) {
-              AttackedByWhite = true;
-            }
-          }
-        }
-        else if ( s.direction == Direction::W) {
-          if ((d == Direction::SW) || (d == Direction::NW)) {
-            if (s.pieceColour == Colour::Black) {
-              AttackedByBlack = true;
-            }
-            else if (s.pieceColour == Colour::White) {
-              AttackedByWhite = true;
-            }
-          }
-        }
-        else if (s.direction == Direction::E) {
-          if ((d == Direction::NE) || (d == Direction::SE)) {
-            if (s.pieceColour == Colour::Black) {
-              AttackedByBlack = true;
-            }
-            else if (s.pieceColour == Colour::White) {
-              AttackedByWhite = true;
-            }
-          }
-        }
+      if (s.pieceColour == Colour::Black) {
+        AttackedByBlack = true;
       }
-      else if (s.direction == d) {
-        //even if there is a piece, the square is still under attack by the
-        // piece who is sending the notification
-        if (s.pieceColour == Colour::Black) {
-          AttackedByBlack = true;
-        }
-        else if (s.pieceColour == Colour::White) {
-          AttackedByWhite = true;
-        }
-        if (piece != Piece::Empty) {
-              if (piece == Piece::Pawn) {
-                //do nothing
-              }
-              //Bishop may be able to attack more squares, so reply is needed
-              if (piece == Piece::Bishop) {
-                State newS;
-                newS.type = StateType::Reply;
-                newS.direction = reverse;
-                newS.pieceColour = pieceColour;
-                this->setState(newS);
-                notifyObservers();
-              }
-              //king follows the same idea as the pawn, so no need to
-              // recalculate the king's squares it is attacking
-              if (piece == Piece::King) {
-                //do nothing
-              }
-              //Queen may be able to attack more squares than before
-              if (piece == Piece::Queen) {
-                State newS;
-                newS.type = StateType::Reply;
-                newS.direction = reverse;
-                newS.pieceColour = pieceColour;
-                this->setState(newS);
-                notifyObservers();
-              }
-              //Rook may be able to attack more squares than before
-              if (piece == Piece::Rook) {
-                State newS;
-                newS.type = StateType::Reply;
-                newS.direction = reverse;
-                newS.pieceColour = pieceColour;
-                this->setState(newS);
-                notifyObservers();
-              }
-            }
-          }
-          else {    //no piece located so it just continues the relay
-              State newS;
-              newS.type = StateType::Relay;
-              newS.direction = s.direction;
-              newS.pieceColour = s.pieceColour;
-              this->setState(newS);
-              notifyObservers();
-          }
+      else if (s.pieceColour == Colour::White) {
+        AttackedByWhite = true;
       }
-      else { //type is a reply to check for discovered checks
-        Direction d = getDirection(*this, whoFrom);
-        Direction reverse = getDirection(whoFrom, *this);
-        //if the cell is in line with the direction of the relay
-        //i.e. the direction of *this is the direction of the relay
-        if (s.pieceColour == Colour::Black) {
-          AttackedByBlack = true;
-        }
-        else if (s.pieceColour == Colour::White) {
-          AttackedByWhite = true;
-        }
-        if (piece != Piece::Empty) {
-          //already calculated so nothing needs to happen
-        }
-        else {    //no piece located so it just continues the reply
-          State newS;
-          newS.type = StateType::Reply;
-          newS.direction = s.direction;
-          newS.pieceColour = s.pieceColour;
-          this->setState(newS);
-          notifyObservers();
+      if (piece != Piece::Empty) {
+        //already calculated so nothing needs to happen
       }
+    else {    //no piece located so it just continues the reply
+        State newS;
+        newS.type = StateType::Reply;
+        newS.direction = s.direction;
+        newS.pieceColour = s.pieceColour;
+        this->setState(newS);
+        notifyObservers();
     }
   }
 }
