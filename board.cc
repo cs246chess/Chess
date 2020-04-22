@@ -4,31 +4,36 @@
 
 using namespace std;
 
-char convert(int i) {
+char convert(int i) {//converts integers into column letters
   return ('a' + (i - 1));
 }
 
-int convertBackwards(char i){
+int convertBackwards(char i){//converts column letters into integers
   return ((i - 'a') + 1);
 }
 
-std::ostream &operator<<(std::ostream &out, const Board &b) {
-  if (b.td != nullptr) {
+std::ostream &operator<<(std::ostream &out, const Board &b) {//ostream operator for board
+  if (b.td != nullptr) {//just outs td
     out << *b.td;
   }
   return out;
 }
 
 void Board::init() {
+  //delete the old text display pointer
+  //if we had a board before it'll get wiped and the text display will be refreshed
+  //if we are making a fresh board nothing will happen
   TextDisplay *temp = td;
   td = new TextDisplay();
   delete temp;
 
   theBoard.clear();
-  theBoard.resize(8);
+  theBoard.resize(8); //resize board vector to hold 8 ranks/rows
   cout << "Size:" << size << endl;
   for (int r = 0; r < 8; r++) {
     for (int c = 0; c < 8; c++) {
+      //create board by pushing back squares of appropriate color
+      //based on the rank and column
       if (c % 2 == 0 && r % 2 == 0) {
         theBoard[r].push_back(Square(r, c, Colour::White));
       }
@@ -44,6 +49,7 @@ void Board::init() {
     }
   }
   cout << "Size:" << size << endl;
+  //attach observers
   for (int i = 0; i < size; i++) {
       for (int j = 0; j < size; j++) {
           if (i == 0 && j == 0) {//bottom left

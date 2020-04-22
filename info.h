@@ -2,7 +2,7 @@
 #define INFO_H
 #include <cstddef>
 #include "state.h"
-
+ 
 struct Info {
   int col;
   int row;
