@@ -30,51 +30,51 @@ void TextDisplay::notify(Subject<Info, State> &whoFrom) {
   Piece piece = whoFrom.getInfo().piece;
   if (colour == Colour::Black) {
     if (piece == Piece::Pawn) {
-      theDisplay[row][col] = 'p';
+      theDisplay[row-1][col-1] = 'p';
     }
     if (piece == Piece::Rook) {
-      theDisplay[row][col] = 'r';
+      theDisplay[row-1][col-1] = 'r';
     }
     if (piece == Piece::King) {
-      theDisplay[row][col] = 'k';
+      theDisplay[row-1][col-1] = 'k';
     }
     if (piece == Piece::Bishop) {
-      theDisplay[row][col] = 'b';
+      theDisplay[row-1][col-1] = 'b';
     }
     if (piece == Piece::Knight) {
-      theDisplay[row][col] = 'n';
+      theDisplay[row-1][col-1] = 'n';
     }
     if (piece == Piece::Queen) {
-      theDisplay[row][col] = 'q';
+      theDisplay[row-1][col-1] = 'q';
     }
   } else if (colour == Colour::White) {
     if (piece == Piece::Pawn) {
-      theDisplay[row][col] = 'P';
+      theDisplay[row-1][col-1] = 'P';
     }
     if (piece == Piece::Rook) {
-      theDisplay[row][col] = 'R';
+      theDisplay[row-1][col-1] = 'R';
     }
     if (piece == Piece::King) {
-      theDisplay[row][col] = 'K';
+      theDisplay[row-1][col-1] = 'K';
     }
     if (piece == Piece::Bishop) {
-      theDisplay[row][col] = 'B';
+      theDisplay[row-1][col-1] = 'B';
     }
     if (piece == Piece::Knight) {
-      theDisplay[row][col] = 'N';
+      theDisplay[row-1][col-1] = 'N';
     }
     if (piece == Piece::Queen) {
-      theDisplay[row][col] = 'Q';
+      theDisplay[row-1][col-1] = 'Q';
     }
   } else {
     if (row % 2 == 0 && col % 2 == 0) {
-      theDisplay[row][col] = ' ';
+      theDisplay[row-1][col-1] = ' ';
     } else if (row % 2 == 0 &&  col % 2 != 0) {
-      theDisplay[row][col] = '_';
+      theDisplay[row-1][col-1] = '_';
     } else if (row % 2 != 0 &&  col % 2 == 0) {
-      theDisplay[row][col] = '_';
+      theDisplay[row-1][col-1] = '_';
     } else {
-      theDisplay[row][col] = ' ';
+      theDisplay[row-1][col-1] = ' ';
     }
   }
 };
